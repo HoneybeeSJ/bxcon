@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d0e19">
+<link rel="icon" href="data:,">
+<meta name="description" content="경영전략, 영업·마케팅, 고객경험(CX), 인사조직(HR), 리서치, 시스템, AI까지 기업의 성장 과제를 실행 가능한 구조로 연결하는 BX컨설팅입니다.">
+<title>BX 히어로 모션 프로토타입</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://qqhwhhtsidiozxnrajlp.supabase.co" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+/* 모서리 규칙: 카드·로고 타일 16px / 작은 태그 8px / 버튼·칩·라벨은 알약형 */
+:root{--bg:#0d0e19;--line:#262c52;--ink:#eef1ff;--mute:#9aa3c7;--blue:#3d72f0;--sky:#7cc8ff;--r-card:16px;--r-tag:8px;--r-pill:999px;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:88px}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:Pretendard,'Noto Sans KR',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;word-break:keep-all}
+a{color:inherit;text-decoration:none}
+.w{display:inline-block;white-space:nowrap}
+.ch{display:inline-block}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:16px;top:-80px;z-index:100;background:var(--blue);color:#fff;padding:12px 18px;border-radius:var(--r-pill);font-weight:600;transition:top .2s}
+.skip:focus{top:16px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:6px}
+
+.proto-tag{position:fixed;right:16px;bottom:16px;z-index:50;font-size:12px;letter-spacing:.08em;color:#c9d2ff;border:1px solid #3a4275;background:rgba(13,14,25,.85);padding:6px 12px;border-radius:var(--r-pill)}
+.draft{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;color:#ffd38a;border:1px dashed #8a6b2c;padding:3px 8px;border-radius:var(--r-tag);vertical-align:middle}
+#toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);z-index:60;background:#1b2147;border:1px solid #3a4275;color:#e6eaff;padding:12px 18px;border-radius:var(--r-pill);font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+
+header{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(16px,4vw,56px);transition:background-color .3s}
+header.scrolled{background:rgba(13,14,25,.82);backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;min-height:44px}
+.logo b{font-weight:900;font-size:24px;letter-spacing:-.05em;color:var(--blue)}
+nav{display:flex;gap:28px;font-size:15px;color:#cfd5f2}
+nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
+nav a:hover{color:#fff}
+.hdr-r{display:flex;gap:10px;align-items:center}
+.btn.menu-btn{display:none;background:transparent;color:inherit;cursor:pointer;font-family:inherit}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid #4a56a0;padding:10px 18px;border-radius:var(--r-pill);font-size:14px;font-weight:600;transition:background-color .25s,border-color .25s}
+.btn:hover,.btn:focus-visible{background:var(--blue);border-color:var(--blue)}
+.btn.solid{background:var(--blue);border-color:var(--blue);padding:16px 32px;font-size:16px}
+.btn.solid:hover,.btn.solid:focus-visible{background:#5a8bff;border-color:#5a8bff}
+
+/* S1 HERO */
+.hero{position:relative;height:100vh;height:100svh;overflow:hidden}
+#lines{position:absolute;inset:0;width:100%;height:100%}
+.hero-copy{position:absolute;left:0;right:0;bottom:10vh;text-align:center;padding:0 16px}
+.slides{display:grid}
+.slide{grid-area:1/1;visibility:hidden}
+.slide.is-active{visibility:visible}
+.slide-title{font-size:clamp(26px,3.6vw,52px);font-weight:700;line-height:1.28;letter-spacing:-.02em}
+.hero-copy h1 em{font-style:normal;color:var(--sky)}
+.hero-sub{margin-top:12px;font-size:clamp(14px,1.3vw,18px);color:var(--mute);letter-spacing:.02em}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.slide-ctrl{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:18px}
+.slide-dot{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
+.slide-dot::before{content:'';width:8px;height:8px;border-radius:var(--r-pill);background:#4a5590;transition:width .3s,background-color .3s}
+.slide-dot[aria-current="true"]::before{width:22px;background:var(--sky)}
+
+.float-label{position:absolute;left:0;top:0;font-size:13px;font-weight:600;color:#bcd7ff;letter-spacing:.04em;white-space:nowrap;pointer-events:none;opacity:0}
+.lane-label{position:absolute;top:50%;transform:translate(-50%,-50%);text-align:center;opacity:0;pointer-events:none;padding:10px 12px}
+.lane-label small{display:block;font-size:12px;color:var(--sky);letter-spacing:.2em;margin-bottom:4px}
+.lane-label{padding:0}
+.lane-label span{display:inline-block;padding:5px 12px;border-radius:var(--r-pill);background:rgba(13,14,25,.82);border:1px solid #2f3870;font-size:clamp(12px,1.05vw,15px);font-weight:700;white-space:nowrap}
+
+/* common */
+.kicker{font-size:13px;letter-spacing:.3em;color:var(--sky);margin-bottom:14px}
+.h2{font-size:clamp(26px,3.3vw,46px);font-weight:700;line-height:1.3;letter-spacing:-.02em}
+.pad{padding-left:clamp(16px,6vw,96px);padding-right:clamp(16px,6vw,96px)}
+
+/* S2 SERVICES (홈페이지 '컨설팅 서비스' 7개) */
+.biz{position:relative;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(64px,8vh,88px)}
+.biz-head{margin-bottom:3vh;position:relative;z-index:2}
+.lead{margin-top:12px;font-size:clamp(15px,1.2vw,17px);color:var(--mute);line-height:1.65;max-width:62ch}
+.track{display:flex;gap:24px;width:max-content;position:relative;z-index:2}
+.card{--c:#5a8bff;width:min(320px,80vw);background:linear-gradient(180deg,#171a33,#10121f);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,border-color .35s}
+.card:hover,.card:focus-within{transform:translateY(-8px);border-color:#4d64c8}
+.stripes{height:56px;flex:none;background:repeating-linear-gradient(90deg,var(--c) 0 3px,transparent 3px 9px);opacity:.6;-webkit-mask-image:linear-gradient(0deg,transparent,#000);mask-image:linear-gradient(0deg,transparent,#000);transition:opacity .35s}
+.card:hover .stripes,.card:focus-within .stripes{opacity:1}
+.card .body{padding:14px 26px 8px;display:flex;flex-direction:column;flex:1}
+.card .num{font-size:13px;color:var(--mute);letter-spacing:.2em}
+.card h3{font-size:24px;margin:6px 0 10px}
+.card p{font-size:15px;color:#c3c9e6;line-height:1.65}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;list-style:none}
+.tags li{font-size:13px;padding:4px 10px;border-radius:var(--r-pill);border:1px solid #333c6c;color:#cdd6ff}
+.card .more{margin-top:auto;padding-top:10px;display:inline-flex;align-items:center;min-height:44px;font-size:14px;color:var(--sky);align-self:flex-start}
+
+/* S2-2 CRM 예시 (홈페이지 원문 + 실제 예시 화면 캡처) */
+.crm{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center;padding-top:16vh;padding-bottom:12vh}
+.crm .btn{margin-top:28px}
+.note{margin-top:14px;font-size:13px;color:var(--mute)}
+.crm-shot img{display:block;width:100%;max-width:520px;height:auto;margin-left:auto;border-radius:var(--r-card);box-shadow:0 24px 70px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06)}
+
+/* S3-2 수행사례: 대표 1건 크게 + 2건 */
+.cases{padding-top:16vh;padding-bottom:10vh}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:5vh}
+.link-more{display:inline-flex;align-items:center;min-height:44px;color:var(--sky);font-size:15px;font-weight:600}
+.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.case{display:flex;flex-direction:column;background:#141731;border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;transition:border-color .35s}
+.case:hover,.case:focus-visible{border-color:#4d64c8}
+.case.featured{grid-column:1 / -1;flex-direction:row;align-items:stretch}
+.case-img{aspect-ratio:8/5;overflow:hidden;background:#fff}
+.case.featured .case-img{flex:0 0 56%}
+.case-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.case:hover .case-img img{transform:scale(1.03)}
+.case-body{padding:20px 24px 24px}
+.case.featured .case-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 36px}
+.case-meta{font-size:13px;color:var(--sky);letter-spacing:.04em}
+.case h3{font-size:20px;line-height:1.4;margin:6px 0 8px}
+.case.featured h3{font-size:clamp(22px,2vw,28px)}
+.case p{font-size:15px;color:#aab2d6;line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.case.featured p{-webkit-line-clamp:4}
+
+/* S3-3 인사이트: 레터·기획조사·보도자료 한 줄씩 */
+.insight{padding-top:10vh;padding-bottom:10vh}
+.ins-list{list-style:none;border-top:1px solid var(--line)}
+.ins{display:grid;grid-template-columns:140px 1fr 220px;gap:32px;align-items:center;padding:28px 0;border-bottom:1px solid var(--line)}
+.ins-type{display:flex;flex-direction:column;gap:6px}
+.ins-type b{font-size:15px;color:var(--sky)}
+.ins-type a{font-size:13px;color:var(--mute);min-height:24px}
+.ins-type a:hover{color:var(--ink)}
+.ins-main h3{font-size:clamp(18px,1.6vw,22px);line-height:1.45}
+.ins-main:hover h3{color:var(--sky)}
+.ins-main p{margin-top:8px;font-size:15px;color:#aab2d6;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ins-thumb{display:block;border-radius:var(--r-tag);overflow:hidden;background:#fff}
+.ins-thumb img{width:100%;height:auto;display:block}
+
+/* S3 SALES TRAINING (홈페이지 세일즈 교육 4단계) */
+.flow{position:relative;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center}
+.flow-stage{position:relative;margin-top:8vh;min-height:230px}
+.flow-svg{position:absolute;left:0;top:-40px;width:100%;height:98px;overflow:visible}
+.nodes{position:relative;height:230px;list-style:none}
+.node{--k:0;position:absolute;top:0;width:23%;transform:translate(-50%,calc(10px * (1 - var(--k))));text-align:center;opacity:calc(.7 + .3 * var(--k))}
+.node .dot{width:18px;height:18px;border-radius:50%;margin:0 auto 22px;border:2px solid color-mix(in srgb,var(--sky) calc(var(--k) * 100%),#3a4478);background:color-mix(in srgb,var(--sky) calc(var(--k) * 100%),var(--bg));box-shadow:0 0 0 calc(8px * var(--k)) rgba(124,200,255,calc(.15 * var(--k)))}
+.node .step{font-size:13px;letter-spacing:.25em;color:var(--mute)}
+.node h3{font-size:clamp(19px,1.8vw,26px);margin:6px 0 10px;color:color-mix(in srgb,var(--sky) calc(var(--k) * 100%),var(--ink))}
+.node p{font-size:15px;color:#aab2d6;line-height:1.6}
+.flow-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+/* S4 COVERAGE (홈페이지 전국 거점) */
+.coverage{padding-top:18vh;padding-bottom:10vh}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:6vh;border-top:1px solid var(--line)}
+.stat{padding:32px 0 0}
+.stat .n{font-size:clamp(44px,5.5vw,80px);font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{color:var(--mute);margin-top:12px;font-size:15px;letter-spacing:.08em;text-transform:uppercase}
+.hubs{list-style:none;display:flex;flex-wrap:wrap;margin-top:6vh;border-top:1px solid var(--line)}
+.hubs li{flex:1 1 200px;padding:22px 24px 0 0}
+.hubs li + li{padding-left:24px;border-left:1px solid var(--line)}
+.hubs b{display:block;font-size:22px}
+.hubs span{color:var(--mute);font-size:15px}
+
+/* S5 CLIENTS (홈페이지 고객 레퍼런스 두 줄 마키) */
+.clients{padding-top:10vh;padding-bottom:12vh}
+.clients-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:5vh}
+.mq{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.mq + .mq{margin-top:16px}
+.mq-track{display:flex;width:max-content;animation:mq var(--d,56s) linear infinite}
+.mq-track.rev{animation-name:mq-rev}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes mq-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.clients:hover .mq-track,.clients:focus-within .mq-track{animation-play-state:paused}
+.mq-set{display:flex}
+.logo-tile{flex:none;width:168px;height:64px;margin-right:16px;background:#fff;border-radius:var(--r-tag);display:flex;align-items:center;justify-content:center;padding:10px 16px}
+.logo-tile img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+
+/* CTA */
+.cta{position:relative;min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 16px;overflow:hidden;isolation:isolate}
+.cta h2{font-size:clamp(28px,4vw,56px);font-weight:800;line-height:1.25;margin-bottom:40px;letter-spacing:-.02em}
+.cta .bars{position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(90deg,rgba(61,114,240,.22) 0 2px,transparent 2px 14px);-webkit-mask-image:radial-gradient(ellipse at center,#000 0,transparent 68%);mask-image:radial-gradient(ellipse at center,#000 0,transparent 68%);transform-origin:center}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+footer{border-top:1px solid var(--line);padding-top:28px;padding-bottom:28px;font-size:14px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;line-height:1.7}
+footer address{font-style:normal}
+footer .tagline{color:var(--ink);margin-bottom:6px}
+
+/* 동작 줄이기: 가로 이동·마키 대신 모두 보이게 */
+.reduced .biz{height:auto;overflow:visible;padding:14vh 0 10vh}
+.reduced .track{width:auto;flex-wrap:wrap}
+.reduced .flow{height:auto;padding-top:14vh;padding-bottom:10vh}
+.reduced .mq{-webkit-mask-image:none;mask-image:none;padding:0 clamp(16px,6vw,96px)}
+.reduced .mq-track{animation:none;width:auto}
+.reduced .mq-set{flex-wrap:wrap;gap:12px 0}
+.reduced .mq-set[aria-hidden="true"]{display:none}
+@media (prefers-reduced-motion:reduce){
+  .card,.btn,.stripes,#toast,header,.skip{transition:none}
+}
+
+@media (max-width:768px){
+  .h2 br,.cta h2 br{display:none}
+  footer{padding-bottom:72px}
+  .ins-type a{min-height:44px;display:inline-flex;align-items:center}
+  .crm{grid-template-columns:1fr;padding-top:12vh}
+  .crm-shot img{margin:0 auto}
+  .cases-grid{grid-template-columns:1fr}
+  .case.featured{flex-direction:column}
+  .case.featured .case-img{flex:none}
+  .case.featured .case-body{padding:20px 24px 24px;justify-content:flex-start}
+  .ins{grid-template-columns:1fr;gap:12px}
+  .ins-type{flex-direction:row;justify-content:space-between}
+  .ins-thumb{display:none}
+  .btn.menu-btn{display:inline-flex}
+  nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:rgba(13,14,25,.97);border-bottom:1px solid var(--line);padding:8px clamp(16px,4vw,56px) 16px}
+  nav.open{display:flex}
+  nav a{border-bottom:1px solid var(--line);font-size:17px;padding:0 4px}
+  nav a:last-child{border-bottom:0}
+  .biz{height:auto;padding:16vh 0 10vh}
+  .track{flex-direction:column;width:auto;padding:0 16px}
+  .card{width:100%;height:auto;min-height:0}
+  .card p{font-size:16px}
+  .flow{height:auto;padding-top:14vh;padding-bottom:6vh}
+  .flow-svg{display:none}
+  .nodes{height:auto;border-left:1px solid #333c6c;margin-left:8px}
+  .node{position:relative;left:auto!important;transform:none;width:auto;text-align:left;padding:0 0 36px 28px}
+  .node p{font-size:16px}
+  .node .dot{position:absolute;left:-9px;top:2px;margin:0}
+  .stats{grid-template-columns:1fr}
+  .hubs li + li{border-left:0;padding-left:0}
+  .logo-tile{width:136px;height:56px}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">본문 바로가기</a>
+<header>
+  <a class="logo" href="#top" aria-label="비엑스컨설팅 처음으로"><b aria-hidden="true">BX</b>비엑스컨설팅</a>
+  <nav id="gnav" aria-label="주요 메뉴"><a href="#biz">서비스</a><a href="#flow">세일즈 교육</a><a href="#cases">수행사례</a><a href="#insight">인사이트</a><a href="https://www.bxcon.co.kr/company/vmc/" target="_blank" rel="noopener">회사소개</a></nav>
+  <div class="hdr-r">
+    <button class="btn menu-btn" type="button" aria-expanded="false" aria-controls="gnav">메뉴</button>
+    <a class="btn" href="#cta">프로젝트 문의</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- S1 HERO : 흩어진 빛줄기 → BX 수렴 → 스크롤 시 7개 서비스로 갈라짐. 문구는 bxcon.co.kr 히어로 첫 장 -->
+<section class="hero" id="top" aria-label="BX컨설팅 소개">
+  <canvas id="lines" aria-hidden="true"></canvas>
+  <div id="floatLabels" aria-hidden="true"></div>
+  <div id="laneLabels" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <div class="slides" role="region" aria-roledescription="carousel" aria-label="핵심 메시지">
+      <div class="slide is-active" role="group" aria-roledescription="slide" aria-label="3개 중 1번째"><h1 class="slide-title split">팔리는 구조를 설계합니다</h1><p class="hero-sub" lang="en">We Engineer Revenue, Not Luck</p></div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="3개 중 2번째" aria-hidden="true"><p class="slide-title split">고객의 경험을 가치로 전환합니다</p><p class="hero-sub" lang="en">Transforming Every Customer Touchpoint into Brand Value</p></div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="3개 중 3번째" aria-hidden="true"><p class="slide-title split">AI 에이전트가 일하는 조직으로 진화합니다</p><p class="hero-sub" lang="en">Evolving Organizations to Work with AI Agents</p></div>
+    </div>
+    <div class="hero-cta"><a class="btn solid" href="#cta">프로젝트 문의</a><a class="btn" href="https://www.bxcon.co.kr/portfolio/" target="_blank" rel="noopener">수행사례 보기</a></div>
+    <div class="slide-ctrl">
+      <button class="slide-dot" type="button" aria-label="1번째 문구 보기" aria-current="true"></button>
+      <button class="slide-dot" type="button" aria-label="2번째 문구 보기" aria-current="false"></button>
+      <button class="slide-dot" type="button" aria-label="3번째 문구 보기" aria-current="false"></button>
+    </div>
+  </div>
+</section>
+
+<!-- S2 SERVICES : 고정 + 가로 카드 (홈페이지 '컨설팅 서비스' 원문) -->
+<section class="biz" id="biz" aria-labelledby="bizTitle">
+  <div class="biz-head pad">
+    <h2 class="h2 split reveal" id="bizTitle">컨설팅 서비스</h2>
+    <p class="lead">기업의 성장 과제에 맞춰 전략, 영업, 고객경험, 조직, 리서치, 시스템, AI까지 필요한 실행 솔루션을 연결합니다.</p>
+  </div>
+  <div class="track pad">
+    <article class="card" style="--c:#5a8bff"><div class="stripes"></div><div class="body"><span class="num">01</span><h3>경영전략 솔루션</h3><p>비전, 중장기 전략, 신사업 기회를 실행 가능한 의사결정 구조로 정리합니다.</p><ul class="tags"><li>전략 수립</li><li>비전 체계</li><li>신사업 설계</li></ul><a class="more" href="https://www.bxcon.co.kr/service/management/" target="_blank" rel="noopener" aria-label="경영전략 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
+    <article class="card" style="--c:#4fa3ff"><div class="stripes"></div><div class="body"><span class="num">02</span><h3>영업·마케팅 솔루션</h3><p>고객 발굴부터 상담, 제안, 영업 성과관리까지 매출 구조를 개선합니다.</p><ul class="tags"><li>세일즈 진단</li><li>영업 교육</li><li>마케팅 실행</li></ul><a class="more" href="https://www.bxcon.co.kr/service/business/" target="_blank" rel="noopener" aria-label="영업·마케팅 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
+    <article class="card" style="--c:#36b6ff"><div class="stripes"></div><div class="body"><span class="num">03</span><h3>고객경험 솔루션</h3><p>고객 여정과 접점을 분석해 브랜드 경험과 서비스 운영 품질을 높입니다.</p><ul class="tags"><li>고객 여정</li><li>접점 개선</li><li>서비스 품질</li></ul><a class="more" href="https://www.bxcon.co.kr/service/cx/" target="_blank" rel="noopener" aria-label="고객경험 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
+    <article class="card" style="--c:#6a5cff"><div class="stripes"></div><div class="body"><span class="num">04</span><h3>인사조직 솔루션</h3><p>조직문화, 리더십, 역할 체계를 정렬해 구성원의 실행력을 높입니다.</p><ul class="tags"><li>조직문화</li><li>리더십</li><li>역할 체계</li></ul><a class="more" href="https://www.bxcon.co.kr/service/group/" target="_blank" rel="noopener" aria-label="인사조직 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
+    <article class="card" style="--c:#58c4e8"><div class="stripes"></div><div class="body"><span class="num">05</span><h3>리서치 솔루션</h3><p>시장과 고객의 목소리를 데이터로 확인하고 전략적 의사결정에 연결합니다.</p><ul class="tags"><li>시장 조사</li><li>고객 조사</li><li>인사이트 도출</li></ul><a class="more" href="https://www.bxcon.co.kr/service/research/" target="_blank" rel="noopener" aria-label="리서치 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
+    <article class="card" style="--c:#8a7dff"><div class="stripes"></div><div class="body"><span class="num">06</span><h3>시스템 솔루션</h3><p>업무 흐름과 데이터 관리를 표준화해 반복 가능한 운영 시스템을 만듭니다.</p><ul class="tags"><li>운영 설계</li><li>데이터 관리</li><li>업무 자동화</li></ul><a class="more" href="https://www.bxcon.co.kr/service/system/" target="_blank" rel="noopener" aria-label="시스템 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
+    <article class="card" style="--c:#7cc8ff"><div class="stripes"></div><div class="body"><span class="num">07</span><h3>인공지능 솔루션</h3><p>생성형 AI와 자동화 도구를 조직의 실제 업무 과정에 맞게 도입합니다.</p><ul class="tags"><li>AI 도입</li><li>업무 자동화</li><li>교육 설계</li></ul><a class="more" href="https://www.bxcon.co.kr/service/ai/" target="_blank" rel="noopener" aria-label="인공지능 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
+  </div>
+</section>
+
+<!-- S2-2 CRM 예시 (홈페이지 원문, 오른쪽은 실제 CRM 예시 페이지 캡처) -->
+<section class="crm pad" id="crm" aria-labelledby="crmTitle">
+  <div class="crm-text fx-up">
+    <h2 class="h2 split reveal" id="crmTitle">영업 업무의<br> 디지털 전환 예시</h2>
+    <p class="lead">상담부터 견적, 계약, 시공까지. 고객의 다음 할 일과 업무 이력을 연결하는 CRM을 직접 체험해 보세요.</p>
+    <a class="btn solid" href="https://www.bxcon.co.kr/examples/crm/" target="_blank" rel="noopener">영업 CRM 예시 보기 ↗</a>
+    <p class="note">실제 고객 정보가 없는 가상 데이터 샘플입니다.</p>
+  </div>
+  <figure class="crm-shot"><img src="assets/crm-sample.png" alt="BX 영업 CRM 샘플 화면. 진행 중 23건, 우선 처리 7건, 견적 10건과 샘플 고객 4명의 현재 할 일" width="536" height="596" loading="lazy"></figure>
+</section>
+
+<!-- S3 SALES TRAINING : 선 하나가 4단계를 잇는다 (홈페이지 세일즈 교육 원문) -->
+<section class="flow pad" id="flow" aria-labelledby="flowTitle">
+  <div>
+    <h2 class="h2 split reveal" id="flowTitle">성과가 나는 영업조직은<br> 교육 전에 병목을 먼저 봅니다.</h2>
+    <p class="lead">BX컨설팅 세일즈 교육은 진단, 문제유형 분류, 추천 과정, 상세 상담으로 이어지는 흐름을 통해 영업조직의 현재 과제에 맞는 교육 로드맵을 설계합니다.</p>
+  </div>
+  <div class="flow-stage">
+    <svg class="flow-svg" viewBox="0 0 1000 98" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="fg" x1="0" x2="1"><stop offset="0" stop-color="#3d72f0"/><stop offset="1" stop-color="#7cc8ff"/></linearGradient></defs>
+      <path d="M0 49 C60 49 90 49 125 49 S250 10 375 49 S500 88 625 49 S750 10 875 49 S960 49 1000 49" fill="none" stroke="#2a3160" stroke-width="2"/>
+      <path id="flowPath" d="M0 49 C60 49 90 49 125 49 S250 10 375 49 S500 88 625 49 S750 10 875 49 S960 49 1000 49" fill="none" stroke="url(#fg)" stroke-width="3" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+      <circle id="flowHead" r="6" cx="0" cy="49" fill="#7cc8ff" opacity="0"/>
+    </svg>
+    <ol class="nodes">
+      <li class="node" style="left:12.5%"><div class="dot"></div><span class="step">01</span><h3>세일즈 진단</h3><p>고객 발굴, 상담, 제안, 클로징, 재구매 관리까지 현재 병목을 먼저 확인합니다.</p></li>
+      <li class="node" style="left:37.5%"><div class="dot"></div><span class="step">02</span><h3>문제유형 매칭</h3><p>조직의 약한 구간에 따라 리드 부족형, 상담 품질 부족형, 제안 병목형 등으로 분류합니다.</p></li>
+      <li class="node" style="left:62.5%"><div class="dot"></div><span class="step">03</span><h3>추천 과정 설계</h3><p>컨설팅 세일즈, 고객 상담 스킬, B2B 제안서 작성 등 필요한 교육 순서를 제안합니다.</p></li>
+      <li class="node" style="left:87.5%"><div class="dot"></div><span class="step">04</span><h3>현업 적용 상담</h3><p>무료 방문 상담을 통해 교육 대상, 일정, 산출물, 적용 과제를 구체화합니다.</p></li>
+    </ol>
+  </div>
+  <div class="flow-cta"><a class="btn solid" href="https://www.bxcon.co.kr/sales-training/diagnostic/start/" target="_blank" rel="noopener">셀프 진단 시작</a><a class="btn" href="https://www.bxcon.co.kr/sales-training/programs/" target="_blank" rel="noopener">교육 과정 보기</a></div>
+</section>
+
+<!-- S3-2 수행사례 (홈페이지 원문·이미지) -->
+<section class="cases pad" id="cases" aria-labelledby="casesTitle">
+  <div class="sec-head"><h2 class="h2 split reveal" id="casesTitle">수행사례</h2><a class="link-more" href="https://www.bxcon.co.kr/portfolio/" target="_blank" rel="noopener">전체 수행사례 보기 ↗</a></div>
+  <div class="cases-grid">
+    <a class="case fx-up featured" href="https://www.bxcon.co.kr/portfolio/fm-서비스-품질-모니터링-조사-및-고객만족도-조사/" target="_blank" rel="noopener"><div class="case-img"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/portfolio/20261001/fm-service-quality-hero.webp?width=1200&quality=78&resize=contain" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">Featured case</span><h3>FM 서비스 품질 모니터링 조사 및 고객만족도 조사</h3><p>리서치 관점에서 대규모 건물관리 점검 방법 부재 문제를 해결하기 위해 구조화된 점검표에 의한 모니터링 조사 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case fx-up" href="https://www.bxcon.co.kr/portfolio/고객사-고유-분석을-반영한-커스텀-ai-챗봇-제작/" target="_blank" rel="noopener"><div class="case-img"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/portfolio/20261001/custom-ai-chatbot-hero.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">2026-04-03</span><h3>고객사 고유 분석을 반영한 커스텀 AI 챗봇 제작</h3><p>AI 관점에서 모바일앱(MTS) 사용자 경험 강화를 위한 혁신적인 접근 방안 부재 문제를 해결하기 위해 RFP 이전부터 기술적 요구사항 정리 및 제안 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case fx-up" href="https://www.bxcon.co.kr/portfolio/사내-erp-연동-자연어-검색-text-to-sql-ai-도입/" target="_blank" rel="noopener"><div class="case-img"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/portfolio/20261001/erp-natural-language-hero.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">2026-04-03</span><h3>사내 ERP 연동 자연어 검색(Text-to-SQL) AI 도입</h3><p>AI 관점에서 사내 ERP 시스템에서 고객 및 제품 정보를 검색하고 활용하는 데 많은 시간과 노력 소요 문제를 해결하기 위해 사내 ERP의 고객 및 제품 정보를 자연어로 즉시 검색할 수 있는 데이터 분석 기반 AI 도입 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+  </div>
+</section>
+
+<!-- S3-3 인사이트 (홈페이지 레터·기획조사·보도자료 원문) -->
+<section class="insight pad" id="insight" aria-labelledby="insTitle">
+  <div class="sec-head"><h2 class="h2 split reveal" id="insTitle">인사이트</h2></div>
+  <ul class="ins-list">
+    <li class="ins fx-up"><div class="ins-type"><b>레터</b><a href="https://www.bxcon.co.kr/insight/" target="_blank" rel="noopener">레터 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener"><h3>챗봇의 함정: 고객 등급이 높을수록 챗봇에 대한 거부감도 커진다</h3><p>상위 고객일수록 챗봇의 획일적 응대에 민감하므로, 고객 가치에 따른 차별화된 서비스 설계가 필요합니다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/content-images/2026/10/13067a72-fac8-4b46-b3f3-0bc8262ff604-premium-customer-chatbot-rejection_upload.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>기획조사</b><a href="https://www.bxcon.co.kr/report/" target="_blank" rel="noopener">기획조사 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener"><h3>‘조용한 사직’의 두 얼굴, ‘선 긋기’ 아닌 ‘적당히’가 이탈 신호</h3><p>전국 직장인 3,000명 조사에서 조용한 사직은 경계 설정과 노력 철회로 나뉘었다. 경계 설정은 직무만족·성과와 함께 높아졌고, 노력 철회 상위 집단의 절반은 이직을 고려했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/reports/20261012-brand/quiet-quitting-hero.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>보도자료</b><a href="https://www.bxcon.co.kr/press/" target="_blank" rel="noopener">보도자료 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener"><h3>가족 같은 회사는 그만… 직장인은 ‘프로 팀’을 원한다</h3><p>직장인이 선호하는 조직 문화가 ‘가족 같은 회사’에서 ‘프로 팀’으로 이동하고 있는 것으로 나타났다. 상사와의 관계보다 동료와의 협업, 과도한 친밀감보다 역할과 성과 중심의 관계를 중시하는 경향이 뚜렷했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/press/legacy/9/hero.png?width=960&quality=78&resize=contain" alt="" loading="lazy"></a></li>
+  </ul>
+</section>
+
+<!-- S4 COVERAGE : 전국 거점 (홈페이지 원문) -->
+<section class="coverage pad" id="coverage" aria-labelledby="covTitle">
+  <h2 class="h2 split reveal" id="covTitle">서울·대전·부산을 거점으로,<br> 전국 어디서나 가까이 빠르게</h2>
+  <p class="lead">서울 본사와 대전·부산 지사가 하나의 실행 네트워크로 움직입니다. 수도권부터 충청권, 영남권까지 현장 진단과 실행 지원을 빠르게 이어갑니다.</p>
+  <div class="stats">
+    <div class="stat"><div class="n"><span class="count" data-to="3">0</span></div><p class="l" lang="en">Business hubs</p></div>
+    <div class="stat"><div class="n">전국</div><p class="l" lang="en">Field coverage</p></div>
+    <div class="stat"><div class="n">현장</div><p class="l" lang="en">Execution support</p></div>
+  </div>
+  <ul class="hubs">
+    <li><b>서울</b><span>전략 총괄</span></li>
+    <li><b>대전</b><span>중부권 업무지원</span></li>
+    <li><b>부산</b><span>남부권 실행지원</span></li>
+  </ul>
+</section>
+
+<!-- S5 CLIENTS : 두 줄 로고 마키 (홈페이지 고객 레퍼런스와 같은 로고·같은 방식) -->
+<section class="clients" id="clients" aria-labelledby="clientsTitle">
+  <div class="clients-head pad">
+    <h2 class="h2 split reveal" id="clientsTitle">실제 프로젝트로 축적한<br> 고객 레퍼런스</h2>
+  </div>
+  <div class="mq"><div class="mq-track" id="mqA" style="--d:56s"></div></div>
+  <div class="mq"><div class="mq-track rev" id="mqB" style="--d:64s"></div></div>
+</section>
+
+<!-- CTA (홈페이지 CONTACT US 원문) -->
+<section class="cta" id="cta" aria-labelledby="ctaTitle">
+  <div class="bars" aria-hidden="true"></div>
+  <h2 class="split reveal" id="ctaTitle">지금 풀어야 할 과제를 함께 구조화하고<br> 실행 가능한 계획으로 바꿔보세요.</h2>
+  <div class="cta-row"><a class="btn solid" href="#cta" data-planned>프로젝트 문의</a><a class="btn" href="mailto:contact@bxcon.co.kr">contact@bxcon.co.kr</a></div>
+</section>
+
+</main>
+
+<footer class="pad">
+  <address><p class="tagline">경험을 전략으로 번역하고, 전략을 실행 가능한 구조로 만드는 컨설팅 파트너입니다.</p>대표 박준호<br>서울특별시 송파구 중대로 121, 2층(가락동, 롯데캐슬파인힐)<br>Tel 02-2152-3937 / Fax 02-538-6996 / Email contact@bxcon.co.kr</address>
+  <small>© Copyright (C) BX CONSULTING. All Rights Reserved.</small>
+</footer>
+
+<div class="proto-tag">PROTOTYPE, 기획 검토용</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (reduce) document.documentElement.classList.add('reduced');
+gsap.registerPlugin(ScrollTrigger);
+
+// 부드러운 스크롤 (벤치마크와 동일한 Lenis + ScrollTrigger 연동)
+let lenis = null;
+if (!reduce && window.Lenis) {
+  lenis = new Lenis({ lerp: 0.09 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+
+// 모바일 메뉴
+const menuBtn = document.querySelector('.menu-btn'), gnav = document.getElementById('gnav');
+const setMenu = open => { gnav.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); menuBtn.textContent = open ? '닫기' : '메뉴'; };
+menuBtn.addEventListener('click', () => setMenu(!gnav.classList.contains('open')));
+gnav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && gnav.classList.contains('open')) { setMenu(false); menuBtn.focus(); } });
+matchMedia('(min-width: 769px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
+
+// 아직 없는 상세 페이지는 이동 대신 안내
+const toast = document.getElementById('toast'); let tt;
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[data-planned]'); if (!a) return;
+  e.preventDefault();
+  toast.textContent = '실제 사이트에서는 여기서 프로젝트 문의 창이 열립니다.';
+  toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2400);
+});
+
+// 글자 단위 분리 (SplitText 대체). 스크린리더에는 원문만 읽히도록 조각은 숨긴다.
+function splitChars(el) {
+  const label = el.textContent.replace(/\s+/g, ' ').trim();
+  const chars = [];
+  const walk = node => {
+    [...node.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+          [...part].forEach(c => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = c; w.appendChild(s); chars.push(s); });
+          frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+    });
+  };
+  walk(el);
+  const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = label; el.prepend(sr);
+  return chars;
+}
+const splits = new Map();
+document.querySelectorAll('.split').forEach(el => splits.set(el, splitChars(el)));
+
+ScrollTrigger.create({ start: 'top -80', end: 'max', toggleClass: { targets: 'header', className: 'scrolled' } });
+
+/* ---------- S5 고객 로고 마키 ---------- */
+// 홈페이지(bxcon.co.kr) 고객 레퍼런스와 같은 로고 49개. 홈페이지가 쓰는 공개 이미지 주소를 그대로 사용한다
+const LOGO_BASE = 'https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/object/public/site-media/client-logos/';
+const LOGOS = [
+  ['folder-import/2026/04/001-47d8cf97-55ab-4f35-8c3c-256267fa8f36-client-logo.webp', '강원도'],
+  ['folder-import/2026/04/002-5c249f78-119a-4832-981d-1cb3f13b8f6c-client-logo.webp', '강원랜드'],
+  ['folder-import/2026/04/003-8549258f-03ce-489b-ab36-7c7c5951ba1a-client-logo.webp', '공항철도'],
+  ['folder-import/2026/04/004-da595958-7a51-4141-af80-4714549ae6f8-client-logo.webp', '기아자동차'],
+  ['2026/05/2255eaa8-7b29-44c8-90b6-0de7737e47e5-image.webp', '노루페인트'],
+  ['folder-import/2026/04/006-8bef0242-c892-4061-a4f4-8b85c68ef96f-client-logo.webp', '대명리조트'],
+  ['folder-import/2026/04/007-ddd8d641-537d-485c-b429-6082e8a7e281-client-logo.webp', '대상주식회사'],
+  ['folder-import/2026/04/008-c6a560ab-6198-4a24-88e0-13d634421b96-client-logo.webp', '더클래스효성'],
+  ['folder-import/2026/04/009-4ddf0820-cd1b-44bf-ad54-432f4209dee8-client-logo.webp', '동아오츠카'],
+  ['folder-import/2026/04/010-eaeb8bac-8aca-4920-9df7-35eecf69a82c-client-logo.webp', '디오션리조트'],
+  ['2026/05/4681323d-9a10-409c-80ba-d87b5f67666f-image.webp', '르노코리아자동차'],
+  ['folder-import/2026/04/012-94d1c57e-2e42-4d3f-a559-cf19aca601a4-client-logo.webp', '미디어윌'],
+  ['folder-import/2026/04/013-24b07d6f-9ba1-43e8-b446-b9d5dd5bcfeb-client-logo.webp', '미래에셋증권'],
+  ['folder-import/2026/04/014-f7d18bae-114f-4730-a6ff-9beeac2f5474-client-logo.webp', '바이드뮬러코리아'],
+  ['folder-import/2026/04/015-d0b34290-8997-49f4-9d90-113b8c8c72b6-client-logo.webp', '반얀트리'],
+  ['folder-import/2026/04/016-c8040b70-76c1-4b6b-8861-5f4756b9db35-client-logo.webp', '부산디자인센터'],
+  ['folder-import/2026/04/017-bf86a3c0-67ae-4bf0-86e7-be5e856c656b-client-logo.webp', '삼성전자'],
+  ['folder-import/2026/04/018-3891499a-0fc5-4e5b-a9d9-f662f0925f1e-client-logo.webp', '서울관광재단'],
+  ['folder-import/2026/04/019-89823b95-bb8d-438b-8320-717ba437a8a9-client-logo.webp', '수협은행'],
+  ['folder-import/2026/04/020-c3062aa9-0bfd-4d11-a129-b3c27c6b9c76-client-logo.webp', '순천시'],
+  ['folder-import/2026/04/021-1bc5e2aa-11c1-4b7e-bd65-95df331184f4-client-logo.webp', '신한은행'],
+  ['folder-import/2026/04/022-62fae2c2-284b-47fe-aff8-10bd888ab015-client-logo.webp', '아모스프로페셔널'],
+  ['folder-import/2026/04/023-158fd956-6a11-4113-96f1-010cf23148fd-client-logo.webp', '에스원'],
+  ['folder-import/2026/04/024-454c9721-037b-4280-954b-8a70d69c432c-client-logo.webp', '엘지유플러스'],
+  ['folder-import/2026/04/025-4b09abcc-6e5a-495b-9d6b-10a7072176da-client-logo.webp', '우리은행'],
+  ['folder-import/2026/04/026-526ac331-99f4-4f95-bca8-e0bd475d0e66-client-logo.webp', '워커힐호텔앤리조트'],
+  ['folder-import/2026/04/027-3d781b5e-c663-4274-bb8b-ff9a84396baf-client-logo.webp', '유진투자증권'],
+  ['2026/05/c1f88bc5-788e-4858-865a-0b3299221fb4-fc.webp', '이랜드FC'],
+  ['folder-import/2026/04/029-ba00234f-fbc3-4f61-92a1-1f8a8067d6ad-client-logo.webp', '인천공항'],
+  ['folder-import/2026/04/030-85b1855e-c428-4e96-8316-9cea6970280d-client-logo.webp', '전남드래곤즈'],
+  ['folder-import/2026/04/031-fe738833-689d-4f1a-8ee8-3d984e3a1590-client-logo.webp', '코레일'],
+  ['folder-import/2026/04/032-a2133399-214d-45df-9533-6f9072db3f30-client-logo.webp', '팜스코'],
+  ['folder-import/2026/04/033-c492dc20-adb6-4c8b-bc74-ca1207074a15-client-logo.webp', '하나은행'],
+  ['folder-import/2026/04/034-89afb3e8-6ea1-4cd0-8a6b-59b483207f92-client-logo.webp', '한국공항공사'],
+  ['folder-import/2026/04/035-727c34ad-c864-46c9-8f3d-1e66a68b3f9f-gm.webp', '한국GM'],
+  ['folder-import/2026/04/036-8f1bb311-a4ea-49b3-953e-71f8b453ce5c-client-logo.webp', '현대엘리베이터서비스'],
+  ['folder-import/2026/04/037-8885f513-41e7-4dac-9dfe-42a8d23d7318-client-logo.webp', '현대자동차'],
+  ['folder-import/2026/04/038-c96b72d9-68e8-49c8-80c9-ad5f40052388-client-logo.webp', '휘닉스호텔앤리조트'],
+  ['folder-import/2026/04/039-f60afa67-14a2-4774-9f44-7a4c25459632-bgf.webp', 'BGF리테일'],
+  ['folder-import/2026/04/040-361b11ec-9194-4b8e-97b8-868f2bcded6c-bmw.webp', 'BMW'],
+  ['folder-import/2026/04/041-364bd899-ef1f-43b5-a63e-2df6beacb9ca-ibk.webp', 'IBK기업은행'],
+  ['folder-import/2026/04/042-c3cf2a11-7c7d-43e8-b978-d534a63ab9bb-kb.webp', 'KB국민은행'],
+  ['2026/05/d467ff30-87d5-4540-97be-8c868614c6da-kb.webp', 'KB리브모바일'],
+  ['folder-import/2026/04/044-3400be37-b274-47f5-97b8-0cb173e639ef-kb.webp', 'KB증권'],
+  ['folder-import/2026/04/045-ff2b8d74-ce71-4a20-8a82-6e8851b47d48-ktestate.webp', 'KTestate'],
+  ['folder-import/2026/04/046-0faaa037-51e6-4de5-a3d5-a78babff9048-lg.webp', 'LG전자'],
+  ['folder-import/2026/04/047-7d9c7b2e-c7f5-4b34-a9ce-592859026872-ls.webp', 'LS엠트론'],
+  ['folder-import/2026/04/048-088d97f4-efbf-4217-8525-9dd35ae11c38-nh.webp', 'NH투자증권'],
+  ['folder-import/2026/04/049-2ac51173-7894-4886-9a4e-b670ac30a9b0-nice.webp', 'NICE그룹']
+];
+// 홈페이지와 같이 첫 줄 25개, 둘째 줄 24개. 같은 묶음을 두 번 이어 붙여 끊김 없이 돈다(두 번째 묶음은 보조기기에서 숨김)
+function fillTrack(el, list) {
+  [false, true].forEach(dup => {
+    const set = document.createElement('div'); set.className = 'mq-set';
+    if (dup) set.setAttribute('aria-hidden', 'true');
+    list.forEach(([f, name]) => {
+      const tile = document.createElement('div'); tile.className = 'logo-tile';
+      const img = document.createElement('img');
+      img.src = LOGO_BASE + f; img.alt = dup ? '' : name + ' 로고'; img.loading = 'lazy'; img.decoding = 'async';
+      img.width = 136; img.height = 44;
+      tile.appendChild(img); set.appendChild(tile);
+    });
+    el.appendChild(set);
+  });
+}
+fillTrack(document.getElementById('mqA'), LOGOS.slice(0, 25));
+fillTrack(document.getElementById('mqB'), LOGOS.slice(25));
+/* ---------- S1 빛줄기 캔버스 ---------- */
+const BIZ = ['경영전략', '영업·마케팅', '고객경험', '인사조직', '리서치', '시스템', 'AI'];
+const N = BIZ.length;
+const cv = document.getElementById('lines'), ctx = cv.getContext('2d');
+const S = { intro: 0, split: 0, fade: 1, labelIn: 0 };
+const floatBox = document.getElementById('floatLabels'), laneBox = document.getElementById('laneLabels');
+const floats = BIZ.map(t => { const d = document.createElement('div'); d.className = 'float-label'; d.textContent = t; floatBox.appendChild(d); return d; });
+const lanes = BIZ.map((t, i) => { const d = document.createElement('div'); d.className = 'lane-label'; d.innerHTML = `<small>0${i + 1}</small><span>${t.replace('&', '&amp;')}</span>`; laneBox.appendChild(d); return d; });
+const COLORS = ['61,114,240', '90,139,255', '124,200,255', '106,92,255'];
+// 줄기 그라데이션은 색마다 한 번만 만들어 두고 매 프레임 늘려서 그린다 (프레임당 그라데이션 생성 제거)
+const strips = COLORS.map(c => {
+  const k = document.createElement('canvas'); k.width = 1; k.height = 64;
+  const x = k.getContext('2d'), g = x.createLinearGradient(0, 0, 0, 64);
+  g.addColorStop(0, `rgba(${c},0)`); g.addColorStop(0.25, `rgba(${c},1)`);
+  g.addColorStop(0.75, `rgba(${c},1)`); g.addColorStop(1, `rgba(${c},.15)`);
+  x.fillStyle = g; x.fillRect(0, 0, 1, 64); return k;
+});
+let W, H, segs = [], floatIdx = [];
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+function build() {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  W = cv.clientWidth || innerWidth; H = cv.clientHeight || innerHeight;
+  if (W < 10 || H < 10) { segs = []; return; }
+  cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // 'BX' 글자를 오프스크린에 그려 세로 줄 단위로 샘플링 → 브로셔 표지의 줄무늬 BX
+  const ow = Math.round(Math.min(W * (narrowHero() ? 0.8 : 0.56), 760)), oh = Math.round(ow * 0.46);
+  const off = document.createElement('canvas'); off.width = ow; off.height = oh;
+  const o = off.getContext('2d');
+  o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle';
+  o.font = `900 ${Math.round(oh * 1.12)}px Pretendard, 'Arial Black', sans-serif`;
+  o.fillText('BX', ow / 2, oh / 2 + oh * 0.04);
+  const data = o.getImageData(0, 0, ow, oh).data;
+  const step = Math.max(5, Math.round(ow / 110));
+  const ox = (W - ow) / 2, oy = H * 0.36 - oh / 2;
+  segs = [];
+  for (let x = 0; x < ow; x += step) {
+    let run = false, st = 0;
+    for (let y = 0; y <= oh; y++) {
+      const on = y < oh && data[(y * ow + x) * 4 + 3] > 128;
+      if (on && !run) { run = true; st = y; }
+      else if (!on && run) { run = false; if (y - st > 3) segs.push({ bx: ox + x, by1: oy + st, by2: oy + y }); }
+    }
+  }
+  // 서비스 묶음 폭은 가장 긴 사업명 라벨이 들어갈 만큼, 칸 폭 안에서 모두 같게 맞춘다
+  const n = segs.length, cell = narrowHero() ? W * 0.96 / 4 : W * 0.8 / N;
+  const maxLabel = Math.max(...lanes.map(l => l.querySelector('span').offsetWidth));
+  const laneW = clamp(maxLabel + 24, Math.min(cell * 0.5, 60), cell * 0.94);
+  const perLane = Array(N).fill(0), laneCount = Array(N).fill(0);
+  segs.forEach((s, i) => { s.lane = Math.min(N - 1, Math.floor(i / n * N)); laneCount[s.lane]++; });
+  segs.forEach((s, i) => {
+    const len = 40 + Math.random() * H * 0.45;
+    s.sx = Math.random() * W; s.sy1 = Math.random() * (H - len); s.sy2 = s.sy1 + len;
+    const k = perLane[s.lane]++, L = laneLayout(s.lane), jitter = 0.12 * (L.b - L.t) / 0.8;
+    s.lx = L.cx + (k / Math.max(1, laneCount[s.lane] - 1) - 0.5) * laneW;
+    s.ly1 = H * (L.t + Math.random() * jitter); s.ly2 = H * (L.b - Math.random() * jitter);
+    s.d = Math.random() * 0.4; s.d2 = s.lane * 0.05 + Math.random() * 0.1;
+    s.a = 0.35 + Math.random() * 0.65; s.ci = i % COLORS.length;
+    s.p = Math.random() < 0.3; s.v = 0.15 + Math.random() * 0.35; s.o = Math.random(); s.ph = Math.random() * 6.28;
+    s.w = step * 0.5;
+  });
+  // 흩어진 상태에서 사업명을 달고 다닐 줄기 6개
+  floatIdx = BIZ.map((_, k) => {
+    const i = Math.floor((k + 0.5) / N * n), s = segs[i];
+    s.sx = W * (0.08 + 0.84 * (k + 0.5) / N) + (Math.random() - 0.5) * 30;
+    s.sy1 = H * (0.2 + Math.random() * 0.3); s.sy2 = s.sy1 + H * 0.25; s.a = 1;
+    return i;
+  });
+  placeLanes();
+}
+// 서비스 묶음의 위치. 넓은 화면은 한 줄, 좁은 화면은 4개 + 3개 두 줄
+function narrowHero() { return W < 640; }
+function laneLayout(i) {
+  if (narrowHero()) {
+    const colGap = W * 0.96 / 4, row = i < 4 ? 0 : 1, c = row ? i - 4 : i;
+    return { cx: W * 0.02 + colGap * (c + 0.5) + (row ? colGap / 2 : 0), t: row ? 0.55 : 0.15, b: row ? 0.87 : 0.47 };
+  }
+  return { cx: W * 0.1 + W * 0.8 / N * (i + 0.5), t: 0.1, b: 0.9 };
+}
+// 사업명 라벨은 각 묶음의 정중앙에 맞춘다 (현재 캔버스 크기 기준)
+function placeLanes() {
+  lanes.forEach((el, i) => {
+    const L = laneLayout(i);
+    el.style.left = L.cx + 'px';
+    el.style.top = ((L.t + L.b) / 2 * H) + 'px';
+  });
+}
+
+let heroVisible = true;
+new IntersectionObserver(e => heroVisible = e[0].isIntersecting).observe(document.querySelector('.hero'));
+
+function draw() {
+  if (!heroVisible && !reduce) return;
+  const time = performance.now() / 1000;
+  ctx.clearRect(0, 0, W, H);
+  segs.forEach(s => {
+    const ti = ease(clamp((S.intro * 1.4 - s.d)));
+    const ts = ease(clamp((S.split * 1.5 - s.d2)));
+    const drift = Math.sin(time * 0.6 + s.ph) * 18 * (1 - ti);
+    const x = lerp(lerp(s.sx + drift, s.bx, ti), s.lx, ts);
+    const y1 = lerp(lerp(s.sy1, s.by1, ti), s.ly1, ts);
+    const y2 = lerp(lerp(s.sy2, s.by2, ti), s.ly2, ts);
+    const a = lerp(0.3, s.a, ti) * S.fade;
+    const w = lerp(lerp(1, s.w, ti), 1.4, ts);
+    ctx.globalAlpha = a;
+    ctx.drawImage(strips[s.ci], 0, 0, 1, 64, x - w / 2, y1, w, y2 - y1);
+    ctx.globalAlpha = 1;
+    if (s.p && !reduce) { // 줄기를 타고 흐르는 빛 입자
+      const py = y1 + ((time * s.v + s.o) % 1) * (y2 - y1);
+      ctx.fillStyle = `rgba(200,235,255,${0.85 * S.fade})`;
+      ctx.beginPath(); ctx.arc(x, py, 1.6, 0, 6.28); ctx.fill();
+    }
+  });
+  const fo = clamp(1 - S.intro * 2.2) * S.labelIn;
+  floats.forEach((el, k) => {
+    const s = segs[floatIdx[k]]; if (!s) return;
+    const x = s.sx + Math.sin(time * 0.6 + s.ph) * 18;
+    el.style.transform = `translate(${x}px,${s.sy1}px) translate(-50%,-150%)`;
+    el.style.opacity = fo;
+  });
+}
+
+// 창 크기뿐 아니라 영역 크기 변화(패널 조절 등)도 감지해서 다시 계산
+let rt, lastW = 0, lastH = 0;
+new ResizeObserver(() => {
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if (w === lastW && h === lastH) return;
+  lastW = w; lastH = h;
+  clearTimeout(rt);
+  rt = setTimeout(() => { build(); ScrollTrigger.refresh(); if (reduce) draw(); }, 120);
+}).observe(cv);
+
+/* ---------- S1 히어로 문구 3장 순환 (홈페이지 히어로와 같은 3개 문구) ---------- */
+// 5초마다 다음 문구로. 마우스를 올리거나 키보드 포커스가 있으면 멈춘다.
+// 동작 줄이기 설정에서는 자동으로 넘기지 않고 점 버튼으로만 바꾼다.
+const slider = (() => {
+  const box = document.querySelector('.hero-copy');
+  const slides = [...document.querySelectorAll('.slide')], dots = [...document.querySelectorAll('.slide-dot')];
+  const chars = el => splits.get(el.querySelector('.slide-title'));
+  const sub = el => el.querySelector('.hero-sub');
+  let cur = 0, timer = null, auto = !reduce, hold = false, started = false;
+  slides.forEach((sl, i) => { if (i) gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); });
+
+  function show(n) {
+    if (n === cur) return;
+    const out = slides[cur], inn = slides[n];
+    slides.forEach((sl, i) => {
+      gsap.killTweensOf([...chars(sl), sub(sl)]);
+      if (sl !== out && sl !== inn) { sl.classList.remove('is-active'); gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); }
+      sl.setAttribute('aria-hidden', i === n ? 'false' : 'true');
+    });
+    inn.classList.add('is-active');
+    if (reduce) {
+      out.classList.remove('is-active');
+      gsap.set([...chars(out), sub(out)], { opacity: 0 });
+      gsap.set([...chars(inn), sub(inn)], { opacity: 1, yPercent: 0, y: 0 });
+    } else {
+      gsap.to(chars(out), { opacity: 0, yPercent: -60, stagger: 0.012, duration: 0.35, ease: 'power2.in' });
+      gsap.to(sub(out), { opacity: 0, duration: 0.3, onComplete: () => { if (cur !== slides.indexOf(out)) out.classList.remove('is-active'); } });
+      gsap.fromTo(chars(inn), { opacity: 0, yPercent: 80 }, { opacity: 1, yPercent: 0, stagger: 0.03, duration: 0.6, ease: 'power3.out', delay: 0.25 });
+      gsap.fromTo(sub(inn), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.5 });
+    }
+    dots.forEach((d, i) => d.setAttribute('aria-current', i === n ? 'true' : 'false'));
+    cur = n;
+  }
+  function schedule() {
+    clearTimeout(timer);
+    if (!started || !auto || hold) return;
+    timer = setTimeout(() => {
+      if (heroVisible && !document.hidden) show((cur + 1) % slides.length);
+      schedule();
+    }, 5000);
+  }
+  dots.forEach((d, i) => d.addEventListener('click', () => { show(i); schedule(); }));
+  const setHold = v => { hold = v; schedule(); };
+  box.addEventListener('mouseenter', () => setHold(true));
+  box.addEventListener('mouseleave', () => setHold(box.contains(document.activeElement)));
+  box.addEventListener('focusin', () => setHold(true));
+  box.addEventListener('focusout', e => { if (!box.contains(e.relatedTarget)) setHold(false); });
+  return { start() { started = true; schedule(); } };
+})();
+
+/* ---------- 실행 ---------- */
+document.fonts.load('900 100px Pretendard').catch(() => {}).finally(() => {
+  build();
+  if (reduce) {
+    S.intro = 1; draw();
+    document.querySelectorAll('.node').forEach(n => n.style.setProperty('--k', 1));
+    document.getElementById('flowPath').style.strokeDashoffset = 0;
+    document.querySelectorAll('.count').forEach(c => c.textContent = c.dataset.to);
+    return;
+  }
+  gsap.ticker.add(draw);
+  initMotion();
+});
+
+function initMotion() {
+  // 인트로: 흩어진 줄기(사업명) → BX 수렴 → 슬로건 글자 등장
+  const heroChars = splits.get(document.querySelector('.slide.is-active .slide-title'));
+  gsap.set(heroChars, { opacity: 0 });
+  gsap.set(['.slide.is-active .hero-sub', '.hero-cta', '.slide-ctrl'], { opacity: 0, y: 12 });
+  lenis && lenis.stop();
+  const intro = gsap.timeline({ delay: 0.3, onComplete: () => { lenis && lenis.start(); slider.start(); } });
+  intro.to(S, { labelIn: 1, duration: 0.8 })
+    .to(S, { intro: 1, duration: 2.4, ease: 'power2.inOut' }, '+=0.7')
+    .fromTo(heroChars, { opacity: 0, yPercent: 80 }, { opacity: 1, yPercent: 0, stagger: 0.04, duration: 0.7, ease: 'power3.out' }, '-=0.5')
+    .to(['.slide.is-active .hero-sub', '.hero-cta', '.slide-ctrl'], { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+  // 인트로 도중 스크롤하면 바로 완료 상태로 건너뛰기
+  const skip = () => { if (intro.isActive()) intro.progress(1); };
+  ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, skip, { once: true, passive: true }));
+
+  // 히어로 고정 → 스크롤하면 BX가 7개 서비스로 풀림
+  gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=160%', pin: true, scrub: 0.6 } })
+    .to('.hero-copy', { yPercent: -40, opacity: 0, duration: 0.3 }, 0)
+    .to(S, { split: 1, duration: 0.6, ease: 'none' }, 0.1)
+    .to(lanes, { opacity: 1, stagger: 0.04, duration: 0.15 }, 0.45)
+    .to(lanes, { opacity: 0, y: -20, duration: 0.12 }, 0.88)
+    .to(S, { fade: 0.15, duration: 0.15 }, 0.85);
+
+  // 섹션 제목 글자 등장
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.from(splits.get(el), { opacity: 0, yPercent: 60, stagger: 0.02, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 82%' } });
+  });
+
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 769px)', () => {
+    // S2: 섹션 고정 + 카드 가로 이동
+    const biz = document.querySelector('.biz');
+    const track = document.querySelector('.track');
+    const dist = () => track.scrollWidth - innerWidth;
+    const hz = gsap.to(track, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '.biz', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true } });
+    gsap.utils.toArray('.card').forEach(c => {
+      gsap.from(c.querySelector('.stripes'), { scaleY: 0, transformOrigin: 'top', ease: 'none', scrollTrigger: { trigger: c, containerAnimation: hz, start: 'left 100%', end: 'left 65%', scrub: true } });
+    });
+    // 키보드로 화면 밖 카드의 링크에 포커스가 가면, 그 카드가 보이는 위치로 스크롤을 옮긴다
+    const onFocus = e => {
+      const reset = () => { biz.scrollLeft = 0; };
+      reset(); requestAnimationFrame(reset);
+      const card = e.target.closest('.card'); if (!card) return;
+      const st = hz.scrollTrigger, d = dist(); if (d <= 0) return;
+      const x = Math.max(0, card.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft));
+      const y = st.start + Math.min(1, x / d) * (st.end - st.start);
+      lenis ? lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y);
+    };
+    track.addEventListener('focusin', onFocus);
+    // S3: 고정 + 선이 4단계를 차례로 연결
+    // S3: 선이 그려지는 양(p)을 하나의 값으로 두고, 선 끝점과 각 단계의 켜짐 정도를 모두 거기서 계산한다.
+    // 스크롤을 올리면 같은 값이 거꾸로 줄어들어 볼륨바처럼 연속으로 오르내린다.
+    const nodes = gsap.utils.toArray('.node');
+    const flowPath = document.getElementById('flowPath'), flowHead = document.getElementById('flowHead');
+    const flowLen = flowPath.getTotalLength(), flowDraw = { p: 0 };
+    const smooth = t => t * t * (3 - 2 * t);
+    // 각 단계가 선 위 어디(길이 비율)에 있는지 미리 구해 둔다
+    const nodeF = nodes.map((_, i) => {
+      const tx = (i + 0.5) / 4 * 1000; let lo = 0, hi = flowLen;
+      for (let k = 0; k < 24; k++) { const m = (lo + hi) / 2; if (flowPath.getPointAtLength(m).x < tx) lo = m; else hi = m; }
+      return lo / flowLen;
+    });
+    const renderFlow = () => {
+      const p = flowDraw.p, pt = flowPath.getPointAtLength(p * flowLen);
+      flowPath.setAttribute('stroke-dashoffset', (1 - p).toFixed(4));
+      flowHead.setAttribute('cx', pt.x.toFixed(2)); flowHead.setAttribute('cy', pt.y.toFixed(2));
+      flowHead.setAttribute('opacity', clamp(Math.min(p, 1 - p) / 0.03).toFixed(3));
+      nodes.forEach((n, i) => n.style.setProperty('--k', smooth(clamp((p - (nodeF[i] - 0.12)) / 0.12)).toFixed(3)));
+    };
+    gsap.timeline({ scrollTrigger: { trigger: '.flow', start: 'top top', end: '+=180%', pin: true, scrub: 0.8 } })
+      .to(flowDraw, { p: 1, ease: 'none', duration: 0.85, onUpdate: renderFlow })
+      .to({}, { duration: 0.15 });
+    renderFlow();
+    return () => track.removeEventListener('focusin', onFocus);
+  });
+  mm.add('(max-width: 768px)', () => {
+    gsap.utils.toArray('.card').forEach(c => gsap.from(c, { opacity: 0, y: 40, duration: 0.6, scrollTrigger: { trigger: c, start: 'top 88%' } }));
+    gsap.utils.toArray('.node').forEach(n => ScrollTrigger.create({ trigger: n, start: 'top 88%', end: 'top 55%', scrub: true, onUpdate: self => n.style.setProperty('--k', self.progress.toFixed(3)) }));
+  });
+
+  // 새 섹션 공통: 화면에 들어올 때 아래에서 올라오며 나타남
+  gsap.set('.fx-up', { opacity: 0, y: 30 });
+  ScrollTrigger.batch('.fx-up', { start: 'top 88%', once: true, onEnter: els => gsap.to(els, { opacity: 1, y: 0, stagger: 0.12, duration: 0.7, ease: 'power3.out' }) });
+  // CRM 예시 화면: 스크롤에 맞춰 살짝 아래에서 떠오름 (제품 화면을 보여주는 순간을 강조)
+  gsap.from('.crm-shot', { y: 80, opacity: 0, scale: 0.96, ease: 'none', scrollTrigger: { trigger: '.crm', start: 'top 85%', end: 'center center', scrub: 0.6 } });
+
+  // S4: 숫자 카운트업
+  document.querySelectorAll('.count').forEach(el => {
+    const o = { v: 0 };
+    gsap.to(o, { v: +el.dataset.to, duration: 1.6, ease: 'power2.out', onUpdate: () => el.textContent = Math.round(o.v), scrollTrigger: { trigger: el, start: 'top 85%' } });
+  });
+
+  // CTA: 배경 줄무늬가 펼쳐짐
+  gsap.from('.cta .bars', { scaleX: 0.2, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'center center', scrub: true } });
+}
+})();
+</script>
+</body>
+</html>
