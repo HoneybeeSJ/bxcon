@@ -299,8 +299,40 @@ footer{border-top:1px solid var(--line);padding-top:28px;padding-bottom:28px;fon
 footer address{font-style:normal}
 footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
 
-/* 모바일 · 동작 줄이기: 고정·가로 이동 없이 세로로 모두 보이게 */
-@media (max-width:768px),(prefers-reduced-motion:reduce){
+.biz-nav{display:none}
+
+/* 모바일 모션: 랜딩은 PC처럼 고정 장면, 서비스 7개는 옆으로 넘기는 카드 */
+@media (max-width:768px) and (prefers-reduced-motion:no-preference){
+  .st-line{font-size:clamp(24px,6.6vw,34px);max-width:calc(100vw - 2 * var(--gut))}
+  .st-1{top:18%}
+  .st-2{top:34%}
+  .st-3{top:50%}
+  .st-lead{top:11%;width:calc(100vw - 2 * var(--gut))}
+  .st-lead h2{font-size:clamp(28px,7.4vw,38px)}
+  .st-lead p{font-size:15px;margin-top:10px}
+  .biz{height:auto;overflow:hidden;padding:12vh 0 8vh}
+  .biz-glow{right:-40%;width:120vw;top:38%}
+  .biz-stage{position:relative;display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 var(--gut);scroll-padding:0 var(--gut)}
+  .biz-stage::-webkit-scrollbar{display:none}
+  .chap{position:relative;inset:auto;flex:0 0 86%;scroll-snap-align:start;scroll-snap-stop:always;visibility:visible;opacity:1;grid-template-columns:1fr;align-content:start;gap:22px;padding:0;opacity:.35;transform:scale(.96);transform-origin:left center;transition:opacity .45s,transform .45s}
+  .chap.is-cur{opacity:1;transform:none}
+  .art-wrap{width:100%;justify-self:start;order:-1}
+  .chap h3{font-size:clamp(28px,7.6vw,38px);margin:8px 0 10px}
+  .chap p{font-size:15.5px}
+  .tags{margin:18px 0 22px}
+  .tags li{font-size:13px;padding:5px 12px}
+  .art-note{position:static;margin:14px var(--gut) 0}
+  .biz-prog{position:static;margin:22px var(--gut) 0}
+  .biz-nav{display:flex;align-items:center;gap:10px;margin:14px var(--gut) 0}
+  .biz-cnt{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--blue)}
+  .biz-cnt{margin-right:4px}
+  .biz-hint{font-size:13px;color:var(--mute);margin-left:4px}
+  .biz-nav .arrow{width:44px;height:44px}
+  .flow{min-height:0;padding-top:14vh}
+}
+
+/* 동작 줄이기: 고정·가로 이동 없이 세로로 모두 보이게 */
+@media (prefers-reduced-motion:reduce){
   .story{height:auto;min-height:0;padding:0 var(--gut) 12vh}
   .story #laneLabels{display:none}
   #storyCv{bottom:auto;height:100vh;height:100svh}
@@ -415,9 +447,11 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
     <article class="chap"><div class="chap-text"><span class="num">05 / 07</span><h3><span>리서치 솔루션</span></h3><p>시장과 고객의 목소리를 데이터로 확인하고 전략적 의사결정에 연결합니다.</p><ul class="tags"><li>시장 조사</li><li>고객 조사</li><li>인사이트 도출</li></ul><a class="btn" href="https://www.bxcon.co.kr/service/research/" target="_blank" rel="noopener" aria-label="리서치 솔루션 자세히 보기 (새 창)">자세히 보기 <span class="arr" aria-hidden="true">↗</span></a></div><div class="art-wrap" aria-hidden="true"><div class="art"><div class="gc" style="left:0em;top:0em;width:19em;height:20em"><div class="gi "><div class="lb">응답 분포</div><div class="pos"><svg viewBox="0 0 100 100" class="rg"><circle class="rt" cx="50" cy="50" r="34"/><circle class="rv dr seg1" data-len="0.43" cx="50" cy="50" r="34" style="transform:rotate(-90deg)"/><circle class="rv dr seg2" data-len="0.28" cx="50" cy="50" r="34" style="transform:rotate(72deg)"/><circle class="rv dr seg3" data-len="0.22" cx="50" cy="50" r="34" style="transform:rotate(173deg)"/></svg><div class="ctr sm2"><span class="cnt " data-to="1200" data-dec="0" data-pre="" data-suf="" data-comma="1">1,200</span><small>표본(명)</small></div></div></div></div><div class="gc" style="left:21em;top:0em;width:21em;height:20em"><div class="gi "><div class="lb">항목별 점수</div><div class="rw"><span>인지도</span><div class="bar"><i class="gx " style="width:72%"></i></div><b><span class="cnt " data-to="72" data-dec="0" data-pre="" data-suf="%" data-comma="0">72%</span></b></div><div class="rw"><span>호감도</span><div class="bar"><i class="gx " style="width:85%"></i></div><b><span class="cnt " data-to="85" data-dec="0" data-pre="" data-suf="%" data-comma="0">85%</span></b></div><div class="rw"><span>재방문</span><div class="bar"><i class="gx " style="width:68%"></i></div><b><span class="cnt " data-to="68" data-dec="0" data-pre="" data-suf="%" data-comma="0">68%</span></b></div><div class="rw"><span>추천</span><div class="bar"><i class="gx " style="width:79%"></i></div><b><span class="cnt " data-to="79" data-dec="0" data-pre="" data-suf="%" data-comma="0">79%</span></b></div></div></div><div class="gc" style="left:0em;top:22em;width:42em;height:12em"><div class="gi "><div class="lb">인사이트 도출</div><div class="pos"><svg viewBox="0 0 400 62" class="cht"><defs><linearGradient id="ar5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f7dff" stop-opacity=".4"/><stop offset="1" stop-color="#4f7dff" stop-opacity="0"/></linearGradient></defs><path class="fillp" d="M5 50C50 46 70 34 110 36S160 52 200 30 250 6 290 12 350 34 395 28V60H5Z" fill="url(#ar5)"/><path class="dr main" d="M5 50C50 46 70 34 110 36S160 52 200 30 250 6 290 12 350 34 395 28"/><circle class="pop ac" cx="262" cy="9" r="5"/><circle class="pop ring" cx="262" cy="9" r="12"/></svg><span class="tg pop" style="left:64%;top:.7em">핵심 인사이트</span></div></div></div></div></div></article>
     <article class="chap"><div class="chap-text"><span class="num">06 / 07</span><h3><span>시스템 솔루션</span></h3><p>업무 흐름과 데이터 관리를 표준화해 반복 가능한 운영 시스템을 만듭니다.</p><ul class="tags"><li>운영 설계</li><li>데이터 관리</li><li>업무 자동화</li></ul><a class="btn" href="https://www.bxcon.co.kr/service/system/" target="_blank" rel="noopener" aria-label="시스템 솔루션 자세히 보기 (새 창)">자세히 보기 <span class="arr" aria-hidden="true">↗</span></a></div><div class="art-wrap" aria-hidden="true"><div class="art"><svg class="abs" viewBox="0 0 420 100"><path class="dr main" id="fw" d="M90 40H110M200 40H220M310 40H330"/><circle class="fdot" r="3.4"><animateMotion dur="3s" repeatCount="indefinite" path="M20 40H400"/></circle><circle class="fdot" r="3.4"><animateMotion dur="3s" begin="1s" repeatCount="indefinite" path="M20 40H400"/></circle><circle class="fdot" r="3.4"><animateMotion dur="3s" begin="2s" repeatCount="indefinite" path="M20 40H400"/></circle></svg><div class="gc" style="left:0em;top:0em;width:9em;height:8em"><div class="gi tight"><div class="nd2"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg></span><small>업무 접수</small></div></div></div><div class="gc" style="left:11em;top:0em;width:9em;height:8em"><div class="gi tight"><div class="nd2"><span class="ico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><small>데이터 정리</small></div></div></div><div class="gc" style="left:22em;top:0em;width:9em;height:8em"><div class="gi tight"><div class="nd2"><span class="ico"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><small>자동 처리</small></div></div></div><div class="gc" style="left:33em;top:0em;width:9em;height:8em"><div class="gi tight"><div class="nd2"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></span><small>현황 확인</small></div></div></div><div class="gc" style="left:0em;top:11em;width:42em;height:23em"><div class="gi "><div class="lb">운영 현황<span class="sw"><i></i></span><small class="swl">자동화 ON</small></div><div class="kps"><div class="kp"><small>처리 건수</small><b><span class="cnt " data-to="128" data-dec="0" data-pre="" data-suf="건" data-comma="0">128건</span></b></div><div class="kp"><small>자동화율</small><b><span class="cnt " data-to="76" data-dec="0" data-pre="" data-suf="%" data-comma="0">76%</span></b></div><div class="kp"><small>대기</small><b><span class="cnt " data-to="4" data-dec="0" data-pre="" data-suf="건" data-comma="0">4건</span></b></div></div><div class="row"><span>주문 접수 정리</span><em class="pill ok">완료</em></div><div class="row"><span>고객 데이터 갱신</span><em class="pill ">진행</em></div><div class="row"><span>주간 보고 생성</span><em class="pill wait">대기</em></div></div></div></div></div></article>
     <article class="chap"><div class="chap-text"><span class="num">07 / 07</span><h3><span>인공지능 솔루션</span></h3><p>생성형 AI와 자동화 도구를 조직의 실제 업무 과정에 맞게 도입합니다.</p><ul class="tags"><li>AI 도입</li><li>업무 자동화</li><li>교육 설계</li></ul><a class="btn" href="https://www.bxcon.co.kr/service/ai/" target="_blank" rel="noopener" aria-label="인공지능 솔루션 자세히 보기 (새 창)">자세히 보기 <span class="arr" aria-hidden="true">↗</span></a></div><div class="art-wrap" aria-hidden="true"><div class="art"><div class="gc" style="left:0em;top:0em;width:25em;height:23em"><div class="gi "><div class="lb">AI 어시스턴트</div><div class="chat"><div class="msg u stp" data-at="0.08">이번 달 고객 문의 요약해줘</div><div class="rep"><div class="msg dots stp" data-at="0.2"><i></i><i></i><i></i></div><div class="msg a stp" data-at="0.4"><span class="rvt" data-at="0.4">문의 124건 중 배송 문의가 가장 많았습니다. 개선안 3가지를 정리했어요.</span></div></div></div></div></div><div class="gc" style="left:27em;top:0em;width:15em;height:13.5em"><div class="gi "><div class="lb">에이전트 작업</div><div class="row"><svg class="ck" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7"/><path class="dr" d="M4.5 8.2l2.5 2.5 4.5-5"/></svg><span>자료 수집</span></div><div class="row"><svg class="ck" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7"/><path class="dr" d="M4.5 8.2l2.5 2.5 4.5-5"/></svg><span>분석</span></div><div class="row"><span class=spin></span><span>보고서 작성</span></div><div class="bar sm3"><i class="gx" style="width:78%"></i></div></div></div><div class="gc" style="left:27em;top:15em;width:15em;height:8em"><div class="gi "><div class="lb">업무 시간</div><div class="big"><span class="cnt " data-to="42" data-dec="0" data-pre="-" data-suf="%" data-comma="0">-42%</span></div><div class="sm">자동화 도입 후</div></div></div><div class="gc" style="left:0em;top:25em;width:42em;height:9em"><div class="gi tight"><div class="pipe"><span class="chip">요청</span><svg viewBox="0 0 40 10"><path class="dr" d="M2 5H36M31 1l5 4-5 4"/></svg><span class="chip hot2">AI 에이전트<i class="pop spark"></i></span><svg viewBox="0 0 40 10"><path class="dr" d="M2 5H36M31 1l5 4-5 4"/></svg><span class="chip">업무 반영</span></div></div></div></div></div></article>
-    <p class="art-note" aria-hidden="true">그래픽의 수치는 이해를 돕기 위한 예시입니다.</p>
-    <div class="biz-prog" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
   </div>
+  <p class="art-note" aria-hidden="true">그래픽의 수치는 이해를 돕기 위한 예시입니다.</p>
+  <div class="biz-prog" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+  <!-- 모바일 전용: 스와이프 위치 표시와 이전·다음 버튼 -->
+  <div class="biz-nav"><span class="biz-cnt" aria-live="polite">01 / 07</span><button class="arrow biz-arw" type="button" data-dir="-1" aria-label="이전 솔루션">←</button><button class="arrow biz-arw" type="button" data-dir="1" aria-label="다음 솔루션">→</button><span class="biz-hint" aria-hidden="true">옆으로 넘겨보세요</span></div>
 </section>
 
 <!-- 4 CRM 예시 (홈페이지 원문, 오른쪽은 실제 CRM 예시 페이지 캡처) -->
@@ -901,11 +935,10 @@ function initMotion() {
 
   // 스크롤을 멈추면 가장 가까운 '완성된 장면' 위치로 부드럽게 붙음 (위로 올릴 때도 같음)
   const SNAP = pts => ({ snapTo: pts, inertia: false, duration: { min: 0.25, max: 0.6 }, delay: 0.12, ease: 'power2.inOut' });
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 769px)', () => {
-    // 1 LANDING 고정: BX가 씨앗처럼 흩어짐 → 문장 3줄이 가운데·왼쪽·오른쪽에 차례로 → 7개 줄기로 내려앉고 라벨 등장
+  // 1 LANDING 고정: BX가 씨앗처럼 흩어짐 → 문장 3줄이 차례로 → 7개 줄기로 내려앉고 라벨 등장 (PC·모바일 공통)
+  const storyTL = () => {
     const lines = gsap.utils.toArray('.st-line');
-    gsap.timeline({ scrollTrigger: { trigger: '.story', start: 'top top', end: () => '+=' + innerHeight * 3.0, pin: true, scrub: 0.5, snap: SNAP([0, 0.23, 0.42, 0.61, 1]) } })
+    return gsap.timeline({ scrollTrigger: { trigger: '.story', start: 'top top', end: () => '+=' + innerHeight * 3.0, pin: true, scrub: 0.5, snap: SNAP([0, 0.23, 0.42, 0.61, 1]) } })
       .to('.hero-first', { opacity: 0, y: -40, duration: 0.07, ease: 'none' }, 0)
       .to(story.S, { blow: 1, duration: 0.2, ease: 'none' }, 0.06)
       .to(story.S, { wind: 1, duration: 0.62, ease: 'none' }, 0.1)
@@ -919,39 +952,51 @@ function initMotion() {
       .fromTo('.st-lead', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.08 }, 0.76)
       .to(laneEls, { opacity: 1, stagger: 0.012, duration: 0.05 }, 0.82)
       .to({}, { duration: 0.08 }, 0.92);
+  };
 
-    // 3 SERVICES 고정: 서비스 7개가 차례로 바뀜. 장면마다 카드가 떠오르고 선이 그려지고 숫자가 올라감
-    const chaps = gsap.utils.toArray('.chap'), bars = gsap.utils.toArray('.biz-prog b'), glow = document.querySelector('.biz-glow');
+  // 서비스 장면 하나의 등장 모션: 카드가 떠오르고 선이 그려지고 숫자가 올라감 (PC는 스크롤 타임라인, 모바일은 넘길 때마다 재생)
+  const chaps = gsap.utils.toArray('.chap'), bars = gsap.utils.toArray('.biz-prog b');
+  const fmtN = (v, el) => { const d = +el.dataset.dec; let t = v.toFixed(d); if (el.dataset.comma === '1') t = (+t).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); return el.dataset.pre + t + el.dataset.suf; };
+  const updCnt = (tl, counters) => { const tt = tl.time(); counters.forEach(k => { const x = clamp((tt - k.s) / k.d); k.el.textContent = fmtN(k.to * (1 - Math.pow(1 - x, 3)), k.el); }); };
+  function chapAnim(tl, c, t0, counters) {
+    const art = c.querySelector('.art'), q = sel => art.querySelectorAll(sel);
+    tl.fromTo(c.querySelector('h3 span'), { yPercent: 110 }, { yPercent: 0, duration: 0.2, ease: 'power3.out' }, t0)
+      .fromTo(c.querySelectorAll('.num,p,.tags,.btn'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.04, duration: 0.2, ease: 'power2.out' }, t0 + 0.04)
+      .fromTo(q('.gc'), { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.24, ease: 'power3.out' }, t0 + 0.02)
+      .fromTo(q('.gx'), { scaleX: 0 }, { scaleX: 1, stagger: 0.03, duration: 0.35, ease: 'power2.out' }, t0 + 0.2)
+      .fromTo(q('.gy'), { scaleY: 0 }, { scaleY: 1, stagger: 0.04, duration: 0.35, ease: 'power2.out' }, t0 + 0.2)
+      .fromTo(q('.fillp'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t0 + 0.3)
+      .fromTo(q('.pop'), { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.03, duration: 0.2, ease: 'back.out(2.2)' }, t0 + 0.36)
+      .fromTo(q('.row'), { opacity: 0, x: -14 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.2, ease: 'power2.out' }, t0 + 0.22)
+      .fromTo(q('.kp,.fn,.rw'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, stagger: 0.03, duration: 0.2, ease: 'power2.out' }, t0 + 0.16);
+    q('.dr').forEach((el, k) => tl.fromTo(el, { strokeDashoffset: (+el.dataset.len || 1) + 0.02 }, { strokeDashoffset: 0, duration: 0.4, ease: 'power1.inOut' }, t0 + 0.14 + k * 0.04));
+    q('.cnt').forEach(el => counters.push({ el, s: t0 + 0.2, d: 0.4, to: +el.dataset.to }));
+    q('.stp').forEach(el => tl.fromTo(el, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.07, ease: 'power2.out' }, t0 + +el.dataset.at));
+    q('.dots').forEach(el => tl.to(el, { opacity: 0, duration: 0.04 }, t0 + 0.38));
+    q('.rvt').forEach(el => tl.fromTo(el, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.2, ease: 'none' }, t0 + +el.dataset.at + 0.02));
+  }
+
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 769px)', () => {
+    storyTL();
+
+    // 3 SERVICES 고정: 서비스 7개가 차례로 바뀜
+    const glow = document.querySelector('.biz-glow');
     const SEG = 1, TOTAL = chaps.length * SEG + 0.15;
-    const fmtN = (v, el) => { const d = +el.dataset.dec; let t = v.toFixed(d); if (el.dataset.comma === '1') t = (+t).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); return el.dataset.pre + t + el.dataset.suf; };
     const tl = gsap.timeline({ scrollTrigger: { trigger: '.biz', start: 'top top', end: () => '+=' + innerHeight * 5.0, pin: true, scrub: 0.5, invalidateOnRefresh: true, snap: SNAP(chaps.map((_, i) => i === chaps.length - 1 ? 1 : (i + 0.74) / TOTAL)) } });
     const counters = [];
     chaps.forEach((c, i) => {
-      const t0 = i * SEG, art = c.querySelector('.art'), q = sel => art.querySelectorAll(sel);
-      tl.set(c, { autoAlpha: 1 }, t0)
-        .fromTo(c.querySelector('h3 span'), { yPercent: 110 }, { yPercent: 0, duration: 0.2, ease: 'power3.out' }, t0)
-        .fromTo(c.querySelectorAll('.num,p,.tags,.btn'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.04, duration: 0.2, ease: 'power2.out' }, t0 + 0.04)
-        .fromTo(q('.gc'), { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.24, ease: 'power3.out' }, t0 + 0.02)
-        .fromTo(q('.gx'), { scaleX: 0 }, { scaleX: 1, stagger: 0.03, duration: 0.35, ease: 'power2.out' }, t0 + 0.2)
-        .fromTo(q('.gy'), { scaleY: 0 }, { scaleY: 1, stagger: 0.04, duration: 0.35, ease: 'power2.out' }, t0 + 0.2)
-        .fromTo(q('.fillp'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t0 + 0.3)
-        .fromTo(q('.pop'), { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.03, duration: 0.2, ease: 'back.out(2.2)' }, t0 + 0.36)
-        .fromTo(q('.row'), { opacity: 0, x: -14 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.2, ease: 'power2.out' }, t0 + 0.22)
-        .fromTo(q('.kp,.fn,.rw'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, stagger: 0.03, duration: 0.2, ease: 'power2.out' }, t0 + 0.16)
-        .fromTo(bars[i], { scaleX: 0 }, { scaleX: 1, duration: SEG, ease: 'none' }, t0)
+      const t0 = i * SEG;
+      tl.set(c, { autoAlpha: 1 }, t0);
+      chapAnim(tl, c, t0, counters);
+      tl.fromTo(bars[i], { scaleX: 0 }, { scaleX: 1, duration: SEG, ease: 'none' }, t0)
         .to(glow, { yPercent: -50 + (i % 2 ? 6 : -6), duration: SEG, ease: 'none' }, t0);
-      q('.dr').forEach((el, k) => tl.fromTo(el, { strokeDashoffset: (+el.dataset.len || 1) + 0.02 }, { strokeDashoffset: 0, duration: 0.4, ease: 'power1.inOut' }, t0 + 0.14 + k * 0.04));
-      q('.cnt').forEach(el => counters.push({ el, s: t0 + 0.2, d: 0.4, to: +el.dataset.to }));
-      q('.stp').forEach(el => tl.fromTo(el, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.07, ease: 'power2.out' }, t0 + +el.dataset.at));
-      q('.dots').forEach(el => tl.to(el, { opacity: 0, duration: 0.04 }, t0 + 0.38));
-      q('.rvt').forEach(el => tl.fromTo(el, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 0.2, ease: 'none' }, t0 + +el.dataset.at + 0.02));
       if (i < chaps.length - 1) tl.to(c, { opacity: 0, y: -36, duration: 0.15, ease: 'power2.in' }, t0 + SEG - 0.17).set(c, { autoAlpha: 0 }, t0 + SEG);
       else tl.to({}, { duration: 0.15 }, t0 + SEG);
       if (i > 0) tl.fromTo(c, { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.14, ease: 'power2.out' }, t0);
     });
     // 숫자는 타임라인 시간에서 직접 계산 (스크롤을 올리고 내려도 항상 같은 값)
-    const updCnt = () => { const tt = tl.time(); counters.forEach(k => { const x = clamp((tt - k.s) / k.d); k.el.textContent = fmtN(k.to * (1 - Math.pow(1 - x, 3)), k.el); }); };
-    tl.eventCallback('onUpdate', updCnt); updCnt();
+    tl.eventCallback('onUpdate', () => updCnt(tl, counters)); updCnt(tl, counters);
     // 장면 안 링크에 키보드 포커스가 가면 그 장면이 보이는 위치로 스크롤
     const stage = document.querySelector('.biz-stage');
     const onFocus = e => {
@@ -987,9 +1032,44 @@ function initMotion() {
     const dark = new Set();
     const mark = (key, on) => { on ? dark.add(key) : dark.delete(key); header.classList.toggle('on-dark', dark.size > 0); };
     document.querySelectorAll('[data-dark]').forEach(sec => ScrollTrigger.create({ trigger: sec, start: 'top 56px', end: 'bottom 56px', onToggle: s => mark(sec, s.isActive) }));
-    gsap.utils.toArray('.st-line, .st-lead, .chap').forEach(el => gsap.from(el, { opacity: 0, y: 36, duration: 0.6, scrollTrigger: { trigger: el, start: 'top 88%' } }));
+    storyTL();
+
+    // 3 SERVICES 스와이프: 7개 장면을 옆으로 넘기고, 화면에 들어온 장면은 PC와 같은 등장 모션을 재생
+    const stage = document.querySelector('.biz-stage'), cnt = document.querySelector('.biz-cnt');
+    const tls = chaps.map(c => {
+      const counters = [], tl = gsap.timeline({ paused: true });
+      chapAnim(tl, c, 0, counters);
+      tl.timeScale(0.6).eventCallback('onUpdate', () => updCnt(tl, counters));
+      return tl;
+    });
+    // 옆에 살짝 보이는 장면은 완성된 모습으로 흐리게, 첫 장면만 처음 들어올 때 재생되도록 시작 상태로 둔다
+    tls.forEach((t, i) => t.progress(i ? 1 : 0));
+    let cur = -1;
+    const go = i => {
+      if (i === cur) return;
+      chaps.forEach((c, k) => c.classList.toggle('is-cur', k === i));
+      cur = i; tls[i].restart();
+      bars.forEach((b, k) => gsap.to(b, { scaleX: k <= i ? 1 : 0, duration: 0.35, ease: 'power2.out' }));
+      if (cnt) cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(chaps.length).padStart(2, '0');
+    };
+    // 가로로 가장 가까운 장면을 현재 장면으로 (세로로 화면에 들어왔을 때만 재생)
+    const nearest = () => Math.round(stage.scrollLeft / (chaps[1].offsetLeft - chaps[0].offsetLeft));
+    let inView = false, st;
+    const io = new IntersectionObserver(e => { inView = e[0].isIntersecting; if (inView) go(clamp(nearest(), 0, chaps.length - 1)); }, { threshold: 0.45 });
+    io.observe(stage);
+    const onScroll = () => { clearTimeout(st); st = setTimeout(() => { if (inView) go(clamp(nearest(), 0, chaps.length - 1)); }, 80); };
+    stage.addEventListener('scroll', onScroll, { passive: true });
+    const arrows = [...document.querySelectorAll('.biz-arw')];
+    const onArw = e => { const i = clamp(cur + +e.currentTarget.dataset.dir, 0, chaps.length - 1); stage.scrollTo({ left: chaps[i].offsetLeft - chaps[0].offsetLeft, behavior: 'smooth' }); };
+    arrows.forEach(b => b.addEventListener('click', onArw));
+
     gsap.utils.toArray('.step').forEach(s => { s.style.setProperty('--k', 0); ScrollTrigger.create({ trigger: s, start: 'top 85%', end: 'top 60%', scrub: true, onUpdate: self => s.style.setProperty('--k', self.progress.toFixed(3)) }); });
-    return () => header.classList.remove('on-dark');
+    return () => {
+      header.classList.remove('on-dark'); io.disconnect(); stage.removeEventListener('scroll', onScroll);
+      arrows.forEach(b => b.removeEventListener('click', onArw));
+      tls.forEach(t => t.progress(1).kill()); gsap.set(bars, { clearProps: 'transform' });
+      chaps.forEach(c => c.classList.remove('is-cur'));
+    };
   });
 
   // 공통: 화면에 들어올 때 아래에서 올라옴
