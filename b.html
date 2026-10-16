@@ -89,7 +89,7 @@ nav a:hover{opacity:1}
 
 /* 3 SERVICES (랜딩과 같은 흰 바탕 톤. 홈페이지 색: 글자 #0b1530, 브랜드 파랑 #2f63ff, 포인트 주황 #df8b42) */
 .biz{position:relative;height:100vh;height:100svh;overflow:hidden;background:#f5f8ff;color:var(--ink)}
-.biz::before{content:'';position:absolute;inset:0;background:radial-gradient(rgba(47,99,255,.2) 1px,transparent 1.6px) 0 0/44px 44px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,#000,transparent);mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,#000,transparent)}
+.biz::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(rgba(47,99,255,.2) 1px,transparent 1.6px) 0 0/44px 44px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,#000,transparent);mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,#000,transparent)}
 .biz-glow{position:absolute;right:-8%;top:50%;width:62vw;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(47,99,255,.17) 0,transparent 62%);pointer-events:none}
 .biz-stage{position:absolute;inset:0}
 .chap{position:absolute;inset:0;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:4vw;padding:96px var(--gut) 96px;visibility:hidden;opacity:0}
@@ -323,7 +323,7 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .tags li{font-size:13px;padding:5px 12px}
   .art-note{position:static;margin:14px var(--gut) 0}
   .biz-prog{position:static;margin:22px var(--gut) 0}
-  .biz-nav{display:flex;align-items:center;gap:10px;margin:14px var(--gut) 0}
+  .biz-nav{position:relative;z-index:2;display:flex;align-items:center;gap:10px;margin:14px var(--gut) 0}
   .biz-cnt{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--blue)}
   .biz-cnt{margin-right:4px}
   .biz-hint{font-size:13px;color:var(--mute);margin-left:4px}
@@ -1055,7 +1055,7 @@ function initMotion() {
     // 가로로 가장 가까운 장면을 현재 장면으로 (세로로 화면에 들어왔을 때만 재생)
     const nearest = () => Math.round(stage.scrollLeft / (chaps[1].offsetLeft - chaps[0].offsetLeft));
     let inView = false, st;
-    const io = new IntersectionObserver(e => { inView = e[0].isIntersecting; if (inView) go(clamp(nearest(), 0, chaps.length - 1)); }, { threshold: 0.45 });
+    const io = new IntersectionObserver(e => { inView = e[0].isIntersecting; if (inView) go(clamp(nearest(), 0, chaps.length - 1)); }, { threshold: 0.2 });
     io.observe(stage);
     const onScroll = () => { clearTimeout(st); st = setTimeout(() => { if (inView) go(clamp(nearest(), 0, chaps.length - 1)); }, 80); };
     stage.addEventListener('scroll', onScroll, { passive: true });
