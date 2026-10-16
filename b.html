@@ -312,8 +312,10 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .st-lead p{font-size:15px;margin-top:10px}
   .biz{height:auto;overflow:hidden;padding:12vh 0 8vh}
   .biz-glow{right:-40%;width:120vw;top:38%}
-  .biz-stage{position:relative;display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 var(--gut);scroll-padding:0 var(--gut)}
-  .biz-stage::-webkit-scrollbar{display:none}
+  .biz-stage{position:relative;display:flex;gap:16px;padding:0 var(--gut);touch-action:pan-y;cursor:grab;will-change:transform}
+  .biz-stage.dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+  .biz-stage a{-webkit-user-drag:none}
+  .biz-nav .arrow:disabled{opacity:.35;cursor:default}
   .chap{position:relative;inset:auto;flex:0 0 86%;scroll-snap-align:start;scroll-snap-stop:always;visibility:visible;opacity:1;grid-template-columns:1fr;align-content:start;gap:22px;padding:0;opacity:.35;transform:scale(.96);transform-origin:left center;transition:opacity .45s,transform .45s}
   .chap.is-cur{opacity:1;transform:none}
   .art-wrap{width:100%;justify-self:start;order:-1}
@@ -694,7 +696,7 @@ fillTrack(document.getElementById('mqB'), LOGOS.slice(25));
 /* ---------- 수행사례 가로 카드: 화살표·번호 ---------- */
 (() => {
   const track = document.querySelector('.cases-track'), cards = [...track.children];
-  const count = document.querySelector('.cases-ctrl .count'), [prev, next] = document.querySelectorAll('.arrow');
+  const count = document.querySelector('.cases-ctrl .count'), [prev, next] = document.querySelectorAll('.cases-ctrl .arrow');
   const idx = () => {
     const x = track.scrollLeft; let best = 0;
     cards.forEach((c, i) => { if (Math.abs(c.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft) - x) < Math.abs(cards[best].offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft) - x)) best = i; });
@@ -1044,29 +1046,66 @@ function initMotion() {
     });
     // 옆에 살짝 보이는 장면은 완성된 모습으로 흐리게, 첫 장면만 처음 들어올 때 재생되도록 시작 상태로 둔다
     tls.forEach((t, i) => t.progress(i ? 1 : 0));
-    let cur = -1;
-    const go = i => {
+    // 카드 줄을 직접 옮김 (브라우저 가로 스크롤·스냅은 등장 모션 중에 되돌아가는 문제가 있어 쓰지 않음)
+    const N = chaps.length, arrows = [...document.querySelectorAll('.biz-arw')];
+    const posOf = i => Math.min(chaps[i].offsetLeft - chaps[0].offsetLeft, chaps[N - 1].offsetLeft + chaps[N - 1].offsetWidth - chaps[0].offsetLeft - (stage.clientWidth - 2 * chaps[0].offsetLeft));
+    let cur = -1, x = 0;
+    const setX = (v, dur) => { x = v; gsap.to(stage, { x: -v, duration: dur, ease: 'power3.out', overwrite: true }); };
+    const go = (i, dur = 0.55) => {
+      i = clamp(i, 0, N - 1);
+      setX(posOf(i), dur);
+      arrows[0].disabled = i === 0; arrows[1].disabled = i === N - 1;
       if (i === cur) return;
       chaps.forEach((c, k) => c.classList.toggle('is-cur', k === i));
       cur = i; tls[i].restart();
       bars.forEach((b, k) => gsap.to(b, { scaleX: k <= i ? 1 : 0, duration: 0.35, ease: 'power2.out' }));
-      if (cnt) cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(chaps.length).padStart(2, '0');
+      if (cnt) cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
     };
-    // 가로로 가장 가까운 장면을 현재 장면으로 (세로로 화면에 들어왔을 때만 재생)
-    const nearest = () => Math.round(stage.scrollLeft / (chaps[1].offsetLeft - chaps[0].offsetLeft));
-    let inView = false, st;
-    const io = new IntersectionObserver(e => { inView = e[0].isIntersecting; if (inView) go(clamp(nearest(), 0, chaps.length - 1)); }, { threshold: 0.2 });
+    // 세로로 화면에 들어오면 첫 장면 재생
+    const io = new IntersectionObserver(e => { if (e[0].isIntersecting && cur < 0) go(0, 0); }, { threshold: 0.2 });
     io.observe(stage);
-    const onScroll = () => { clearTimeout(st); st = setTimeout(() => { if (inView) go(clamp(nearest(), 0, chaps.length - 1)); }, 80); };
-    stage.addEventListener('scroll', onScroll, { passive: true });
-    const arrows = [...document.querySelectorAll('.biz-arw')];
-    const onArw = e => { const i = clamp(cur + +e.currentTarget.dataset.dir, 0, chaps.length - 1); stage.scrollTo({ left: chaps[i].offsetLeft - chaps[0].offsetLeft, behavior: 'smooth' }); };
+    const onArw = e => go((cur < 0 ? 0 : cur) + +e.currentTarget.dataset.dir);
     arrows.forEach(b => b.addEventListener('click', onArw));
+
+    // 손가락·마우스로 옆으로 밀어서 넘기기. 세로 움직임이 크면 그냥 페이지 스크롤로 둔다
+    let p0 = null, dragged = false;
+    const onDown = e => { if (e.button > 0) return; p0 = { x: e.clientX, y: e.clientY, t: performance.now(), base: x, id: e.pointerId, dir: 0 }; dragged = false; };
+    const onMove = e => {
+      if (!p0 || e.pointerId !== p0.id) return;
+      const dx = e.clientX - p0.x, dy = e.clientY - p0.y;
+      if (!p0.dir) { if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; p0.dir = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; if (p0.dir === 'x') { stage.setPointerCapture(e.pointerId); stage.classList.add('dragging'); } }
+      if (p0.dir !== 'x') return;
+      dragged = true; e.preventDefault();
+      const max = posOf(N - 1); let v = p0.base - dx;
+      if (v < 0) v *= 0.35; else if (v > max) v = max + (v - max) * 0.35;  // 끝에서는 살짝만 끌려옴
+      x = v; gsap.set(stage, { x: -v });
+    };
+    const onUp = e => {
+      if (!p0 || e.pointerId !== p0.id) return;
+      const dx = e.clientX - p0.x, vel = dx / Math.max(1, performance.now() - p0.t), was = p0.dir === 'x';
+      p0 = null; stage.classList.remove('dragging');
+      if (!was) return;
+      const c = cur < 0 ? 0 : cur;
+      go(dx < -50 || vel < -0.4 ? c + 1 : dx > 50 || vel > 0.4 ? c - 1 : c);
+    };
+    const onClick = e => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } };  // 끈 다음 손을 뗄 때 링크가 열리지 않게
+    const onFocus = e => { const c = e.target.closest('.chap'); if (c) go(chaps.indexOf(c)); };
+    const onResize = () => cur >= 0 && go(cur, 0);
+    stage.addEventListener('pointerdown', onDown);
+    stage.addEventListener('pointermove', onMove);
+    stage.addEventListener('pointerup', onUp);
+    stage.addEventListener('pointercancel', onUp);
+    stage.addEventListener('click', onClick, true);
+    stage.addEventListener('focusin', onFocus);
+    addEventListener('resize', onResize);
 
     gsap.utils.toArray('.step').forEach(s => { s.style.setProperty('--k', 0); ScrollTrigger.create({ trigger: s, start: 'top 85%', end: 'top 60%', scrub: true, onUpdate: self => s.style.setProperty('--k', self.progress.toFixed(3)) }); });
     return () => {
-      header.classList.remove('on-dark'); io.disconnect(); stage.removeEventListener('scroll', onScroll);
-      arrows.forEach(b => b.removeEventListener('click', onArw));
+      header.classList.remove('on-dark'); io.disconnect();
+      arrows.forEach(b => { b.removeEventListener('click', onArw); b.disabled = false; });
+      ['pointerdown', onDown, 'pointermove', onMove, 'pointerup', onUp, 'pointercancel', onUp, 'focusin', onFocus].forEach((v, k, a) => { if (k % 2 === 0) stage.removeEventListener(v, a[k + 1]); });
+      stage.removeEventListener('click', onClick, true); removeEventListener('resize', onResize);
+      gsap.set(stage, { clearProps: 'transform' });
       tls.forEach(t => t.progress(1).kill()); gsap.set(bars, { clearProps: 'transform' });
       chaps.forEach(c => c.classList.remove('is-cur'));
     };
