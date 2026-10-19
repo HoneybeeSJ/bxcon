@@ -7,11 +7,10 @@
 <meta name="theme-color" content="#0d0e19">
 <link rel="icon" href="data:,">
 <meta name="description" content="경영전략, 영업·마케팅, 고객경험(CX), 인사조직(HR), 리서치, 시스템, AI까지 기업의 성장 과제를 실행 가능한 구조로 연결하는 BX컨설팅입니다.">
-<title>BX 히어로 모션 프로토타입</title>
+<title>비엑스컨설팅 BX Consulting</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
-<link rel="preconnect" href="https://qqhwhhtsidiozxnrajlp.supabase.co" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
 /* 모서리 규칙: 카드·로고 타일 16px / 작은 태그 8px / 버튼·칩·라벨은 알약형 */
@@ -24,11 +23,10 @@ a{color:inherit;text-decoration:none}
 .w{display:inline-block;white-space:nowrap}
 .ch{display:inline-block}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.skip{position:fixed;left:16px;top:-80px;z-index:100;background:var(--blue);color:#fff;padding:12px 18px;border-radius:var(--r-pill);font-weight:600;transition:top .2s}
+.skip{position:fixed;left:16px;top:-80px;z-index:100;background:var(--blue);color:#fff;padding:13px 18px;border-radius:var(--r-pill);font-weight:600;transition:top .2s}
 .skip:focus{top:16px}
 a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:6px}
 
-.proto-tag{position:fixed;right:16px;bottom:16px;z-index:50;font-size:12px;letter-spacing:.08em;color:#c9d2ff;border:1px solid #3a4275;background:rgba(13,14,25,.85);padding:6px 12px;border-radius:var(--r-pill)}
 .draft{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;color:#ffd38a;border:1px dashed #8a6b2c;padding:3px 8px;border-radius:var(--r-tag);vertical-align:middle}
 #toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);z-index:60;background:#1b2147;border:1px solid #3a4275;color:#e6eaff;padding:12px 18px;border-radius:var(--r-pill);font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s}
 #toast.show{opacity:1}
@@ -39,10 +37,11 @@ header.scrolled{background:rgba(13,14,25,.82);backdrop-filter:blur(10px)}
 .logo b{font-weight:900;font-size:24px;letter-spacing:-.05em;color:var(--blue)}
 nav{display:flex;gap:28px;font-size:15px;color:#cfd5f2}
 nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
-nav a:hover{color:#fff}
+nav a:hover,nav a:focus-visible{color:#fff}
+.btn,a,button{touch-action:manipulation}
 .hdr-r{display:flex;gap:10px;align-items:center}
 .btn.menu-btn{display:none;background:transparent;color:inherit;cursor:pointer;font-family:inherit}
-.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid #4a56a0;padding:10px 18px;border-radius:var(--r-pill);font-size:14px;font-weight:600;transition:background-color .25s,border-color .25s}
+.btn{display:inline-flex;align-items:center;min-height:44px;gap:8px;border:1px solid #4a56a0;padding:10px 18px;border-radius:var(--r-pill);font-size:14px;font-weight:600;transition:background-color .25s,border-color .25s}
 .btn:hover,.btn:focus-visible{background:var(--blue);border-color:var(--blue)}
 .btn.solid{background:var(--blue);border-color:var(--blue);padding:16px 32px;font-size:16px}
 .btn.solid:hover,.btn.solid:focus-visible{background:#5a8bff;border-color:#5a8bff}
@@ -59,7 +58,7 @@ nav a:hover{color:#fff}
 .hero-sub{margin-top:12px;font-size:clamp(14px,1.3vw,18px);color:var(--mute);letter-spacing:.02em}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
 .slide-ctrl{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:18px}
-.slide-dot{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
+.slide-dot{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
 .slide-dot::before{content:'';width:8px;height:8px;border-radius:var(--r-pill);background:#4a5590;transition:width .3s,background-color .3s}
 .slide-dot[aria-current="true"]::before{width:22px;background:var(--sky)}
 
@@ -108,7 +107,7 @@ nav a:hover{color:#fff}
 .case-img{aspect-ratio:8/5;overflow:hidden;background:#fff}
 .case.featured .case-img{flex:0 0 56%}
 .case-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
-.case:hover .case-img img{transform:scale(1.03)}
+.case:hover .case-img img,.case:focus-visible .case-img img{transform:scale(1.03)}
 .case-body{padding:20px 24px 24px}
 .case.featured .case-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 36px}
 .case-meta{font-size:13px;color:var(--sky);letter-spacing:.04em}
@@ -124,9 +123,9 @@ nav a:hover{color:#fff}
 .ins-type{display:flex;flex-direction:column;gap:6px}
 .ins-type b{font-size:15px;color:var(--sky)}
 .ins-type a{font-size:13px;color:var(--mute);min-height:24px}
-.ins-type a:hover{color:var(--ink)}
+.ins-type a:hover,.ins-type a:focus-visible{color:var(--ink)}
 .ins-main h3{font-size:clamp(18px,1.6vw,22px);line-height:1.45}
-.ins-main:hover h3{color:var(--sky)}
+.ins-main:hover h3,.ins-main:focus-visible h3{color:var(--sky)}
 .ins-main p{margin-top:8px;font-size:15px;color:#aab2d6;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ins-thumb{display:block;border-radius:var(--r-tag);overflow:hidden;background:#fff}
 .ins-thumb img{width:100%;height:auto;display:block}
@@ -313,9 +312,9 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
 <section class="cases pad" id="cases" aria-labelledby="casesTitle">
   <div class="sec-head"><h2 class="h2 split reveal" id="casesTitle">수행사례</h2><a class="link-more" href="https://www.bxcon.co.kr/portfolio/" target="_blank" rel="noopener">전체 수행사례 보기 ↗</a></div>
   <div class="cases-grid">
-    <a class="case fx-up featured" href="https://www.bxcon.co.kr/portfolio/fm-서비스-품질-모니터링-조사-및-고객만족도-조사/" target="_blank" rel="noopener"><div class="case-img"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/portfolio/20261001/fm-service-quality-hero.webp?width=1200&quality=78&resize=contain" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">Featured case</span><h3>FM 서비스 품질 모니터링 조사 및 고객만족도 조사</h3><p>리서치 관점에서 대규모 건물관리 점검 방법 부재 문제를 해결하기 위해 구조화된 점검표에 의한 모니터링 조사 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
-    <a class="case fx-up" href="https://www.bxcon.co.kr/portfolio/고객사-고유-분석을-반영한-커스텀-ai-챗봇-제작/" target="_blank" rel="noopener"><div class="case-img"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/portfolio/20261001/custom-ai-chatbot-hero.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">2026-04-03</span><h3>고객사 고유 분석을 반영한 커스텀 AI 챗봇 제작</h3><p>AI 관점에서 모바일앱(MTS) 사용자 경험 강화를 위한 혁신적인 접근 방안 부재 문제를 해결하기 위해 RFP 이전부터 기술적 요구사항 정리 및 제안 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
-    <a class="case fx-up" href="https://www.bxcon.co.kr/portfolio/사내-erp-연동-자연어-검색-text-to-sql-ai-도입/" target="_blank" rel="noopener"><div class="case-img"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/portfolio/20261001/erp-natural-language-hero.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">2026-04-03</span><h3>사내 ERP 연동 자연어 검색(Text-to-SQL) AI 도입</h3><p>AI 관점에서 사내 ERP 시스템에서 고객 및 제품 정보를 검색하고 활용하는 데 많은 시간과 노력 소요 문제를 해결하기 위해 사내 ERP의 고객 및 제품 정보를 자연어로 즉시 검색할 수 있는 데이터 분석 기반 AI 도입 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case fx-up featured" href="https://www.bxcon.co.kr/portfolio/fm-서비스-품질-모니터링-조사-및-고객만족도-조사/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/fm-service-quality-hero.jpg" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">Featured case</span><h3>FM 서비스 품질 모니터링 조사 및 고객만족도 조사</h3><p>리서치 관점에서 대규모 건물관리 점검 방법 부재 문제를 해결하기 위해 구조화된 점검표에 의한 모니터링 조사 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case fx-up" href="https://www.bxcon.co.kr/portfolio/고객사-고유-분석을-반영한-커스텀-ai-챗봇-제작/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/custom-ai-chatbot-hero.jpg" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">2026-04-03</span><h3>고객사 고유 분석을 반영한 커스텀 AI 챗봇 제작</h3><p>AI 관점에서 모바일앱(MTS) 사용자 경험 강화를 위한 혁신적인 접근 방안 부재 문제를 해결하기 위해 RFP 이전부터 기술적 요구사항 정리 및 제안 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case fx-up" href="https://www.bxcon.co.kr/portfolio/사내-erp-연동-자연어-검색-text-to-sql-ai-도입/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/erp-natural-language-hero.jpg" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">2026-04-03</span><h3>사내 ERP 연동 자연어 검색(Text-to-SQL) AI 도입</h3><p>AI 관점에서 사내 ERP 시스템에서 고객 및 제품 정보를 검색하고 활용하는 데 많은 시간과 노력 소요 문제를 해결하기 위해 사내 ERP의 고객 및 제품 정보를 자연어로 즉시 검색할 수 있는 데이터 분석 기반 AI 도입 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
   </div>
 </section>
 
@@ -323,9 +322,9 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
 <section class="insight pad" id="insight" aria-labelledby="insTitle">
   <div class="sec-head"><h2 class="h2 split reveal" id="insTitle">인사이트</h2></div>
   <ul class="ins-list">
-    <li class="ins fx-up"><div class="ins-type"><b>레터</b><a href="https://www.bxcon.co.kr/insight/" target="_blank" rel="noopener">레터 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener"><h3>챗봇의 함정: 고객 등급이 높을수록 챗봇에 대한 거부감도 커진다</h3><p>상위 고객일수록 챗봇의 획일적 응대에 민감하므로, 고객 가치에 따른 차별화된 서비스 설계가 필요합니다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/content-images/2026/10/13067a72-fac8-4b46-b3f3-0bc8262ff604-premium-customer-chatbot-rejection_upload.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></a></li>
-    <li class="ins fx-up"><div class="ins-type"><b>기획조사</b><a href="https://www.bxcon.co.kr/report/" target="_blank" rel="noopener">기획조사 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener"><h3>‘조용한 사직’의 두 얼굴, ‘선 긋기’ 아닌 ‘적당히’가 이탈 신호</h3><p>전국 직장인 3,000명 조사에서 조용한 사직은 경계 설정과 노력 철회로 나뉘었다. 경계 설정은 직무만족·성과와 함께 높아졌고, 노력 철회 상위 집단의 절반은 이직을 고려했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/reports/20261012-brand/quiet-quitting-hero.webp?width=960&quality=78&resize=contain" alt="" loading="lazy"></a></li>
-    <li class="ins fx-up"><div class="ins-type"><b>보도자료</b><a href="https://www.bxcon.co.kr/press/" target="_blank" rel="noopener">보도자료 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener"><h3>가족 같은 회사는 그만… 직장인은 ‘프로 팀’을 원한다</h3><p>직장인이 선호하는 조직 문화가 ‘가족 같은 회사’에서 ‘프로 팀’으로 이동하고 있는 것으로 나타났다. 상사와의 관계보다 동료와의 협업, 과도한 친밀감보다 역할과 성과 중심의 관계를 중시하는 경향이 뚜렷했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/render/image/public/site-media/press/legacy/9/hero.png?width=960&quality=78&resize=contain" alt="" loading="lazy"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>레터</b><a href="https://www.bxcon.co.kr/insight/" target="_blank" rel="noopener">레터 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener"><h3>챗봇의 함정: 고객 등급이 높을수록 챗봇에 대한 거부감도 커진다</h3><p>상위 고객일수록 챗봇의 획일적 응대에 민감하므로, 고객 가치에 따른 차별화된 서비스 설계가 필요합니다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/premium-customer-chatbot-rejection_upload.jpg" alt="" loading="lazy"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>기획조사</b><a href="https://www.bxcon.co.kr/report/" target="_blank" rel="noopener">기획조사 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener"><h3>‘조용한 사직’의 두 얼굴, ‘선 긋기’ 아닌 ‘적당히’가 이탈 신호</h3><p>전국 직장인 3,000명 조사에서 조용한 사직은 경계 설정과 노력 철회로 나뉘었다. 경계 설정은 직무만족·성과와 함께 높아졌고, 노력 철회 상위 집단의 절반은 이직을 고려했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/quiet-quitting-hero.jpg" alt="" loading="lazy"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>보도자료</b><a href="https://www.bxcon.co.kr/press/" target="_blank" rel="noopener">보도자료 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener"><h3>가족 같은 회사는 그만… 직장인은 ‘프로 팀’을 원한다</h3><p>직장인이 선호하는 조직 문화가 ‘가족 같은 회사’에서 ‘프로 팀’으로 이동하고 있는 것으로 나타났다. 상사와의 관계보다 동료와의 협업, 과도한 친밀감보다 역할과 성과 중심의 관계를 중시하는 경향이 뚜렷했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/hero.png" alt="" loading="lazy"></a></li>
   </ul>
 </section>
 
@@ -368,7 +367,6 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
   <small>© Copyright (C) BX CONSULTING. All Rights Reserved.</small>
 </footer>
 
-<div class="proto-tag">PROTOTYPE, 기획 검토용</div>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -436,57 +434,57 @@ ScrollTrigger.create({ start: 'top -80', end: 'max', toggleClass: { targets: 'he
 
 /* ---------- S5 고객 로고 마키 ---------- */
 // 홈페이지(bxcon.co.kr) 고객 레퍼런스와 같은 로고 49개. 홈페이지가 쓰는 공개 이미지 주소를 그대로 사용한다
-const LOGO_BASE = 'https://qqhwhhtsidiozxnrajlp.supabase.co/storage/v1/object/public/site-media/client-logos/';
+const LOGO_BASE = 'assets/';
 const LOGOS = [
-  ['folder-import/2026/04/001-47d8cf97-55ab-4f35-8c3c-256267fa8f36-client-logo.webp', '강원도'],
-  ['folder-import/2026/04/002-5c249f78-119a-4832-981d-1cb3f13b8f6c-client-logo.webp', '강원랜드'],
-  ['folder-import/2026/04/003-8549258f-03ce-489b-ab36-7c7c5951ba1a-client-logo.webp', '공항철도'],
-  ['folder-import/2026/04/004-da595958-7a51-4141-af80-4714549ae6f8-client-logo.webp', '기아자동차'],
-  ['2026/05/2255eaa8-7b29-44c8-90b6-0de7737e47e5-image.webp', '노루페인트'],
-  ['folder-import/2026/04/006-8bef0242-c892-4061-a4f4-8b85c68ef96f-client-logo.webp', '대명리조트'],
-  ['folder-import/2026/04/007-ddd8d641-537d-485c-b429-6082e8a7e281-client-logo.webp', '대상주식회사'],
-  ['folder-import/2026/04/008-c6a560ab-6198-4a24-88e0-13d634421b96-client-logo.webp', '더클래스효성'],
-  ['folder-import/2026/04/009-4ddf0820-cd1b-44bf-ad54-432f4209dee8-client-logo.webp', '동아오츠카'],
-  ['folder-import/2026/04/010-eaeb8bac-8aca-4920-9df7-35eecf69a82c-client-logo.webp', '디오션리조트'],
-  ['2026/05/4681323d-9a10-409c-80ba-d87b5f67666f-image.webp', '르노코리아자동차'],
-  ['folder-import/2026/04/012-94d1c57e-2e42-4d3f-a559-cf19aca601a4-client-logo.webp', '미디어윌'],
-  ['folder-import/2026/04/013-24b07d6f-9ba1-43e8-b446-b9d5dd5bcfeb-client-logo.webp', '미래에셋증권'],
-  ['folder-import/2026/04/014-f7d18bae-114f-4730-a6ff-9beeac2f5474-client-logo.webp', '바이드뮬러코리아'],
-  ['folder-import/2026/04/015-d0b34290-8997-49f4-9d90-113b8c8c72b6-client-logo.webp', '반얀트리'],
-  ['folder-import/2026/04/016-c8040b70-76c1-4b6b-8861-5f4756b9db35-client-logo.webp', '부산디자인센터'],
-  ['folder-import/2026/04/017-bf86a3c0-67ae-4bf0-86e7-be5e856c656b-client-logo.webp', '삼성전자'],
-  ['folder-import/2026/04/018-3891499a-0fc5-4e5b-a9d9-f662f0925f1e-client-logo.webp', '서울관광재단'],
-  ['folder-import/2026/04/019-89823b95-bb8d-438b-8320-717ba437a8a9-client-logo.webp', '수협은행'],
-  ['folder-import/2026/04/020-c3062aa9-0bfd-4d11-a129-b3c27c6b9c76-client-logo.webp', '순천시'],
-  ['folder-import/2026/04/021-1bc5e2aa-11c1-4b7e-bd65-95df331184f4-client-logo.webp', '신한은행'],
-  ['folder-import/2026/04/022-62fae2c2-284b-47fe-aff8-10bd888ab015-client-logo.webp', '아모스프로페셔널'],
-  ['folder-import/2026/04/023-158fd956-6a11-4113-96f1-010cf23148fd-client-logo.webp', '에스원'],
-  ['folder-import/2026/04/024-454c9721-037b-4280-954b-8a70d69c432c-client-logo.webp', '엘지유플러스'],
-  ['folder-import/2026/04/025-4b09abcc-6e5a-495b-9d6b-10a7072176da-client-logo.webp', '우리은행'],
-  ['folder-import/2026/04/026-526ac331-99f4-4f95-bca8-e0bd475d0e66-client-logo.webp', '워커힐호텔앤리조트'],
-  ['folder-import/2026/04/027-3d781b5e-c663-4274-bb8b-ff9a84396baf-client-logo.webp', '유진투자증권'],
-  ['2026/05/c1f88bc5-788e-4858-865a-0b3299221fb4-fc.webp', '이랜드FC'],
-  ['folder-import/2026/04/029-ba00234f-fbc3-4f61-92a1-1f8a8067d6ad-client-logo.webp', '인천공항'],
-  ['folder-import/2026/04/030-85b1855e-c428-4e96-8316-9cea6970280d-client-logo.webp', '전남드래곤즈'],
-  ['folder-import/2026/04/031-fe738833-689d-4f1a-8ee8-3d984e3a1590-client-logo.webp', '코레일'],
-  ['folder-import/2026/04/032-a2133399-214d-45df-9533-6f9072db3f30-client-logo.webp', '팜스코'],
-  ['folder-import/2026/04/033-c492dc20-adb6-4c8b-bc74-ca1207074a15-client-logo.webp', '하나은행'],
-  ['folder-import/2026/04/034-89afb3e8-6ea1-4cd0-8a6b-59b483207f92-client-logo.webp', '한국공항공사'],
-  ['folder-import/2026/04/035-727c34ad-c864-46c9-8f3d-1e66a68b3f9f-gm.webp', '한국GM'],
-  ['folder-import/2026/04/036-8f1bb311-a4ea-49b3-953e-71f8b453ce5c-client-logo.webp', '현대엘리베이터서비스'],
-  ['folder-import/2026/04/037-8885f513-41e7-4dac-9dfe-42a8d23d7318-client-logo.webp', '현대자동차'],
-  ['folder-import/2026/04/038-c96b72d9-68e8-49c8-80c9-ad5f40052388-client-logo.webp', '휘닉스호텔앤리조트'],
-  ['folder-import/2026/04/039-f60afa67-14a2-4774-9f44-7a4c25459632-bgf.webp', 'BGF리테일'],
-  ['folder-import/2026/04/040-361b11ec-9194-4b8e-97b8-868f2bcded6c-bmw.webp', 'BMW'],
-  ['folder-import/2026/04/041-364bd899-ef1f-43b5-a63e-2df6beacb9ca-ibk.webp', 'IBK기업은행'],
-  ['folder-import/2026/04/042-c3cf2a11-7c7d-43e8-b978-d534a63ab9bb-kb.webp', 'KB국민은행'],
-  ['2026/05/d467ff30-87d5-4540-97be-8c868614c6da-kb.webp', 'KB리브모바일'],
-  ['folder-import/2026/04/044-3400be37-b274-47f5-97b8-0cb173e639ef-kb.webp', 'KB증권'],
-  ['folder-import/2026/04/045-ff2b8d74-ce71-4a20-8a82-6e8851b47d48-ktestate.webp', 'KTestate'],
-  ['folder-import/2026/04/046-0faaa037-51e6-4de5-a3d5-a78babff9048-lg.webp', 'LG전자'],
-  ['folder-import/2026/04/047-7d9c7b2e-c7f5-4b34-a9ce-592859026872-ls.webp', 'LS엠트론'],
-  ['folder-import/2026/04/048-088d97f4-efbf-4217-8525-9dd35ae11c38-nh.webp', 'NH투자증권'],
-  ['folder-import/2026/04/049-2ac51173-7894-4886-9a4e-b670ac30a9b0-nice.webp', 'NICE그룹']
+  ['logos/001-강원도.webp', '강원도'],
+  ['logos/002-강원랜드.webp', '강원랜드'],
+  ['logos/003-공항철도.webp', '공항철도'],
+  ['logos/004-기아자동차.webp', '기아자동차'],
+  ['logos/xgewebp-노루페인트.webp', '노루페인트'],
+  ['logos/006-대명리조트.webp', '대명리조트'],
+  ['logos/007-대상주식회사.webp', '대상주식회사'],
+  ['logos/008-더클래스효성.webp', '더클래스효성'],
+  ['logos/009-동아오츠카.webp', '동아오츠카'],
+  ['logos/010-디오션리조트.webp', '디오션리조트'],
+  ['logos/xgewebp-르노코리아자동차.webp', '르노코리아자동차'],
+  ['logos/012-미디어윌.webp', '미디어윌'],
+  ['logos/013-미래에셋증권.webp', '미래에셋증권'],
+  ['logos/014-바이드뮬러코리아.webp', '바이드뮬러코리아'],
+  ['logos/015-반얀트리.webp', '반얀트리'],
+  ['logos/016-부산디자인센터.webp', '부산디자인센터'],
+  ['logos/017-삼성전자.webp', '삼성전자'],
+  ['logos/018-서울관광재단.webp', '서울관광재단'],
+  ['logos/019-수협은행.webp', '수협은행'],
+  ['logos/020-순천시.webp', '순천시'],
+  ['logos/021-신한은행.webp', '신한은행'],
+  ['logos/022-아모스프로페셔널.webp', '아모스프로페셔널'],
+  ['logos/023-에스원.webp', '에스원'],
+  ['logos/024-엘지유플러스.webp', '엘지유플러스'],
+  ['logos/025-우리은행.webp', '우리은행'],
+  ['logos/026-워커힐호텔앤리조트.webp', '워커힐호텔앤리조트'],
+  ['logos/027-유진투자증권.webp', '유진투자증권'],
+  ['logos/858-이랜드FC.webp', '이랜드FC'],
+  ['logos/029-인천공항.webp', '인천공항'],
+  ['logos/030-전남드래곤즈.webp', '전남드래곤즈'],
+  ['logos/031-코레일.webp', '코레일'],
+  ['logos/032-팜스코.webp', '팜스코'],
+  ['logos/033-하나은행.webp', '하나은행'],
+  ['logos/034-한국공항공사.webp', '한국공항공사'],
+  ['logos/035-한국GM.webp', '한국GM'],
+  ['logos/036-현대엘리베이터서비스.webp', '현대엘리베이터서비스'],
+  ['logos/037-현대자동차.webp', '현대자동차'],
+  ['logos/038-휘닉스호텔앤리조트.webp', '휘닉스호텔앤리조트'],
+  ['logos/039-BGF리테일.webp', 'BGF리테일'],
+  ['logos/040-BMW.webp', 'BMW'],
+  ['logos/041-IBK기업은행.webp', 'IBK기업은행'],
+  ['logos/042-KB국민은행.webp', 'KB국민은행'],
+  ['logos/540-KB리브모바일.webp', 'KB리브모바일'],
+  ['logos/044-KB증권.webp', 'KB증권'],
+  ['logos/045-KTestate.webp', 'KTestate'],
+  ['logos/046-LG전자.webp', 'LG전자'],
+  ['logos/047-LS엠트론.webp', 'LS엠트론'],
+  ['logos/048-NH투자증권.webp', 'NH투자증권'],
+  ['logos/049-NICE그룹.webp', 'NICE그룹']
 ];
 // 홈페이지와 같이 첫 줄 25개, 둘째 줄 24개. 같은 묶음을 두 번 이어 붙여 끊김 없이 돈다(두 번째 묶음은 보조기기에서 숨김)
 function fillTrack(el, list) {
@@ -647,7 +645,7 @@ const slider = (() => {
   const slides = [...document.querySelectorAll('.slide')], dots = [...document.querySelectorAll('.slide-dot')];
   const chars = el => splits.get(el.querySelector('.slide-title'));
   const sub = el => el.querySelector('.hero-sub');
-  let cur = 0, timer = null, auto = !reduce, hold = false, started = false;
+  let cur = 0, timer = null, auto = !reduce, hold = false, started = false, touched = false;
   slides.forEach((sl, i) => { if (i) gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); });
 
   function show(n) {
@@ -674,7 +672,7 @@ const slider = (() => {
   }
   function schedule() {
     clearTimeout(timer);
-    if (!started || !auto || hold) return;
+    if (!started || !auto || hold || touched) return;
     timer = setTimeout(() => {
       if (heroVisible && !document.hidden) show((cur + 1) % slides.length);
       schedule();
@@ -684,6 +682,8 @@ const slider = (() => {
   const setHold = v => { hold = v; schedule(); };
   box.addEventListener('mouseenter', () => setHold(true));
   box.addEventListener('mouseleave', () => setHold(box.contains(document.activeElement)));
+  // 터치로 만지면 자동 전환 멈춤 (손가락에는 마우스 올림 같은 멈춤 수단이 없음)
+  box.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { touched = true; clearTimeout(timer); } });
   box.addEventListener('focusin', () => setHold(true));
   box.addEventListener('focusout', e => { if (!box.contains(e.relatedTarget)) setHold(false); });
   return { start() { started = true; schedule(); } };

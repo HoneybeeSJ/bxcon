@@ -27,7 +27,7 @@ button{font-family:inherit}
 .w{display:inline-block;white-space:nowrap}
 .ch{display:inline-block}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.skip{position:fixed;left:16px;top:-80px;z-index:100;background:var(--blue);color:#fff;padding:12px 18px;border-radius:var(--r-pill);font-weight:600;transition:top .2s}
+.skip{position:fixed;left:16px;top:-80px;z-index:100;background:var(--blue);color:#fff;padding:13px 18px;border-radius:var(--r-pill);font-weight:600;transition:top .2s}
 .skip:focus{top:16px}
 a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
 [data-dark] a:focus-visible,[data-dark] button:focus-visible{outline-color:var(--sky)}
@@ -47,7 +47,8 @@ header.on-dark.scrolled{background:rgba(11,18,48,.6)}
 header.on-dark .logo b{color:var(--sky)}
 nav{display:flex;gap:24px;font-size:15px;font-weight:500}
 nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;opacity:.82;transition:opacity .2s}
-nav a:hover{opacity:1}
+nav a:hover,nav a:focus-visible{opacity:1}
+.btn,a,button{touch-action:manipulation}
 .hdr-r{display:flex;gap:10px;align-items:center}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;border:1.5px solid currentColor;padding:10px 20px;border-radius:var(--r-pill);font-size:14px;font-weight:700;background:transparent;color:inherit;cursor:pointer;transition:background-color .25s,border-color .25s,color .25s}
 .btn:hover,.btn:focus-visible{background:var(--blue);border-color:var(--blue);color:#fff}
@@ -71,7 +72,7 @@ nav a:hover{opacity:1}
 .hero-sub{margin-top:14px;font-size:clamp(15px,1.25vw,18px);color:var(--mute);font-weight:500}
 .hero-row{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:32px}
 .slide-ctrl{display:flex;gap:2px}
-.slide-dot{width:32px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
+.slide-dot{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
 .slide-dot::before{content:'';width:8px;height:8px;border-radius:var(--r-pill);background:#c3cde6;transition:width .3s,background-color .3s}
 .slide-dot[aria-current="true"]::before{width:24px;background:var(--blue)}
 .st-line{position:absolute;z-index:2;font-size:clamp(26px,3.4vw,54px);font-weight:700;line-height:1.3;letter-spacing:-.03em;opacity:0;max-width:min(92vw,900px)}
@@ -91,12 +92,13 @@ nav a:hover{opacity:1}
 .biz-glow{position:absolute;right:-8%;top:50%;width:62vw;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(47,99,255,.17) 0,transparent 62%);pointer-events:none}
 .biz-stage{position:absolute;inset:0}
 .chap{position:absolute;inset:0;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:4vw;padding:96px var(--gut) 96px;visibility:hidden;opacity:0}
-.chap .num{display:block;font-size:15px;font-weight:700;letter-spacing:.06em;color:var(--blue);font-variant-numeric:tabular-nums}
+.chap .num{display:block;font-size:15px;font-weight:700;letter-spacing:.06em;color:var(--blue-d);font-variant-numeric:tabular-nums}
 .chap h3{overflow:hidden;font-size:clamp(36px,4.6vw,72px);font-weight:800;letter-spacing:-.045em;line-height:1.2;padding-bottom:.1em;margin:14px 0 14px}
 .chap h3 span{display:block}
 .chap p{font-size:clamp(16px,1.3vw,19px);line-height:1.7;color:var(--mute);max-width:36ch}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 30px;list-style:none}
 .tags li{font-size:14px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(47,99,255,.08);border:1px solid rgba(47,99,255,.28);color:#2547b8;font-weight:600}
+.chap .btn{min-height:44px}
 .chap .btn:hover,.chap .btn:focus-visible{background:var(--blue);border-color:var(--blue);color:#fff}
 .art-wrap{container-type:inline-size;width:min(40vw,560px);justify-self:center}
 .art{position:relative;width:100%;height:calc(100cqw * 34 / 42);font-size:calc(100cqw / 42);color:var(--ink);font-weight:500}
@@ -247,7 +249,7 @@ nav a:hover{opacity:1}
 .case-img{aspect-ratio:8/5;background:#fff;border-bottom:1px solid var(--line)}
 .case-img img{width:100%;height:100%;object-fit:contain;display:block}
 .case-body{padding:24px 28px 30px}
-.case-meta{font-size:14px;font-weight:600;color:var(--blue)}
+.case-meta{font-size:14px;font-weight:600;color:var(--blue-d)}
 .case h3{font-size:clamp(19px,1.6vw,23px);line-height:1.4;margin:8px 0 10px;letter-spacing:-.02em}
 .case p{font-size:15px;color:var(--mute);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
@@ -257,11 +259,11 @@ nav a:hover{opacity:1}
 .ins-list{list-style:none;border-top:1px solid var(--line)}
 .ins{display:grid;grid-template-columns:150px 1fr 220px;gap:32px;align-items:center;padding:28px 0;border-bottom:1px solid var(--line)}
 .ins-type{display:flex;flex-direction:column;gap:6px}
-.ins-type b{font-size:16px;color:var(--blue)}
+.ins-type b{font-size:16px;color:var(--blue-d)}
 .ins-type a{display:inline-flex;align-items:center;font-size:14px;color:var(--mute);min-height:44px}
-.ins-type a:hover{color:var(--ink)}
+.ins-type a:hover,.ins-type a:focus-visible{color:var(--ink)}
 .ins-main h3{font-size:clamp(18px,1.6vw,22px);line-height:1.45;letter-spacing:-.02em;transition:color .2s}
-.ins-main:hover h3{color:var(--blue)}
+.ins-main:hover h3,.ins-main:focus-visible h3{color:var(--blue)}
 .ins-main p{margin-top:8px;font-size:15px;color:var(--mute);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ins-thumb{display:block;border-radius:var(--r-tag);overflow:hidden;background:#fff;border:1px solid var(--line)}
 .ins-thumb img{width:100%;height:auto;display:block}
@@ -324,7 +326,7 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .art-note{position:static;margin:14px var(--gut) 0}
   .biz-prog{position:static;margin:22px var(--gut) 0}
   .biz-nav{position:relative;z-index:2;display:flex;align-items:center;gap:10px;margin:14px var(--gut) 0}
-  .biz-cnt{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--blue)}
+  .biz-cnt{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--blue-d)}
   .biz-cnt{margin-right:4px}
   .biz-hint{font-size:13px;color:var(--mute);margin-left:4px}
   .flow{min-height:0;padding-top:14vh}
@@ -494,9 +496,9 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
     </div>
   </div>
   <div class="cases-track" tabindex="-1">
-    <a class="case" href="https://www.bxcon.co.kr/portfolio/fm-서비스-품질-모니터링-조사-및-고객만족도-조사/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/fm-service-quality-hero.jpg" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">리서치</span><h3>FM 서비스 품질 모니터링 조사 및 고객만족도 조사</h3><span class="sr-only"> (새 창)</span><p>리서치 관점에서 대규모 건물관리 점검 방법 부재 문제를 해결하기 위해 구조화된 점검표에 의한 모니터링 조사 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
-    <a class="case" href="https://www.bxcon.co.kr/portfolio/고객사-고유-분석을-반영한-커스텀-ai-챗봇-제작/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/custom-ai-chatbot-hero.jpg" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">AI · 2026-04-03</span><h3>고객사 고유 분석을 반영한 커스텀 AI 챗봇 제작</h3><span class="sr-only"> (새 창)</span><p>AI 관점에서 모바일앱(MTS) 사용자 경험 강화를 위한 혁신적인 접근 방안 부재 문제를 해결하기 위해 RFP 이전부터 기술적 요구사항 정리 및 제안 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
-    <a class="case" href="https://www.bxcon.co.kr/portfolio/사내-erp-연동-자연어-검색-text-to-sql-ai-도입/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/erp-natural-language-hero.jpg" alt="" loading="lazy"></div><div class="case-body"><span class="case-meta">AI · 2026-04-03</span><h3>사내 ERP 연동 자연어 검색(Text-to-SQL) AI 도입</h3><span class="sr-only"> (새 창)</span><p>AI 관점에서 사내 ERP 시스템에서 고객 및 제품 정보를 검색하고 활용하는 데 많은 시간과 노력 소요 문제를 해결하기 위해 사내 ERP의 고객 및 제품 정보를 자연어로 즉시 검색할 수 있는 데이터 분석 기반 AI 도입 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case" href="https://www.bxcon.co.kr/portfolio/fm-서비스-품질-모니터링-조사-및-고객만족도-조사/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/fm-service-quality-hero.jpg" alt="" loading="lazy" width="1200" height="749"></div><div class="case-body"><span class="case-meta">리서치</span><h3>FM 서비스 품질 모니터링 조사 및 고객만족도 조사</h3><span class="sr-only"> (새 창)</span><p>리서치 관점에서 대규모 건물관리 점검 방법 부재 문제를 해결하기 위해 구조화된 점검표에 의한 모니터링 조사 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case" href="https://www.bxcon.co.kr/portfolio/고객사-고유-분석을-반영한-커스텀-ai-챗봇-제작/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/custom-ai-chatbot-hero.jpg" alt="" loading="lazy" width="1200" height="751"></div><div class="case-body"><span class="case-meta">AI · 2026-04-03</span><h3>고객사 고유 분석을 반영한 커스텀 AI 챗봇 제작</h3><span class="sr-only"> (새 창)</span><p>AI 관점에서 모바일앱(MTS) 사용자 경험 강화를 위한 혁신적인 접근 방안 부재 문제를 해결하기 위해 RFP 이전부터 기술적 요구사항 정리 및 제안 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
+    <a class="case" href="https://www.bxcon.co.kr/portfolio/사내-erp-연동-자연어-검색-text-to-sql-ai-도입/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/erp-natural-language-hero.jpg" alt="" loading="lazy" width="1200" height="751"></div><div class="case-body"><span class="case-meta">AI · 2026-04-03</span><h3>사내 ERP 연동 자연어 검색(Text-to-SQL) AI 도입</h3><span class="sr-only"> (새 창)</span><p>AI 관점에서 사내 ERP 시스템에서 고객 및 제품 정보를 검색하고 활용하는 데 많은 시간과 노력 소요 문제를 해결하기 위해 사내 ERP의 고객 및 제품 정보를 자연어로 즉시 검색할 수 있는 데이터 분석 기반 AI 도입 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
   </div>
 </section>
 
@@ -504,9 +506,9 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
 <section class="insight pad" id="insight" aria-labelledby="insTitle">
   <div class="sec-head"><h2 class="h2 split reveal" id="insTitle">인사이트</h2></div>
   <ul class="ins-list">
-    <li class="ins fx-up"><div class="ins-type"><b>레터</b><a href="https://www.bxcon.co.kr/insight/" target="_blank" rel="noopener">레터 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener"><h3>챗봇의 함정: 고객 등급이 높을수록 챗봇에 대한 거부감도 커진다<span class="sr-only"> (새 창)</span></h3><p>상위 고객일수록 챗봇의 획일적 응대에 민감하므로, 고객 가치에 따른 차별화된 서비스 설계가 필요합니다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/premium-customer-chatbot-rejection_upload.jpg" alt="" loading="lazy"></a></li>
-    <li class="ins fx-up"><div class="ins-type"><b>기획조사</b><a href="https://www.bxcon.co.kr/report/" target="_blank" rel="noopener">기획조사 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener"><h3>‘조용한 사직’의 두 얼굴, ‘선 긋기’ 아닌 ‘적당히’가 이탈 신호<span class="sr-only"> (새 창)</span></h3><p>전국 직장인 3,000명 조사에서 조용한 사직은 경계 설정과 노력 철회로 나뉘었다. 경계 설정은 직무만족·성과와 함께 높아졌고, 노력 철회 상위 집단의 절반은 이직을 고려했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/quiet-quitting-hero.jpg" alt="" loading="lazy"></a></li>
-    <li class="ins fx-up"><div class="ins-type"><b>보도자료</b><a href="https://www.bxcon.co.kr/press/" target="_blank" rel="noopener">보도자료 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener"><h3>가족 같은 회사는 그만… 직장인은 ‘프로 팀’을 원한다<span class="sr-only"> (새 창)</span></h3><p>직장인이 선호하는 조직 문화가 ‘가족 같은 회사’에서 ‘프로 팀’으로 이동하고 있는 것으로 나타났다. 상사와의 관계보다 동료와의 협업, 과도한 친밀감보다 역할과 성과 중심의 관계를 중시하는 경향이 뚜렷했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/hero.png" alt="" loading="lazy"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>레터</b><a href="https://www.bxcon.co.kr/insight/" target="_blank" rel="noopener">레터 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener"><h3>챗봇의 함정: 고객 등급이 높을수록 챗봇에 대한 거부감도 커진다<span class="sr-only"> (새 창)</span></h3><p>상위 고객일수록 챗봇의 획일적 응대에 민감하므로, 고객 가치에 따른 차별화된 서비스 설계가 필요합니다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/insight/챗봇의-함정-중요한-고객일수록-자동화를-싫어할-수-있다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/premium-customer-chatbot-rejection_upload.jpg" alt="" loading="lazy" width="960" height="507"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>기획조사</b><a href="https://www.bxcon.co.kr/report/" target="_blank" rel="noopener">기획조사 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener"><h3>‘조용한 사직’의 두 얼굴, ‘선 긋기’ 아닌 ‘적당히’가 이탈 신호<span class="sr-only"> (새 창)</span></h3><p>전국 직장인 3,000명 조사에서 조용한 사직은 경계 설정과 노력 철회로 나뉘었다. 경계 설정은 직무만족·성과와 함께 높아졌고, 노력 철회 상위 집단의 절반은 이직을 고려했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/report/조용한-사직의-두-얼굴-선-긋기-아닌-적당히가-이탈-신호/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/quiet-quitting-hero.jpg" alt="" loading="lazy" width="960" height="600"></a></li>
+    <li class="ins fx-up"><div class="ins-type"><b>보도자료</b><a href="https://www.bxcon.co.kr/press/" target="_blank" rel="noopener">보도자료 전체 보기 ↗</a></div><a class="ins-main" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener"><h3>가족 같은 회사는 그만… 직장인은 ‘프로 팀’을 원한다<span class="sr-only"> (새 창)</span></h3><p>직장인이 선호하는 조직 문화가 ‘가족 같은 회사’에서 ‘프로 팀’으로 이동하고 있는 것으로 나타났다. 상사와의 관계보다 동료와의 협업, 과도한 친밀감보다 역할과 성과 중심의 관계를 중시하는 경향이 뚜렷했다.</p></a><a class="ins-thumb" href="https://www.bxcon.co.kr/press/가족-같은-회사는-그만-직장인은-프로-팀을-원한다/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="assets/img/hero.png" alt="" loading="lazy" width="960" height="720"></a></li>
   </ul>
 </section>
 
@@ -923,7 +925,7 @@ const slider = (() => {
   const slides = [...document.querySelectorAll('.slide')], dots = [...document.querySelectorAll('.slide-dot')];
   const chars = el => splits.get(el.querySelector('.slide-title'));
   const sub = el => el.querySelector('.hero-sub');
-  let cur = 0, timer = null, hold = false, started = false;
+  let cur = 0, timer = null, hold = false, started = false, touched = false;
   const heroOn = () => scrollY < innerHeight * 0.3;
   slides.forEach((sl, i) => { if (i) gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); });
   function show(n) {
@@ -950,13 +952,15 @@ const slider = (() => {
   }
   function schedule() {
     clearTimeout(timer);
-    if (!started || reduce || hold) return;
+    if (!started || reduce || hold || touched) return;
     timer = setTimeout(() => { if (heroOn() && !document.hidden) show((cur + 1) % slides.length); schedule(); }, 5000);
   }
   dots.forEach((d, i) => d.addEventListener('click', () => { show(i); schedule(); }));
   const setHold = v => { hold = v; schedule(); };
   box.addEventListener('mouseenter', () => setHold(true));
   box.addEventListener('mouseleave', () => setHold(box.contains(document.activeElement)));
+  // 터치로 만지면 자동 전환 멈춤 (손가락에는 마우스 올림 같은 멈춤 수단이 없음)
+  box.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { touched = true; clearTimeout(timer); } });
   box.addEventListener('focusin', () => setHold(true));
   box.addEventListener('focusout', e => { if (!box.contains(e.relatedTarget)) setHold(false); });
   onSwipe(box, dir => { show((cur + dir + slides.length) % slides.length); schedule(); });
