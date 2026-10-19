@@ -64,17 +64,12 @@ nav a:hover,nav a:focus-visible{opacity:1}
 #storyCv{position:absolute;inset:0;width:100%;height:100%}
 .hero-first{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:center;padding-bottom:9vh;text-align:center}
 .hero-copy{width:100%}
-.slides{display:grid;justify-items:center;max-width:min(92vw,1100px);margin:0 auto}
-.slide{grid-area:1/1;visibility:hidden}
-.slide.is-active{visibility:visible}
-.slide-title{font-size:clamp(32px,4.6vw,76px);font-weight:800;line-height:1.2;letter-spacing:-.045em}
+.slides{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2.6vh,28px);max-width:min(92vw,1100px);margin:0 auto}
+.slide-title{font-size:clamp(26px,3.2vw,50px);font-weight:800;line-height:1.2;letter-spacing:-.045em}
+.slide-title br{display:none}
 .slide-title em{font-style:normal;color:var(--blue)}
-.hero-sub{margin-top:14px;font-size:clamp(15px,1.25vw,18px);color:var(--mute);font-weight:500}
+.hero-sub{margin-top:6px;font-size:clamp(14px,1.1vw,17px);color:var(--mute);font-weight:500}
 .hero-row{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:32px}
-.slide-ctrl{display:flex;gap:2px}
-.slide-dot{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
-.slide-dot::before{content:'';width:8px;height:8px;border-radius:var(--r-pill);background:#c3cde6;transition:width .3s,background-color .3s}
-.slide-dot[aria-current="true"]::before{width:24px;background:var(--blue)}
 .st-line{position:absolute;z-index:2;font-size:clamp(26px,3.4vw,54px);font-weight:700;line-height:1.3;letter-spacing:-.03em;opacity:0;max-width:min(92vw,900px)}
 .st-line em{font-style:normal;color:var(--blue)}
 .st-1{left:50%;top:20%;transform:translateX(-50%);text-align:center;width:max-content}
@@ -233,15 +228,9 @@ nav a:hover,nav a:focus-visible{opacity:1}
 .cases-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:6vh}
 .cases-head .h2{font-size:clamp(40px,5.4vw,88px);line-height:1.08}
 .cases-ctrl{display:flex;align-items:center;gap:14px}
-.cases-ctrl .count{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
 .link-more{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
-.cases-track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 var(--gut) 8px;scroll-padding:0 var(--gut)}
-.cases-track::-webkit-scrollbar{display:none}
-.cases-track{cursor:grab}
-.cases-track.dragging{cursor:grabbing;scroll-snap-type:none;user-select:none;-webkit-user-select:none}
-.cases-track a,.cases-track img{-webkit-user-drag:none}
-.swiping{user-select:none;-webkit-user-select:none}
-.case{flex:0 0 min(560px,82vw);scroll-snap-align:start;display:flex;flex-direction:column;background:linear-gradient(160deg,#fff,rgba(255,255,255,.86));color:var(--ink);border:1px solid rgba(47,99,255,.14);box-shadow:0 22px 50px rgba(30,60,140,.12),0 2px 8px rgba(30,60,140,.06);border-radius:24px;overflow:hidden;transition:transform .35s,box-shadow .35s}
+.cases-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:24px;padding:0 var(--gut)}
+.case{display:flex;flex-direction:column;background:linear-gradient(160deg,#fff,rgba(255,255,255,.86));color:var(--ink);border:1px solid rgba(47,99,255,.14);box-shadow:0 22px 50px rgba(30,60,140,.12),0 2px 8px rgba(30,60,140,.06);border-radius:24px;overflow:hidden;transition:transform .35s,box-shadow .35s}
 .case:hover,.case:focus-visible{transform:translateY(-6px);box-shadow:0 30px 60px rgba(30,60,140,.18),0 2px 8px rgba(30,60,140,.06)}
 .case-img{aspect-ratio:8/5;background:#fff;border-bottom:1px solid var(--line)}
 .case-img img{width:100%;height:100%;object-fit:contain;display:block}
@@ -297,7 +286,6 @@ footer{border-top:1px solid var(--line);padding-top:28px;padding-bottom:28px;fon
 footer address{font-style:normal}
 footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
 
-.biz-nav{display:none}
 
 /* 모바일 모션: 랜딩은 PC처럼 고정 장면, 서비스 7개는 옆으로 넘기는 카드 */
 @media (max-width:768px) and (prefers-reduced-motion:no-preference){
@@ -305,24 +293,18 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .st-1{top:18%}
   .st-2{top:34%}
   .st-3{top:50%}
-  .biz{height:auto;overflow:hidden;padding:12vh 0 8vh}
+  .biz{height:auto;overflow:hidden;padding:12vh var(--gut) 8vh}
   .biz-glow{right:-40%;width:120vw;top:38%}
-  .biz-stage{position:relative;display:flex;gap:16px;padding:0 var(--gut);touch-action:pan-y;cursor:grab;will-change:transform}
-  .biz-stage.dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
-  .biz-stage a{-webkit-user-drag:none}
-  .chap{position:relative;inset:auto;flex:0 0 86%;scroll-snap-align:start;scroll-snap-stop:always;visibility:visible;opacity:1;grid-template-columns:1fr;align-content:start;gap:22px;padding:0;opacity:.35;transform:scale(.96);transform-origin:left center;transition:opacity .45s,transform .45s}
-  .chap.is-cur{opacity:1;transform:none}
+  .biz-stage{position:static}
+  .chap{position:static;visibility:visible;opacity:1;grid-template-columns:1fr;align-content:start;gap:18px;padding:36px 0;border-top:1px solid rgba(15,23,40,.1)}
+  .chap:first-child{border-top:0;padding-top:0}
   .art-wrap{width:100%;justify-self:start;order:-1}
   .chap h3{font-size:clamp(28px,7.6vw,38px);margin:8px 0 10px}
   .chap p{font-size:15.5px}
   .tags{margin:18px 0 22px}
   .tags li{font-size:13px;padding:5px 12px}
-  .art-note{position:static;margin:14px var(--gut) 0}
-  .biz-prog{position:static;margin:22px var(--gut) 0}
-  .biz-nav{position:relative;z-index:2;display:flex;align-items:center;gap:10px;margin:14px var(--gut) 0}
-  .biz-cnt{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--blue-d)}
-  .biz-cnt{margin-right:4px}
-  .biz-hint{font-size:13px;color:var(--mute);margin-left:4px}
+  .art-note{position:static;margin:14px 0 0}
+  .biz-prog{display:none}
   .flow{min-height:0;padding-top:14vh}
 }
 
@@ -362,7 +344,7 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .hdr-r .btn{padding:8px 14px}
   .hdr-r .btn.cta-top{display:none}
   .slides{max-width:none}
-  .slide-title{font-size:8.4vw}
+  .slide-title{font-size:clamp(20px,5.8vw,28px)}
   .hero-row{margin-top:28px}
   .crm{grid-template-columns:1fr;padding-top:12vh}
   .crm-shot img{margin:0 auto}
@@ -406,18 +388,13 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   <canvas id="storyCv" aria-hidden="true"></canvas>
   <div class="hero-first pad">
     <div class="hero-copy">
-    <div class="slides" role="region" aria-roledescription="carousel" aria-label="핵심 메시지">
-      <div class="slide is-active" role="group" aria-roledescription="slide" aria-label="3개 중 1번째"><h1 class="slide-title split"><em>팔리는 구조</em>를<br> 설계합니다</h1><p class="hero-sub" lang="en">We Engineer Revenue, Not Luck</p></div>
-      <div class="slide" role="group" aria-roledescription="slide" aria-label="3개 중 2번째" aria-hidden="true"><p class="slide-title split"><em>고객의 경험</em>을<br> 가치로 전환합니다</p><p class="hero-sub" lang="en">Transforming Every Customer Touchpoint into Brand Value</p></div>
-      <div class="slide" role="group" aria-roledescription="slide" aria-label="3개 중 3번째" aria-hidden="true"><p class="slide-title split"><em>AI 에이전트</em>가 일하는<br> 조직으로 진화합니다</p><p class="hero-sub" lang="en">Evolving Organizations to Work with AI Agents</p></div>
+    <div class="slides">
+      <div class="slide"><h1 class="slide-title split"><em>팔리는 구조</em>를<br> 설계합니다</h1><p class="hero-sub" lang="en">We Engineer Revenue, Not Luck</p></div>
+      <div class="slide"><p class="slide-title split"><em>고객의 경험</em>을<br> 가치로 전환합니다</p><p class="hero-sub" lang="en">Transforming Every Customer Touchpoint into Brand Value</p></div>
+      <div class="slide"><p class="slide-title split"><em>AI 에이전트</em>가 일하는<br> 조직으로 진화합니다</p><p class="hero-sub" lang="en">Evolving Organizations to Work with AI Agents</p></div>
     </div>
     <div class="hero-row">
       <a class="btn big" href="#cta">프로젝트 문의 <span class="arr" aria-hidden="true">↗</span></a>
-      <div class="slide-ctrl">
-        <button class="slide-dot" type="button" aria-label="1번째 문구 보기" aria-current="true"></button>
-        <button class="slide-dot" type="button" aria-label="2번째 문구 보기" aria-current="false"></button>
-        <button class="slide-dot" type="button" aria-label="3번째 문구 보기" aria-current="false"></button>
-      </div>
     </div>
     </div>
   </div>
@@ -441,8 +418,6 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   </div>
   <p class="art-note" aria-hidden="true">그래픽의 수치는 이해를 돕기 위한 예시입니다.</p>
   <div class="biz-prog" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
-  <!-- 모바일 전용: 스와이프 위치 표시와 이전·다음 버튼 -->
-  <div class="biz-nav"><span class="biz-cnt" aria-live="polite">01 / 07</span><span class="biz-hint" aria-hidden="true">옆으로 넘겨보세요</span></div>
 </section>
 
 <!-- 4 CRM 예시 (홈페이지 원문, 오른쪽은 실제 CRM 예시 페이지 캡처) -->
@@ -483,10 +458,9 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
     <h2 class="h2 split reveal" id="casesTitle">수행사례</h2>
     <div class="cases-ctrl">
       <a class="link-more" href="https://www.bxcon.co.kr/portfolio/" target="_blank" rel="noopener">전체 수행사례 보기</a>
-      <span class="count" aria-live="polite">01 / 03</span>
     </div>
   </div>
-  <div class="cases-track" tabindex="-1">
+  <div class="cases-track">
     <a class="case" href="https://www.bxcon.co.kr/portfolio/fm-서비스-품질-모니터링-조사-및-고객만족도-조사/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/fm-service-quality-hero.jpg" alt="" loading="lazy" width="1200" height="749"></div><div class="case-body"><span class="case-meta">리서치</span><h3>FM 서비스 품질 모니터링 조사 및 고객만족도 조사</h3><span class="sr-only"> (새 창)</span><p>리서치 관점에서 대규모 건물관리 점검 방법 부재 문제를 해결하기 위해 구조화된 점검표에 의한 모니터링 조사 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
     <a class="case" href="https://www.bxcon.co.kr/portfolio/고객사-고유-분석을-반영한-커스텀-ai-챗봇-제작/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/custom-ai-chatbot-hero.jpg" alt="" loading="lazy" width="1200" height="751"></div><div class="case-body"><span class="case-meta">AI · 2026-04-03</span><h3>고객사 고유 분석을 반영한 커스텀 AI 챗봇 제작</h3><span class="sr-only"> (새 창)</span><p>AI 관점에서 모바일앱(MTS) 사용자 경험 강화를 위한 혁신적인 접근 방안 부재 문제를 해결하기 위해 RFP 이전부터 기술적 요구사항 정리 및 제안 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
     <a class="case" href="https://www.bxcon.co.kr/portfolio/사내-erp-연동-자연어-검색-text-to-sql-ai-도입/" target="_blank" rel="noopener"><div class="case-img"><img src="assets/img/erp-natural-language-hero.jpg" alt="" loading="lazy" width="1200" height="751"></div><div class="case-body"><span class="case-meta">AI · 2026-04-03</span><h3>사내 ERP 연동 자연어 검색(Text-to-SQL) AI 도입</h3><span class="sr-only"> (새 창)</span><p>AI 관점에서 사내 ERP 시스템에서 고객 및 제품 정보를 검색하고 활용하는 데 많은 시간과 노력 소요 문제를 해결하기 위해 사내 ERP의 고객 및 제품 정보를 자연어로 즉시 검색할 수 있는 데이터 분석 기반 AI 도입 등을 수행한 BXCON 포트폴리오 사례입니다.</p></div></a>
@@ -679,47 +653,6 @@ function fillTrack(el, list) {
 fillTrack(document.getElementById('mqA'), LOGOS.slice(0, 25));
 fillTrack(document.getElementById('mqB'), LOGOS.slice(25));
 
-/* ---------- 수행사례 가로 카드: 화살표·번호 ---------- */
-(() => {
-  const track = document.querySelector('.cases-track'), cards = [...track.children];
-  const count = document.querySelector('.cases-ctrl .count');
-  const idx = () => {
-    const x = track.scrollLeft; let best = 0;
-    cards.forEach((c, i) => { if (Math.abs(c.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft) - x) < Math.abs(cards[best].offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft) - x)) best = i; });
-    const end = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-    return end ? cards.length - 1 : best;
-  };
-  const sync = () => {
-    const i = idx();
-    count.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(cards.length).padStart(2, '0');
-  };
-  track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
-  addEventListener('resize', sync); sync();
-
-  // PC 마우스로 끌어서 넘기기 (손가락은 브라우저 기본 가로 스크롤·스냅 그대로). 놓으면 가장 가까운 카드로 맞춤
-  let p = null, moved = false;
-  track.addEventListener('pointerdown', e => {
-    if (e.pointerType !== 'mouse' || e.button > 0) return;
-    p = { x: e.clientX, left: track.scrollLeft, id: e.pointerId }; moved = false;
-  });
-  track.addEventListener('pointermove', e => {
-    if (!p || e.pointerId !== p.id) return;
-    const dx = e.clientX - p.x;
-    if (!moved) { if (Math.abs(dx) < 6) return; moved = true; track.classList.add('dragging'); try { track.setPointerCapture(p.id); } catch (_) {} }
-    track.scrollLeft = p.left - dx;
-  });
-  const end = e => {
-    if (!p || e.pointerId !== p.id) return;
-    const dx = e.clientX - p.x, step = cards[0].offsetWidth + 24, was = moved, from = Math.round(p.left / step);
-    p = null; track.classList.remove('dragging');
-    if (!was) return;
-    const to = clamp(dx < -50 ? from + 1 : dx > 50 ? from - 1 : from, 0, cards.length - 1);
-    track.scrollTo({ left: to * step, behavior: reduce ? 'auto' : 'smooth' });
-    setTimeout(() => { moved = false; }, 0);
-  };
-  track.addEventListener('pointerup', end); track.addEventListener('pointercancel', end);
-  track.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);  // 끈 다음 놓을 때 링크가 열리지 않게
-})();
 
 /* ---------- 줄무늬 BX 선 그래픽 (히어로·스토리 공용) ---------- */
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -854,87 +787,7 @@ const story = Field(document.getElementById('storyCv'), {
   parallax: document.querySelector('.story')
 });
 
-/* ---------- 가로 스와이프 공통 (손가락·마우스): 50px 이상 또는 빠르게 밀면 fn(+1 다음 / -1 이전). 세로로 움직이면 그대로 페이지 스크롤 ---------- */
-function onSwipe(el, fn) {
-  let p = null, dragged = false;
-  const down = e => {
-    if (e.button > 0 || e.target.closest('button, input')) return;
-    p = { x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId, dir: '' }; dragged = false;
-  };
-  const move = e => {
-    if (!p || e.pointerId !== p.id) return;
-    const dx = e.clientX - p.x, dy = e.clientY - p.y;
-    if (!p.dir) {
-      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-      p.dir = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-      if (p.dir === 'x') { try { el.setPointerCapture(e.pointerId); } catch (_) {} el.classList.add('swiping'); }
-    }
-    if (p.dir === 'x') dragged = true;
-  };
-  const up = e => {
-    if (!p || e.pointerId !== p.id) return;
-    const dx = e.clientX - p.x, vel = dx / Math.max(1, performance.now() - p.t), was = p.dir === 'x';
-    p = null; el.classList.remove('swiping');
-    if (was && e.type === 'pointerup' && (Math.abs(dx) > 50 || Math.abs(vel) > 0.4)) fn(dx < 0 ? 1 : -1);
-  };
-  const click = e => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } };  // 끈 다음 손을 뗄 때 링크가 열리지 않게
-  el.style.touchAction = 'pan-y pinch-zoom';
-  el.addEventListener('pointerdown', down); el.addEventListener('pointermove', move);
-  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('click', click, true);
-  return () => {
-    el.style.touchAction = '';
-    el.removeEventListener('pointerdown', down); el.removeEventListener('pointermove', move);
-    el.removeEventListener('pointerup', up); el.removeEventListener('pointercancel', up); el.removeEventListener('click', click, true);
-  };
-}
 
-/* ---------- 히어로 문구 3장 순환 (5초, 마우스·포커스 시 멈춤) ---------- */
-const slider = (() => {
-  const box = document.querySelector('.hero-first');
-  const slides = [...document.querySelectorAll('.slide')], dots = [...document.querySelectorAll('.slide-dot')];
-  const chars = el => splits.get(el.querySelector('.slide-title'));
-  const sub = el => el.querySelector('.hero-sub');
-  let cur = 0, timer = null, hold = false, started = false, touched = false;
-  const heroOn = () => scrollY < innerHeight * 0.3;
-  slides.forEach((sl, i) => { if (i) gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); });
-  function show(n) {
-    if (n === cur) return;
-    const out = slides[cur], inn = slides[n];
-    slides.forEach((sl, i) => {
-      gsap.killTweensOf([...chars(sl), sub(sl)]);
-      if (sl !== out && sl !== inn) { sl.classList.remove('is-active'); gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); }
-      sl.setAttribute('aria-hidden', i === n ? 'false' : 'true');
-    });
-    inn.classList.add('is-active');
-    if (reduce) {
-      out.classList.remove('is-active');
-      gsap.set([...chars(out), sub(out)], { opacity: 0 });
-      gsap.set([...chars(inn), sub(inn)], { opacity: 1, yPercent: 0, y: 0 });
-    } else {
-      gsap.to(chars(out), { opacity: 0, yPercent: -50, stagger: 0.01, duration: 0.35, ease: 'power2.in' });
-      gsap.to(sub(out), { opacity: 0, duration: 0.3, onComplete: () => { if (cur !== slides.indexOf(out)) out.classList.remove('is-active'); } });
-      gsap.fromTo(chars(inn), { opacity: 0, yPercent: 70 }, { opacity: 1, yPercent: 0, stagger: 0.025, duration: 0.6, ease: 'power3.out', delay: 0.25 });
-      gsap.fromTo(sub(inn), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.5 });
-    }
-    dots.forEach((d, i) => d.setAttribute('aria-current', i === n ? 'true' : 'false'));
-    cur = n;
-  }
-  function schedule() {
-    clearTimeout(timer);
-    if (!started || reduce || hold || touched) return;
-    timer = setTimeout(() => { if (heroOn() && !document.hidden) show((cur + 1) % slides.length); schedule(); }, 5000);
-  }
-  dots.forEach((d, i) => d.addEventListener('click', () => { show(i); schedule(); }));
-  const setHold = v => { hold = v; schedule(); };
-  box.addEventListener('mouseenter', () => setHold(true));
-  box.addEventListener('mouseleave', () => setHold(box.contains(document.activeElement)));
-  // 터치로 만지면 자동 전환 멈춤 (손가락에는 마우스 올림 같은 멈춤 수단이 없음)
-  box.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { touched = true; clearTimeout(timer); } });
-  box.addEventListener('focusin', () => setHold(true));
-  box.addEventListener('focusout', e => { if (!box.contains(e.relatedTarget)) setHold(false); });
-  onSwipe(box, dir => { show((cur + dir + slides.length) % slides.length); schedule(); });
-  return { start() { started = true; schedule(); } };
-})();
 
 /* ---------- 실행 ---------- */
 document.fonts.load('900 100px Pretendard').catch(() => {}).finally(() => {
@@ -949,16 +802,21 @@ document.fonts.load('900 100px Pretendard').catch(() => {}).finally(() => {
 
 function initMotion() {
   // 인트로: 흩어진 줄기가 BX로 모임 → 문구 글자 등장 (별도 로딩 화면 없이 히어로가 곧바로 시작)
-  const heroChars = splits.get(document.querySelector('.slide.is-active .slide-title'));
-  gsap.set(heroChars, { opacity: 0 });
-  gsap.set(['.slide.is-active .hero-sub', '.hero-row'], { opacity: 0, y: 14 });
+  const heroSlides = [...document.querySelectorAll('.slide')];
+  const heroChars = heroSlides.map(sl => splits.get(sl.querySelector('.slide-title')));
+  gsap.set(heroChars.flat(), { opacity: 0 });
+  gsap.set(['.slide .hero-sub', '.hero-row'], { opacity: 0, y: 14 });
   gsap.set('header', { opacity: 0 });
   lenis && lenis.stop();
-  const intro = gsap.timeline({ delay: 0.25, onComplete: () => { lenis && lenis.start(); slider.start(); } });
+  const intro = gsap.timeline({ delay: 0.25, onComplete: () => { lenis && lenis.start(); } });
   intro.to(story.S, { intro: 1, duration: 2.6, ease: 'power2.inOut' })
     .to('header', { opacity: 1, duration: 0.6, ease: 'power1.out' }, 1.4)
-    .fromTo(heroChars, { opacity: 0, yPercent: 80 }, { opacity: 1, yPercent: 0, stagger: 0.035, duration: 0.7, ease: 'power3.out' }, 1.6)
-    .to(['.slide.is-active .hero-sub', '.hero-row'], { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out' }, 2.3);
+    ;
+  // 문구 글자들이 위아래로 흩어져 있다가 BX 줄무늬가 모이는 시점에 맞춰 제자리로 모임 (처음 한 번만, 동작 줄이기 설정이면 이 함수 자체가 실행되지 않음)
+  const rnd = k => () => gsap.utils.random(-1, 1) * k;
+  intro.fromTo(heroChars.flat(), { opacity: 0, y: rnd(innerHeight * 0.2 + 40) },
+    { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: { each: 0.008, from: 'random' } }, 1.1)
+    .to(['.slide .hero-sub', '.hero-row'], { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out' }, 2.5);
   const skip = () => { if (intro.isActive()) intro.progress(1); };
   ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, skip, { once: true, passive: true }));
 
@@ -1002,7 +860,7 @@ function initMotion() {
       .fromTo(q('.gy'), { scaleY: 0 }, { scaleY: 1, stagger: 0.04, duration: 0.35, ease: 'power2.out' }, t0 + 0.2)
       .fromTo(q('.fillp'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t0 + 0.3)
       .fromTo(q('.pop'), { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.03, duration: 0.2, ease: 'back.out(2.2)' }, t0 + 0.36)
-      .fromTo(q('.row'), { opacity: 0, x: -14 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.2, ease: 'power2.out' }, t0 + 0.22)
+      .fromTo(q('.row'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, stagger: 0.05, duration: 0.2, ease: 'power2.out' }, t0 + 0.22)
       .fromTo(q('.kp,.fn,.rw'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, stagger: 0.03, duration: 0.2, ease: 'power2.out' }, t0 + 0.16);
     q('.dr').forEach((el, k) => tl.fromTo(el, { strokeDashoffset: (+el.dataset.len || 1) + 0.02 }, { strokeDashoffset: 0, duration: 0.4, ease: 'power1.inOut' }, t0 + 0.14 + k * 0.04));
     q('.cnt').forEach(el => counters.push({ el, s: t0 + 0.2, d: 0.4, to: +el.dataset.to }));
@@ -1042,15 +900,6 @@ function initMotion() {
     };
     stage.addEventListener('focusin', onFocus);
 
-    // 옆으로 밀면 이전·다음 서비스 장면으로 스크롤 이동 (기본 조작은 세로 스크롤, 스와이프는 같은 위치로 이동시키는 보조 수단)
-    const st = tl.scrollTrigger, N = chaps.length;
-    const norms = chaps.map((_, i) => i === N - 1 ? 1 : (i + 0.74) / TOTAL);
-    const curChap = () => norms.reduce((b, n, i) => Math.abs(n - st.progress) < Math.abs(norms[b] - st.progress) ? i : b, 0);
-    const stopSwipe = onSwipe(document.querySelector('.biz'), dir => {
-      const y = st.start + (st.end - st.start) * norms[clamp(curChap() + dir, 0, N - 1)];
-      lenis ? lenis.scrollTo(y, { duration: 0.8 }) : scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
-    });
-
     // 5 SALES TRAINING 고정: 선이 다음 카드에 닿을 때마다 그 카드가 하나씩 켜짐 (스크롤을 올리면 거꾸로)
     const steps = gsap.utils.toArray('.step'), fill = document.querySelector('.rail b'), prog = { p: 0 };
     const smooth = t => t * t * (3 - 2 * t);
@@ -1070,7 +919,7 @@ function initMotion() {
     const wrap = el => el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el;
     document.querySelectorAll('[data-dark]').forEach(sec => ScrollTrigger.create({ trigger: wrap(sec), start: 'top 64px', end: 'bottom 64px', onToggle: s => mark(sec, s.isActive) }));
 
-    return () => { stage.removeEventListener('focusin', onFocus); stopSwipe(); header.classList.remove('on-dark'); };
+    return () => { stage.removeEventListener('focusin', onFocus); header.classList.remove('on-dark'); };
   });
   mm.add('(max-width: 768px)', () => {
     const dark = new Set();
@@ -1078,74 +927,19 @@ function initMotion() {
     document.querySelectorAll('[data-dark]').forEach(sec => ScrollTrigger.create({ trigger: sec, start: 'top 56px', end: 'bottom 56px', onToggle: s => mark(sec, s.isActive) }));
     storyTL();
 
-    // 3 SERVICES 스와이프: 7개 장면을 옆으로 넘기고, 화면에 들어온 장면은 PC와 같은 등장 모션을 재생
-    const stage = document.querySelector('.biz-stage'), cnt = document.querySelector('.biz-cnt');
+    // 3 SERVICES 세로 나열: 서비스가 화면에 들어올 때 그 서비스의 등장 모션을 한 번 재생
     const tls = chaps.map(c => {
       const counters = [], tl = gsap.timeline({ paused: true });
       chapAnim(tl, c, 0, counters);
       tl.timeScale(0.6).eventCallback('onUpdate', () => updCnt(tl, counters));
+      ScrollTrigger.create({ trigger: c, start: 'top 78%', once: true, onEnter: () => tl.play() });
       return tl;
     });
-    // 옆에 살짝 보이는 장면은 완성된 모습으로 흐리게, 첫 장면만 처음 들어올 때 재생되도록 시작 상태로 둔다
-    tls.forEach((t, i) => t.progress(i ? 1 : 0));
-    // 카드 줄을 직접 옮김 (브라우저 가로 스크롤·스냅은 등장 모션 중에 되돌아가는 문제가 있어 쓰지 않음)
-    const N = chaps.length;
-    const posOf = i => Math.min(chaps[i].offsetLeft - chaps[0].offsetLeft, chaps[N - 1].offsetLeft + chaps[N - 1].offsetWidth - chaps[0].offsetLeft - (stage.clientWidth - 2 * chaps[0].offsetLeft));
-    let cur = -1, x = 0;
-    const setX = (v, dur) => { x = v; gsap.to(stage, { x: -v, duration: dur, ease: 'power3.out', overwrite: true }); };
-    const go = (i, dur = 0.55) => {
-      i = clamp(i, 0, N - 1);
-      setX(posOf(i), dur);
-      if (i === cur) return;
-      chaps.forEach((c, k) => c.classList.toggle('is-cur', k === i));
-      cur = i; tls[i].restart();
-      bars.forEach((b, k) => gsap.to(b, { scaleX: k <= i ? 1 : 0, duration: 0.35, ease: 'power2.out' }));
-      if (cnt) cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
-    };
-    // 세로로 화면에 들어오면 첫 장면 재생
-    const io = new IntersectionObserver(e => { if (e[0].isIntersecting && cur < 0) go(0, 0); }, { threshold: 0.2 });
-    io.observe(stage);
-
-    // 손가락·마우스로 옆으로 밀어서 넘기기. 세로 움직임이 크면 그냥 페이지 스크롤로 둔다
-    let p0 = null, dragged = false;
-    const onDown = e => { if (e.button > 0) return; p0 = { x: e.clientX, y: e.clientY, t: performance.now(), base: x, id: e.pointerId, dir: 0 }; dragged = false; };
-    const onMove = e => {
-      if (!p0 || e.pointerId !== p0.id) return;
-      const dx = e.clientX - p0.x, dy = e.clientY - p0.y;
-      if (!p0.dir) { if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; p0.dir = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; if (p0.dir === 'x') { stage.setPointerCapture(e.pointerId); stage.classList.add('dragging'); } }
-      if (p0.dir !== 'x') return;
-      dragged = true; e.preventDefault();
-      const max = posOf(N - 1); let v = p0.base - dx;
-      if (v < 0) v *= 0.35; else if (v > max) v = max + (v - max) * 0.35;  // 끝에서는 살짝만 끌려옴
-      x = v; gsap.set(stage, { x: -v });
-    };
-    const onUp = e => {
-      if (!p0 || e.pointerId !== p0.id) return;
-      const dx = e.clientX - p0.x, vel = dx / Math.max(1, performance.now() - p0.t), was = p0.dir === 'x';
-      p0 = null; stage.classList.remove('dragging');
-      if (!was) return;
-      const c = cur < 0 ? 0 : cur;
-      go(dx < -50 || vel < -0.4 ? c + 1 : dx > 50 || vel > 0.4 ? c - 1 : c);
-    };
-    const onClick = e => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } };  // 끈 다음 손을 뗄 때 링크가 열리지 않게
-    const onFocus = e => { const c = e.target.closest('.chap'); if (c) go(chaps.indexOf(c)); };
-    const onResize = () => cur >= 0 && go(cur, 0);
-    stage.addEventListener('pointerdown', onDown);
-    stage.addEventListener('pointermove', onMove);
-    stage.addEventListener('pointerup', onUp);
-    stage.addEventListener('pointercancel', onUp);
-    stage.addEventListener('click', onClick, true);
-    stage.addEventListener('focusin', onFocus);
-    addEventListener('resize', onResize);
 
     gsap.utils.toArray('.step').forEach(s => { s.style.setProperty('--k', 0); ScrollTrigger.create({ trigger: s, start: 'top 85%', end: 'top 60%', scrub: true, onUpdate: self => s.style.setProperty('--k', self.progress.toFixed(3)) }); });
     return () => {
-      header.classList.remove('on-dark'); io.disconnect();
-      ['pointerdown', onDown, 'pointermove', onMove, 'pointerup', onUp, 'pointercancel', onUp, 'focusin', onFocus].forEach((v, k, a) => { if (k % 2 === 0) stage.removeEventListener(v, a[k + 1]); });
-      stage.removeEventListener('click', onClick, true); removeEventListener('resize', onResize);
-      gsap.set(stage, { clearProps: 'transform' });
-      tls.forEach(t => t.progress(1).kill()); gsap.set(bars, { clearProps: 'transform' });
-      chaps.forEach(c => c.classList.remove('is-cur'));
+      header.classList.remove('on-dark');
+      tls.forEach(t => t.progress(1).kill());
     };
   });
 
@@ -1154,8 +948,8 @@ function initMotion() {
   ScrollTrigger.batch('.fx-up', { start: 'top 88%', once: true, onEnter: els => gsap.to(els, { opacity: 1, y: 0, stagger: 0.12, duration: 0.7, ease: 'power3.out' }) });
   // CRM 화면: 스크롤에 맞춰 떠오름
   gsap.from('.crm-shot', { y: 90, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.crm', start: 'top 85%', end: 'center center', scrub: 0.6 } });
-  // 수행사례 카드: 오른쪽에서 차례로 들어옴
-  gsap.from('.case', { x: 80, opacity: 0, stagger: 0.12, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.cases-track', start: 'top 85%' } });
+  // 수행사례 카드: 아래에서 차례로 올라옴
+  gsap.from('.case', { y: 40, opacity: 0, stagger: 0.12, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.cases-track', start: 'top 85%' } });
   // CTA: 남색 띠가 살짝 커지며 등장
   gsap.from('.cta', { scale: 0.94, opacity: 0.4, ease: 'none', scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'top 60%', scrub: true } });
 }

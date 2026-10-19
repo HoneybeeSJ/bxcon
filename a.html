@@ -50,17 +50,11 @@ nav a:hover,nav a:focus-visible{color:#fff}
 .hero{position:relative;height:100vh;height:100svh;overflow:hidden}
 #lines{position:absolute;inset:0;width:100%;height:100%}
 .hero-copy{position:absolute;left:0;right:0;bottom:10vh;text-align:center;padding:0 16px}
-.slides{display:grid}
-.slide{grid-area:1/1;visibility:hidden}
-.slide.is-active{visibility:visible}
-.slide-title{font-size:clamp(26px,3.6vw,52px);font-weight:700;line-height:1.28;letter-spacing:-.02em}
+.slides{display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2.2vh,24px)}
+.slide-title{font-size:clamp(20px,2.4vw,36px);font-weight:700;line-height:1.28;letter-spacing:-.02em}
 .hero-copy h1 em{font-style:normal;color:var(--sky)}
-.hero-sub{margin-top:12px;font-size:clamp(14px,1.3vw,18px);color:var(--mute);letter-spacing:.02em}
-.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-.slide-ctrl{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:18px}
-.slide-dot{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
-.slide-dot::before{content:'';width:8px;height:8px;border-radius:var(--r-pill);background:#4a5590;transition:width .3s,background-color .3s}
-.slide-dot[aria-current="true"]::before{width:22px;background:var(--sky)}
+.hero-sub{margin-top:4px;font-size:clamp(13px,1.1vw,16px);color:var(--mute);letter-spacing:.02em}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
 
 .float-label{position:absolute;left:0;top:0;font-size:13px;font-weight:600;color:#bcd7ff;letter-spacing:.04em;white-space:nowrap;pointer-events:none;opacity:0}
 
@@ -70,10 +64,10 @@ nav a:hover,nav a:focus-visible{color:#fff}
 .pad{padding-left:clamp(16px,6vw,96px);padding-right:clamp(16px,6vw,96px)}
 
 /* S2 SERVICES (홈페이지 '컨설팅 서비스' 7개) */
-.biz{position:relative;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(64px,8vh,88px)}
+.biz{position:relative;overflow:hidden;padding:16vh 0 10vh}
 .lead{margin-top:12px;font-size:clamp(15px,1.2vw,17px);color:var(--mute);line-height:1.65;max-width:62ch}
-.track{display:flex;gap:24px;width:max-content;position:relative;z-index:2}
-.card{--c:#5a8bff;width:min(320px,80vw);background:linear-gradient(180deg,#171a33,#10121f);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,border-color .35s}
+.track{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px;position:relative;z-index:2}
+.card{--c:#5a8bff;background:linear-gradient(180deg,#171a33,#10121f);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,border-color .35s}
 .card:hover,.card:focus-within{transform:translateY(-8px);border-color:#4d64c8}
 .stripes{height:56px;flex:none;background:repeating-linear-gradient(90deg,var(--c) 0 3px,transparent 3px 9px);opacity:.6;-webkit-mask-image:linear-gradient(0deg,transparent,#000);mask-image:linear-gradient(0deg,transparent,#000);transition:opacity .35s}
 .card:hover .stripes,.card:focus-within .stripes{opacity:1}
@@ -175,8 +169,7 @@ footer address{font-style:normal}
 footer .tagline{color:var(--ink);margin-bottom:6px}
 
 /* 동작 줄이기: 가로 이동·마키 대신 모두 보이게 */
-.reduced .biz{height:auto;overflow:visible;padding:14vh 0 10vh}
-.reduced .track{width:auto;flex-wrap:wrap}
+.reduced .biz{overflow:visible}
 .reduced .flow{height:auto;padding-top:14vh;padding-bottom:10vh}
 .reduced .mq{-webkit-mask-image:none;mask-image:none;padding:0 clamp(16px,6vw,96px)}
 .reduced .mq-track{animation:none;width:auto}
@@ -205,9 +198,9 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
   nav.open{display:flex}
   nav a{border-bottom:1px solid var(--line);font-size:17px;padding:0 4px}
   nav a:last-child{border-bottom:0}
-  .biz{height:auto;padding:16vh 0 10vh}
-  .track{flex-direction:column;width:auto;padding:0 16px}
-  .card{width:100%;height:auto;min-height:0}
+  .biz{padding:16vh 0 10vh}
+  .track{grid-template-columns:1fr;padding:0 16px}
+  .card{height:auto;min-height:0}
   .card p{font-size:16px}
   .flow{height:auto;padding-top:14vh;padding-bottom:6vh}
   .flow-svg{display:none}
@@ -240,17 +233,12 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
   <canvas id="lines" aria-hidden="true"></canvas>
   <div id="floatLabels" aria-hidden="true"></div>
     <div class="hero-copy">
-    <div class="slides" role="region" aria-roledescription="carousel" aria-label="핵심 메시지">
-      <div class="slide is-active" role="group" aria-roledescription="slide" aria-label="3개 중 1번째"><h1 class="slide-title split">팔리는 구조를 설계합니다</h1><p class="hero-sub" lang="en">We Engineer Revenue, Not Luck</p></div>
-      <div class="slide" role="group" aria-roledescription="slide" aria-label="3개 중 2번째" aria-hidden="true"><p class="slide-title split">고객의 경험을 가치로 전환합니다</p><p class="hero-sub" lang="en">Transforming Every Customer Touchpoint into Brand Value</p></div>
-      <div class="slide" role="group" aria-roledescription="slide" aria-label="3개 중 3번째" aria-hidden="true"><p class="slide-title split">AI 에이전트가 일하는 조직으로 진화합니다</p><p class="hero-sub" lang="en">Evolving Organizations to Work with AI Agents</p></div>
+    <div class="slides">
+      <div class="slide"><h1 class="slide-title split">팔리는 구조를 설계합니다</h1><p class="hero-sub" lang="en">We Engineer Revenue, Not Luck</p></div>
+      <div class="slide"><p class="slide-title split">고객의 경험을 가치로 전환합니다</p><p class="hero-sub" lang="en">Transforming Every Customer Touchpoint into Brand Value</p></div>
+      <div class="slide"><p class="slide-title split">AI 에이전트가 일하는 조직으로 진화합니다</p><p class="hero-sub" lang="en">Evolving Organizations to Work with AI Agents</p></div>
     </div>
     <div class="hero-cta"><a class="btn solid" href="#cta">프로젝트 문의</a><a class="btn" href="https://www.bxcon.co.kr/portfolio/" target="_blank" rel="noopener">수행사례 보기</a></div>
-    <div class="slide-ctrl">
-      <button class="slide-dot" type="button" aria-label="1번째 문구 보기" aria-current="true"></button>
-      <button class="slide-dot" type="button" aria-label="2번째 문구 보기" aria-current="false"></button>
-      <button class="slide-dot" type="button" aria-label="3번째 문구 보기" aria-current="false"></button>
-    </div>
   </div>
 </section>
 
@@ -523,7 +511,11 @@ function build() {
   if (W < 10 || H < 10) { segs = []; return; }
   cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   // 'BX' 글자를 오프스크린에 그려 세로 줄 단위로 샘플링 → 브로셔 표지의 줄무늬 BX
-  const ow = Math.round(Math.min(W * (narrowHero() ? 0.8 : 0.56), 760)), oh = Math.round(ow * 0.46);
+  const copy = document.querySelector('.hero-copy');
+  const copyTop = H - parseFloat(getComputedStyle(copy).bottom) - copy.offsetHeight;
+  let ow = Math.round(Math.min(W * (narrowHero() ? 0.8 : 0.56), 760));
+  ow = Math.max(150, Math.min(ow, Math.round((copyTop - 32 - 90) / 0.46)));  // 헤더 아래 90px 안쪽, 문구 윗선에서 32px 위
+  const oh = Math.round(ow * 0.46);
   const off = document.createElement('canvas'); off.width = ow; off.height = oh;
   const o = off.getContext('2d');
   o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle';
@@ -531,7 +523,7 @@ function build() {
   o.fillText('BX', ow / 2, oh / 2 + oh * 0.04);
   const data = o.getImageData(0, 0, ow, oh).data;
   const step = Math.max(5, Math.round(ow / 110));
-  const ox = (W - ow) / 2, oy = H * 0.36 - oh / 2;
+  const ox = (W - ow) / 2, oy = Math.max(90, Math.min(H * 0.36 - oh / 2, copyTop - 32 - oh));
   segs = [];
   for (let x = 0; x < ow; x += step) {
     let run = false, st = 0;
@@ -546,7 +538,7 @@ function build() {
     const len = 40 + Math.random() * H * 0.45;
     s.sx = Math.random() * W; s.sy1 = Math.random() * (H - len); s.sy2 = s.sy1 + len;
     // BX는 흩어지지 않고 제자리에서 위로 살짝 떠오르며 사라짐
-    s.lx = s.bx + (Math.random() - 0.5) * 24; s.ly1 = s.by1 - H * 0.1; s.ly2 = s.by2 - H * 0.1;
+    s.lx = s.bx; s.ly1 = s.by1 - H * 0.1; s.ly2 = s.by2 - H * 0.1;
     s.d = Math.random() * 0.4; s.d2 = Math.random() * 0.2;
     s.a = 0.35 + Math.random() * 0.65; s.ci = i % COLORS.length;
     s.p = Math.random() < 0.3; s.v = 0.15 + Math.random() * 0.35; s.o = Math.random(); s.ph = Math.random() * 6.28;
@@ -609,54 +601,6 @@ new ResizeObserver(() => {
 /* ---------- S1 히어로 문구 3장 순환 (홈페이지 히어로와 같은 3개 문구) ---------- */
 // 5초마다 다음 문구로. 마우스를 올리거나 키보드 포커스가 있으면 멈춘다.
 // 동작 줄이기 설정에서는 자동으로 넘기지 않고 점 버튼으로만 바꾼다.
-const slider = (() => {
-  const box = document.querySelector('.hero-copy');
-  const slides = [...document.querySelectorAll('.slide')], dots = [...document.querySelectorAll('.slide-dot')];
-  const chars = el => splits.get(el.querySelector('.slide-title'));
-  const sub = el => el.querySelector('.hero-sub');
-  let cur = 0, timer = null, auto = !reduce, hold = false, started = false, touched = false;
-  slides.forEach((sl, i) => { if (i) gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); });
-
-  function show(n) {
-    if (n === cur) return;
-    const out = slides[cur], inn = slides[n];
-    slides.forEach((sl, i) => {
-      gsap.killTweensOf([...chars(sl), sub(sl)]);
-      if (sl !== out && sl !== inn) { sl.classList.remove('is-active'); gsap.set([...chars(sl), sub(sl)], { opacity: 0 }); }
-      sl.setAttribute('aria-hidden', i === n ? 'false' : 'true');
-    });
-    inn.classList.add('is-active');
-    if (reduce) {
-      out.classList.remove('is-active');
-      gsap.set([...chars(out), sub(out)], { opacity: 0 });
-      gsap.set([...chars(inn), sub(inn)], { opacity: 1, yPercent: 0, y: 0 });
-    } else {
-      gsap.to(chars(out), { opacity: 0, yPercent: -60, stagger: 0.012, duration: 0.35, ease: 'power2.in' });
-      gsap.to(sub(out), { opacity: 0, duration: 0.3, onComplete: () => { if (cur !== slides.indexOf(out)) out.classList.remove('is-active'); } });
-      gsap.fromTo(chars(inn), { opacity: 0, yPercent: 80 }, { opacity: 1, yPercent: 0, stagger: 0.03, duration: 0.6, ease: 'power3.out', delay: 0.25 });
-      gsap.fromTo(sub(inn), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.5 });
-    }
-    dots.forEach((d, i) => d.setAttribute('aria-current', i === n ? 'true' : 'false'));
-    cur = n;
-  }
-  function schedule() {
-    clearTimeout(timer);
-    if (!started || !auto || hold || touched) return;
-    timer = setTimeout(() => {
-      if (heroVisible && !document.hidden) show((cur + 1) % slides.length);
-      schedule();
-    }, 5000);
-  }
-  dots.forEach((d, i) => d.addEventListener('click', () => { show(i); schedule(); }));
-  const setHold = v => { hold = v; schedule(); };
-  box.addEventListener('mouseenter', () => setHold(true));
-  box.addEventListener('mouseleave', () => setHold(box.contains(document.activeElement)));
-  // 터치로 만지면 자동 전환 멈춤 (손가락에는 마우스 올림 같은 멈춤 수단이 없음)
-  box.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { touched = true; clearTimeout(timer); } });
-  box.addEventListener('focusin', () => setHold(true));
-  box.addEventListener('focusout', e => { if (!box.contains(e.relatedTarget)) setHold(false); });
-  return { start() { started = true; schedule(); } };
-})();
 
 /* ---------- 실행 ---------- */
 document.fonts.load('900 100px Pretendard').catch(() => {}).finally(() => {
@@ -674,15 +618,20 @@ document.fonts.load('900 100px Pretendard').catch(() => {}).finally(() => {
 
 function initMotion() {
   // 인트로: 흩어진 줄기(사업명) → BX 수렴 → 슬로건 글자 등장
-  const heroChars = splits.get(document.querySelector('.slide.is-active .slide-title'));
-  gsap.set(heroChars, { opacity: 0 });
-  gsap.set(['.slide.is-active .hero-sub', '.hero-cta', '.slide-ctrl'], { opacity: 0, y: 12 });
+  const heroSlides = [...document.querySelectorAll('.slide')];
+  const heroChars = heroSlides.map(sl => splits.get(sl.querySelector('.slide-title')));
+  gsap.set(heroChars.flat(), { opacity: 0 });
+  gsap.set(['.slide .hero-sub', '.hero-cta'], { opacity: 0, y: 12 });
   lenis && lenis.stop();
-  const intro = gsap.timeline({ delay: 0.3, onComplete: () => { lenis && lenis.start(); slider.start(); } });
+  const intro = gsap.timeline({ delay: 0.3, onComplete: () => { lenis && lenis.start(); } });
   intro.to(S, { labelIn: 1, duration: 0.8 })
-    .to(S, { intro: 1, duration: 2.4, ease: 'power2.inOut' }, '+=0.7')
-    .fromTo(heroChars, { opacity: 0, yPercent: 80 }, { opacity: 1, yPercent: 0, stagger: 0.04, duration: 0.7, ease: 'power3.out' }, '-=0.5')
-    .to(['.slide.is-active .hero-sub', '.hero-cta', '.slide-ctrl'], { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+    .addLabel('bx', '+=0.7')
+    .to(S, { intro: 1, duration: 2.4, ease: 'power2.inOut' }, 'bx');
+  // 문구 글자들이 위아래로 흩어져 있다가 BX 줄무늬가 모이는 시점에 맞춰 제자리로 모임 (처음 한 번만, 동작 줄이기 설정이면 이 함수 자체가 실행되지 않음)
+  const rnd = k => () => gsap.utils.random(-1, 1) * k;
+  intro.fromTo(heroChars.flat(), { opacity: 0, y: rnd(innerHeight * 0.2 + 40) },
+    { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: { each: 0.008, from: 'random' } }, 'bx+=0.8')
+    .to(['.slide .hero-sub', '.hero-cta'], { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out' }, 'bx+=2.1');
   // 인트로 도중 스크롤하면 바로 완료 상태로 건너뛰기
   const skip = () => { if (intro.isActive()) intro.progress(1); };
   ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, skip, { once: true, passive: true }));
@@ -701,25 +650,11 @@ function initMotion() {
 
   const mm = gsap.matchMedia();
   mm.add('(min-width: 769px)', () => {
-    // S2: 섹션 고정 + 카드 가로 이동
-    const biz = document.querySelector('.biz');
-    const track = document.querySelector('.track');
-    const dist = () => track.scrollWidth - innerWidth;
-    const hz = gsap.to(track, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '.biz', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true } });
+    // S2: 서비스 카드는 세로 스크롤로 차례로 올라오고, 위쪽 줄무늬가 위에서부터 그려짐
     gsap.utils.toArray('.card').forEach(c => {
-      gsap.from(c.querySelector('.stripes'), { scaleY: 0, transformOrigin: 'top', ease: 'none', scrollTrigger: { trigger: c, containerAnimation: hz, start: 'left 100%', end: 'left 65%', scrub: true } });
+      gsap.from(c, { opacity: 0, y: 40, duration: 0.6, scrollTrigger: { trigger: c, start: 'top 88%' } });
+      gsap.from(c.querySelector('.stripes'), { scaleY: 0, transformOrigin: 'top', ease: 'none', scrollTrigger: { trigger: c, start: 'top 90%', end: 'top 55%', scrub: true } });
     });
-    // 키보드로 화면 밖 카드의 링크에 포커스가 가면, 그 카드가 보이는 위치로 스크롤을 옮긴다
-    const onFocus = e => {
-      const reset = () => { biz.scrollLeft = 0; };
-      reset(); requestAnimationFrame(reset);
-      const card = e.target.closest('.card'); if (!card) return;
-      const st = hz.scrollTrigger, d = dist(); if (d <= 0) return;
-      const x = Math.max(0, card.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft));
-      const y = st.start + Math.min(1, x / d) * (st.end - st.start);
-      lenis ? lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y);
-    };
-    track.addEventListener('focusin', onFocus);
     // S3: 고정 + 선이 4단계를 차례로 연결
     // S3: 선이 그려지는 양(p)을 하나의 값으로 두고, 선 끝점과 각 단계의 켜짐 정도를 모두 거기서 계산한다.
     // 스크롤을 올리면 같은 값이 거꾸로 줄어들어 볼륨바처럼 연속으로 오르내린다.
@@ -744,7 +679,6 @@ function initMotion() {
       .to(flowDraw, { p: 1, ease: 'none', duration: 0.85, onUpdate: renderFlow })
       .to({}, { duration: 0.15 });
     renderFlow();
-    return () => track.removeEventListener('focusin', onFocus);
   });
   mm.add('(max-width: 768px)', () => {
     gsap.utils.toArray('.card').forEach(c => gsap.from(c, { opacity: 0, y: 40, duration: 0.6, scrollTrigger: { trigger: c, start: 'top 88%' } }));
