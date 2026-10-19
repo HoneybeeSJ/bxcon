@@ -202,6 +202,8 @@ nav a:hover,nav a:focus-visible{opacity:1}
 .crm .btn{margin-top:32px}
 .note{margin-top:14px;font-size:14px;color:var(--mute)}
 .crm-shot img{display:block;width:100%;max-width:520px;height:auto;margin-left:auto;border-radius:var(--r-card);box-shadow:0 30px 80px rgba(30,60,140,.18),0 0 0 1px var(--line)}
+.crm-shot a{display:block;max-width:520px;margin-left:auto;border-radius:var(--r-card);transition:transform .3s}
+.crm-shot a:hover,.crm-shot a:focus-visible{transform:translateY(-4px)}
 
 /* 5 SALES TRAINING (루아소프트 Process: 큰 제목 + 단계 카드가 차례로 켜짐) */
 .flow{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:96px;padding-bottom:48px}
@@ -375,6 +377,7 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .hero-row{margin-top:28px}
   .crm{grid-template-columns:1fr;padding-top:12vh}
   .crm-shot img{margin:0 auto}
+  .crm-shot a{margin:0 auto}
   .flow-stage{margin-top:5vh}
   .rail{display:none}
   .steps{grid-template-columns:1fr;padding-top:0;gap:14px}
@@ -462,7 +465,7 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
     <a class="btn solid" href="https://www.bxcon.co.kr/examples/crm/" target="_blank" rel="noopener">영업 CRM 예시 보기 <span class="arr" aria-hidden="true">↗</span></a>
     <p class="note">실제 고객 정보가 없는 가상 데이터 샘플입니다.</p>
   </div>
-  <figure class="crm-shot"><img src="assets/crm-sample.png" alt="BX 영업 CRM 샘플 화면. 진행 중 23건, 우선 처리 7건, 견적 10건과 샘플 고객 4명의 현재 할 일" width="536" height="596" loading="lazy"></figure>
+  <figure class="crm-shot"><a href="https://www.bxcon.co.kr/examples/crm/" target="_blank" rel="noopener" aria-label="영업 CRM 샘플 화면, 예시 페이지 열기 (새 창)"><img src="assets/crm-sample.png" alt="BX 영업 CRM 샘플 화면. 진행 중 23건, 우선 처리 7건, 견적 10건과 샘플 고객 4명의 현재 할 일" width="536" height="596" loading="lazy"></a></figure>
 </section>
 
 <!-- 5 SALES TRAINING : 큰 제목 + 4단계 카드가 스크롤에 맞춰 하나씩 켜짐 (홈페이지 세일즈 교육 원문) -->
