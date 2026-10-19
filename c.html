@@ -317,6 +317,17 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .st-2{top:34%}
   .st-3{top:50%}
   .biz{height:auto;overflow:hidden;padding:12vh var(--gut) 8vh}
+  .biz-glow{right:-40%;width:120vw;top:38%}
+  .biz-stage{position:static}
+  .chap{position:static;visibility:visible;opacity:1;grid-template-columns:1fr;align-content:start;gap:18px;padding:36px 0;border-top:1px solid rgba(15,23,40,.1)}
+  .chap:first-child{border-top:0;padding-top:0}
+  .art-wrap{width:100%;justify-self:start;order:-1}
+  .chap h3{font-size:clamp(28px,7.6vw,38px);margin:8px 0 10px}
+  .chap p{font-size:15.5px}
+  .tags{margin:18px 0 22px}
+  .tags li{font-size:13px;padding:5px 12px}
+  .art-note{position:static;margin:14px 0 0}
+  .biz-prog{display:none}
   .flow{min-height:0;padding-top:14vh}
 }
 
@@ -347,17 +358,6 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .mq-set[aria-hidden="true"]{display:none}
 }
 @media (max-width:768px){
-  /* 모바일 서비스: A안의 카드형 장점을 가져옴. 큰 모션그래픽 대신 줄무늬 띠가 있는 카드, 글자는 크고 대비 높게 */
-  .biz-glow,.art-wrap,.art-note,.biz-prog{display:none}
-  .biz-stage{position:static;display:grid;gap:16px}
-  .chap{--c:#3d72f0;position:relative;visibility:visible;opacity:1;grid-template-columns:1fr;align-content:start;gap:0;padding:0 0 26px;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;box-shadow:0 14px 34px rgba(30,60,140,.08)}
-  .chap::before{content:'';display:block;height:56px;background:repeating-linear-gradient(90deg,var(--c) 0 3px,transparent 3px 9px);opacity:.55;-webkit-mask-image:linear-gradient(0deg,transparent,#000);mask-image:linear-gradient(0deg,transparent,#000)}
-  .chap:nth-child(2){--c:#2f8bff}.chap:nth-child(3){--c:#1fa3e0}.chap:nth-child(4){--c:#6a5cff}.chap:nth-child(5){--c:#2bb3c7}.chap:nth-child(6){--c:#8a7dff}.chap:nth-child(7){--c:#4a90e2}
-  .chap-text{padding:6px 24px 0}
-  .chap h3{font-size:clamp(26px,7vw,32px);margin:6px 0 10px}
-  .chap p{font-size:16px;line-height:1.65;color:var(--ink);opacity:.82;max-width:none}
-  .tags{margin:16px 0 20px}
-  .tags li{font-size:13px;padding:5px 12px}
   footer{padding-bottom:72px}
   nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:rgba(245,248,255,.98);color:var(--ink);border-bottom:1px solid var(--line);padding:8px var(--gut) 16px}
   nav.open{display:flex}
@@ -985,11 +985,24 @@ function initMotion() {
     document.querySelectorAll('[data-dark]').forEach(sec => ScrollTrigger.create({ trigger: sec, start: 'top 56px', end: 'bottom 56px', onToggle: s => mark(sec, s.isActive) }));
     storyTL();
 
-    // 3 SERVICES: 모바일은 카드가 세로로 차례로 올라오기만 함 (큰 그래픽 모션은 PC에서만)
-    gsap.utils.toArray('.chap').forEach(c => gsap.from(c, { opacity: 0, y: 36, duration: 0.6, ease: 'power2.out', scrollTrigger: { trigger: c, start: 'top 88%' } }));
+    // 3 SERVICES 세로 나열: 서비스가 화면에 들어올 때 그 서비스의 등장 모션을 한 번 재생
+    const tls = chaps.map(c => {
+      const counters = [], tl = gsap.timeline({ paused: true });
+      chapAnim(tl, c, 0, counters);
+      tl.timeScale(0.6).eventCallback('onUpdate', () => updCnt(tl, counters));
+      // PC처럼 위로 올라올 때도 다시 재생: 화면에 들어올 때(아래로·위로 모두) 처음부터 재생하고, 화면 밖으로 나가면 시작 상태로 되돌려 둠
+      const play = () => tl.restart();
+      const reset = () => tl.pause(0);
+      const st = ScrollTrigger.create({ trigger: c, start: 'top 78%', end: 'bottom 15%', onEnter: play, onEnterBack: play, onLeave: reset, onLeaveBack: reset });
+      if (st.isActive) play();
+      return tl;
+    });
 
     gsap.utils.toArray('.step').forEach(s => { s.style.setProperty('--k', 0); ScrollTrigger.create({ trigger: s, start: 'top 85%', end: 'top 60%', scrub: true, onUpdate: self => s.style.setProperty('--k', self.progress.toFixed(3)) }); });
-    return () => { header.classList.remove('on-dark'); };
+    return () => {
+      header.classList.remove('on-dark');
+      tls.forEach(t => t.progress(1).kill());
+    };
   });
 
   // 공통: 화면에 들어올 때 아래에서 올라옴
