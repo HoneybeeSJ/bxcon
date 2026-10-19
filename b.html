@@ -80,11 +80,6 @@ nav a:hover,nav a:focus-visible{opacity:1}
 .st-1{left:50%;top:20%;transform:translateX(-50%);text-align:center;width:max-content}
 .st-2{left:var(--gut);top:38%}
 .st-3{right:var(--gut);top:56%;text-align:right}
-.st-lead{position:absolute;z-index:2;left:50%;top:15%;transform:translateX(-50%);width:min(88vw,820px);text-align:center;opacity:0}
-.st-lead h2{font-size:clamp(28px,3.4vw,52px);font-weight:800;letter-spacing:-.03em}
-.st-lead p{margin-top:14px;font-size:clamp(15px,1.25vw,18px);line-height:1.65;color:var(--mute)}
-#laneLabels{position:absolute;inset:0;pointer-events:none}
-.lane-label{position:absolute;transform:translateX(-50%);text-align:center;font-weight:700;line-height:1.3;color:var(--ink);opacity:0}
 
 /* 3 SERVICES (랜딩과 같은 흰 바탕 톤. 홈페이지 색: 글자 #0b1530, 브랜드 파랑 #2f63ff, 포인트 주황 #df8b42) */
 .biz{position:relative;height:100vh;height:100svh;overflow:hidden;background:#f5f8ff;color:var(--ink)}
@@ -310,9 +305,6 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .st-1{top:18%}
   .st-2{top:34%}
   .st-3{top:50%}
-  .st-lead{top:11%;width:calc(100vw - 2 * var(--gut))}
-  .st-lead h2{font-size:clamp(28px,7.4vw,38px)}
-  .st-lead p{font-size:15px;margin-top:10px}
   .biz{height:auto;overflow:hidden;padding:12vh 0 8vh}
   .biz-glow{right:-40%;width:120vw;top:38%}
   .biz-stage{position:relative;display:flex;gap:16px;padding:0 var(--gut);touch-action:pan-y;cursor:grab;will-change:transform}
@@ -337,13 +329,10 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
 /* 동작 줄이기: 고정·가로 이동 없이 세로로 모두 보이게 */
 @media (prefers-reduced-motion:reduce){
   .story{height:auto;min-height:0;padding:0 var(--gut) 12vh}
-  .story #laneLabels{display:none}
   #storyCv{bottom:auto;height:100vh;height:100svh}
   .hero-first{position:relative;inset:auto;min-height:100vh;min-height:100svh;padding:72px 0 9svh}
-  .st-line,.st-lead{position:static;transform:none;opacity:1;width:auto;max-width:none;text-align:left}
-  .st-lead{margin-top:10vh}
+  .st-line{position:static;transform:none;opacity:1;width:auto;max-width:none;text-align:left}
   .st-line + .st-line{margin-top:6px}
-  .st-lead h2{font-size:clamp(28px,7vw,40px)}
   .biz{height:auto;overflow:visible;padding:2vh var(--gut) 10vh}
   .biz-glow,.biz::before{display:none}
   .biz-stage{position:static}
@@ -413,7 +402,7 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
 <main id="main">
 
 <!-- 1 LANDING : 문구 3장 순환(홈페이지 히어로 원문) → 스크롤하면 BX가 흩어지고 소개 문장 → 7개 서비스 줄기 -->
-<section class="story" id="top" aria-labelledby="bizTitle">
+<section class="story" id="top" aria-label="BX컨설팅 소개">
   <canvas id="storyCv" aria-hidden="true"></canvas>
   <div class="hero-first pad">
     <div class="hero-copy">
@@ -435,8 +424,7 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   <p class="st-line st-1"><em>경험</em>을 전략으로 번역하고,</p>
   <p class="st-line st-2"><em>전략</em>을 실행 가능한<br> 구조로 만드는</p>
   <p class="st-line st-3">컨설팅 파트너입니다.</p>
-  <div class="st-lead"><h2 id="bizTitle">컨설팅 서비스</h2><p>기업의 성장 과제에 맞춰 전략, 영업, 고객경험, 조직, 리서치, 시스템, AI까지 필요한 실행 솔루션을 연결합니다.</p></div>
-  <div id="laneLabels" aria-hidden="true"></div>
+  
 </section>
 
 <!-- 3 SERVICES : 고정 화면에서 7개 서비스가 차례로 바뀜. 서비스마다 실제 화면처럼 보이는 모션 그래픽(예시 데이터) -->
@@ -847,27 +835,6 @@ function Field(cv, cfg) {
 
 const narrow = () => innerWidth <= 768;
 // 스토리 구간 서비스 줄기: 넓은 화면은 7개 한 줄, 좁은 화면은 4+3 두 줄. 라벨은 항상 자기 칸 안에 들어가게 맞춘다
-const laneBox = document.getElementById('laneLabels');
-const laneEls = SERVICES.map(t => { const d = document.createElement('div'); d.className = 'lane-label'; d.textContent = t; laneBox.appendChild(d); return d; });
-function laneLayout(i, W, H) {
-  if (W < 640) {
-    const row = i < 4 ? 0 : 1, c = row ? i - 4 : i, cell = (W - 32) / 4;
-    return { cx: 16 + cell * (c + 0.5) + (row ? cell / 2 : 0), t: row ? 0.66 : 0.44, b: row ? 0.82 : 0.6, w: cell * 0.5, cell };
-  }
-  const span = Math.min(W * 0.84, 1200), x0 = (W - span) / 2, cell = span / 7;
-  return { cx: x0 + cell * (i + 0.5), t: 0.46, b: 0.78, w: cell * 0.55, cell };
-}
-function placeLaneLabels(W, H) {
-  const L0 = laneLayout(0, W, H);
-  const fs = clamp(L0.cell * 0.13, 12, 17);
-  laneEls.forEach((el, i) => {
-    const L = laneLayout(i, W, H);
-    el.style.fontSize = fs + 'px'; el.style.maxWidth = (L.cell - 8) + 'px';
-    const half = Math.min(el.offsetWidth, L.cell - 8) / 2;
-    el.style.left = clamp(L.cx, half + 8, W - half - 8) + 'px';
-    el.style.top = (L.b * H + 14) + 'px';
-  });
-}
 const story = Field(document.getElementById('storyCv'), {
   colors: ['61,114,240', '47,92,214', '96,170,255', '106,92,255'], dot: 'rgba(61,114,240,.85)',
   box: (W, H) => {
@@ -884,8 +851,7 @@ const story = Field(document.getElementById('storyCv'), {
     const oh = w * ratio;
     return { cx: W / 2, cy: Math.min(H * 0.36, textTop - gap - oh / 2), w };
   },
-  parallax: document.querySelector('.story'),
-  lanes: laneLayout, onBuild: placeLaneLabels
+  parallax: document.querySelector('.story')
 });
 
 /* ---------- 가로 스와이프 공통 (손가락·마우스): 50px 이상 또는 빠르게 밀면 fn(+1 다음 / -1 이전). 세로로 움직이면 그대로 페이지 스크롤 ---------- */
@@ -1006,7 +972,7 @@ function initMotion() {
   // 1 LANDING 고정: BX가 씨앗처럼 흩어짐 → 문장 3줄이 차례로 → 7개 줄기로 내려앉고 라벨 등장 (PC·모바일 공통)
   const storyTL = () => {
     const lines = gsap.utils.toArray('.st-line');
-    return gsap.timeline({ scrollTrigger: { trigger: '.story', start: 'top top', end: () => '+=' + innerHeight * 3.0, pin: true, scrub: 0.5, snap: SNAP([0, 0.23, 0.42, 0.61, 1]) } })
+    const tl = gsap.timeline({ scrollTrigger: { trigger: '.story', start: 'top top', end: () => '+=' + innerHeight * 2.2, pin: true, scrub: 0.5, snap: SNAP([0, 0.23, 0.42, 0.61, 1]) } })
       .to('.hero-first', { opacity: 0, y: -40, duration: 0.07, ease: 'none' }, 0)
       .to(story.S, { blow: 1, duration: 0.2, ease: 'none' }, 0.06)
       .to(story.S, { wind: 1, duration: 0.62, ease: 'none' }, 0.1)
@@ -1015,11 +981,12 @@ function initMotion() {
       .fromTo(lines[1], { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.07 }, 0.31)
       .to(lines[1], { opacity: 0, y: -30, duration: 0.05 }, 0.47)
       .fromTo(lines[2], { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.07 }, 0.51)
-      .to(lines[2], { opacity: 0, y: -30, duration: 0.05 }, 0.65)
-      .to(story.S, { land: 1, duration: 0.24, ease: 'none' }, 0.64)
-      .fromTo('.st-lead', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.08 }, 0.76)
-      .to(laneEls, { opacity: 1, stagger: 0.012, duration: 0.05 }, 0.82)
-      .to({}, { duration: 0.08 }, 0.92);
+      .to({}, { duration: 0.02 }, 0.98);
+    // 마지막 문장과 줄무늬는 고정이 풀려 위로 올라가는 동안 사라지고, 같은 순간 서비스 상세가 아래에서 올라옴 (빈 화면 없이 이어짐)
+    gsap.timeline({ scrollTrigger: { trigger: '.biz', start: 'top bottom', end: 'top 25%', scrub: true } })
+      .to(story.S, { fade: 0, ease: 'none' }, 0)
+      .to(lines[2], { opacity: 0, ease: 'none' }, 0);
+    return tl;
   };
 
   // 서비스 장면 하나의 등장 모션: 카드가 떠오르고 선이 그려지고 숫자가 올라감 (PC는 스크롤 타임라인, 모바일은 넘길 때마다 재생)

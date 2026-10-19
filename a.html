@@ -63,10 +63,6 @@ nav a:hover,nav a:focus-visible{color:#fff}
 .slide-dot[aria-current="true"]::before{width:22px;background:var(--sky)}
 
 .float-label{position:absolute;left:0;top:0;font-size:13px;font-weight:600;color:#bcd7ff;letter-spacing:.04em;white-space:nowrap;pointer-events:none;opacity:0}
-.lane-label{position:absolute;top:50%;transform:translate(-50%,-50%);text-align:center;opacity:0;pointer-events:none;padding:10px 12px}
-.lane-label small{display:block;font-size:12px;color:var(--sky);letter-spacing:.2em;margin-bottom:4px}
-.lane-label{padding:0}
-.lane-label span{display:inline-block;padding:5px 12px;border-radius:var(--r-pill);background:rgba(13,14,25,.82);border:1px solid #2f3870;font-size:clamp(12px,1.05vw,15px);font-weight:700;white-space:nowrap}
 
 /* common */
 .kicker{font-size:13px;letter-spacing:.3em;color:var(--sky);margin-bottom:14px}
@@ -75,7 +71,6 @@ nav a:hover,nav a:focus-visible{color:#fff}
 
 /* S2 SERVICES (홈페이지 '컨설팅 서비스' 7개) */
 .biz{position:relative;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(64px,8vh,88px)}
-.biz-head{margin-bottom:3vh;position:relative;z-index:2}
 .lead{margin-top:12px;font-size:clamp(15px,1.2vw,17px);color:var(--mute);line-height:1.65;max-width:62ch}
 .track{display:flex;gap:24px;width:max-content;position:relative;z-index:2}
 .card{--c:#5a8bff;width:min(320px,80vw);background:linear-gradient(180deg,#171a33,#10121f);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column;transition:transform .35s,border-color .35s}
@@ -244,8 +239,7 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
 <section class="hero" id="top" aria-label="BX컨설팅 소개">
   <canvas id="lines" aria-hidden="true"></canvas>
   <div id="floatLabels" aria-hidden="true"></div>
-  <div id="laneLabels" aria-hidden="true"></div>
-  <div class="hero-copy">
+    <div class="hero-copy">
     <div class="slides" role="region" aria-roledescription="carousel" aria-label="핵심 메시지">
       <div class="slide is-active" role="group" aria-roledescription="slide" aria-label="3개 중 1번째"><h1 class="slide-title split">팔리는 구조를 설계합니다</h1><p class="hero-sub" lang="en">We Engineer Revenue, Not Luck</p></div>
       <div class="slide" role="group" aria-roledescription="slide" aria-label="3개 중 2번째" aria-hidden="true"><p class="slide-title split">고객의 경험을 가치로 전환합니다</p><p class="hero-sub" lang="en">Transforming Every Customer Touchpoint into Brand Value</p></div>
@@ -261,11 +255,7 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
 </section>
 
 <!-- S2 SERVICES : 고정 + 가로 카드 (홈페이지 '컨설팅 서비스' 원문) -->
-<section class="biz" id="biz" aria-labelledby="bizTitle">
-  <div class="biz-head pad">
-    <h2 class="h2 split reveal" id="bizTitle">컨설팅 서비스</h2>
-    <p class="lead">기업의 성장 과제에 맞춰 전략, 영업, 고객경험, 조직, 리서치, 시스템, AI까지 필요한 실행 솔루션을 연결합니다.</p>
-  </div>
+<section class="biz" id="biz" aria-label="7개 컨설팅 서비스 상세">
   <div class="track pad">
     <article class="card" style="--c:#5a8bff"><div class="stripes"></div><div class="body"><span class="num">01</span><h3>경영전략 솔루션</h3><p>비전, 중장기 전략, 신사업 기회를 실행 가능한 의사결정 구조로 정리합니다.</p><ul class="tags"><li>전략 수립</li><li>비전 체계</li><li>신사업 설계</li></ul><a class="more" href="https://www.bxcon.co.kr/service/management/" target="_blank" rel="noopener" aria-label="경영전략 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
     <article class="card" style="--c:#4fa3ff"><div class="stripes"></div><div class="body"><span class="num">02</span><h3>영업·마케팅 솔루션</h3><p>고객 발굴부터 상담, 제안, 영업 성과관리까지 매출 구조를 개선합니다.</p><ul class="tags"><li>세일즈 진단</li><li>영업 교육</li><li>마케팅 실행</li></ul><a class="more" href="https://www.bxcon.co.kr/service/business/" target="_blank" rel="noopener" aria-label="영업·마케팅 솔루션 자세히 보기 (새 창)">자세히 보기 ↗</a></div></article>
@@ -511,9 +501,8 @@ const BIZ = ['경영전략', '영업·마케팅', '고객경험', '인사조직'
 const N = BIZ.length;
 const cv = document.getElementById('lines'), ctx = cv.getContext('2d');
 const S = { intro: 0, split: 0, fade: 1, labelIn: 0 };
-const floatBox = document.getElementById('floatLabels'), laneBox = document.getElementById('laneLabels');
+const floatBox = document.getElementById('floatLabels');
 const floats = BIZ.map(t => { const d = document.createElement('div'); d.className = 'float-label'; d.textContent = t; floatBox.appendChild(d); return d; });
-const lanes = BIZ.map((t, i) => { const d = document.createElement('div'); d.className = 'lane-label'; d.innerHTML = `<small>0${i + 1}</small><span>${t.replace('&', '&amp;')}</span>`; laneBox.appendChild(d); return d; });
 const COLORS = ['61,114,240', '90,139,255', '124,200,255', '106,92,255'];
 // 줄기 그라데이션은 색마다 한 번만 만들어 두고 매 프레임 늘려서 그린다 (프레임당 그라데이션 생성 제거)
 const strips = COLORS.map(c => {
@@ -552,19 +541,13 @@ function build() {
       else if (!on && run) { run = false; if (y - st > 3) segs.push({ bx: ox + x, by1: oy + st, by2: oy + y }); }
     }
   }
-  // 서비스 묶음 폭은 가장 긴 사업명 라벨이 들어갈 만큼, 칸 폭 안에서 모두 같게 맞춘다
-  const n = segs.length, cell = narrowHero() ? W * 0.96 / 4 : W * 0.8 / N;
-  const maxLabel = Math.max(...lanes.map(l => l.querySelector('span').offsetWidth));
-  const laneW = clamp(maxLabel + 24, Math.min(cell * 0.5, 60), cell * 0.94);
-  const perLane = Array(N).fill(0), laneCount = Array(N).fill(0);
-  segs.forEach((s, i) => { s.lane = Math.min(N - 1, Math.floor(i / n * N)); laneCount[s.lane]++; });
+  const n = segs.length;
   segs.forEach((s, i) => {
     const len = 40 + Math.random() * H * 0.45;
     s.sx = Math.random() * W; s.sy1 = Math.random() * (H - len); s.sy2 = s.sy1 + len;
-    const k = perLane[s.lane]++, L = laneLayout(s.lane), jitter = 0.12 * (L.b - L.t) / 0.8;
-    s.lx = L.cx + (k / Math.max(1, laneCount[s.lane] - 1) - 0.5) * laneW;
-    s.ly1 = H * (L.t + Math.random() * jitter); s.ly2 = H * (L.b - Math.random() * jitter);
-    s.d = Math.random() * 0.4; s.d2 = s.lane * 0.05 + Math.random() * 0.1;
+    // BX는 흩어지지 않고 제자리에서 위로 살짝 떠오르며 사라짐
+    s.lx = s.bx + (Math.random() - 0.5) * 24; s.ly1 = s.by1 - H * 0.1; s.ly2 = s.by2 - H * 0.1;
+    s.d = Math.random() * 0.4; s.d2 = Math.random() * 0.2;
     s.a = 0.35 + Math.random() * 0.65; s.ci = i % COLORS.length;
     s.p = Math.random() < 0.3; s.v = 0.15 + Math.random() * 0.35; s.o = Math.random(); s.ph = Math.random() * 6.28;
     s.w = step * 0.5;
@@ -576,25 +559,8 @@ function build() {
     s.sy1 = H * (0.2 + Math.random() * 0.3); s.sy2 = s.sy1 + H * 0.25; s.a = 1;
     return i;
   });
-  placeLanes();
 }
-// 서비스 묶음의 위치. 넓은 화면은 한 줄, 좁은 화면은 4개 + 3개 두 줄
 function narrowHero() { return W < 640; }
-function laneLayout(i) {
-  if (narrowHero()) {
-    const colGap = W * 0.96 / 4, row = i < 4 ? 0 : 1, c = row ? i - 4 : i;
-    return { cx: W * 0.02 + colGap * (c + 0.5) + (row ? colGap / 2 : 0), t: row ? 0.55 : 0.15, b: row ? 0.87 : 0.47 };
-  }
-  return { cx: W * 0.1 + W * 0.8 / N * (i + 0.5), t: 0.1, b: 0.9 };
-}
-// 사업명 라벨은 각 묶음의 정중앙에 맞춘다 (현재 캔버스 크기 기준)
-function placeLanes() {
-  lanes.forEach((el, i) => {
-    const L = laneLayout(i);
-    el.style.left = L.cx + 'px';
-    el.style.top = ((L.t + L.b) / 2 * H) + 'px';
-  });
-}
 
 let heroVisible = true;
 new IntersectionObserver(e => heroVisible = e[0].isIntersecting).observe(document.querySelector('.hero'));
@@ -722,12 +688,11 @@ function initMotion() {
   ['wheel', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, skip, { once: true, passive: true }));
 
   // 히어로 고정 → 스크롤하면 BX가 7개 서비스로 풀림
-  gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=160%', pin: true, scrub: 0.6 } })
+  gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=100%', pin: true, scrub: 0.6 } })
     .to('.hero-copy', { yPercent: -40, opacity: 0, duration: 0.3 }, 0)
-    .to(S, { split: 1, duration: 0.6, ease: 'none' }, 0.1)
-    .to(lanes, { opacity: 1, stagger: 0.04, duration: 0.15 }, 0.45)
-    .to(lanes, { opacity: 0, y: -20, duration: 0.12 }, 0.88)
-    .to(S, { fade: 0.15, duration: 0.15 }, 0.85);
+    .to(S, { split: 1, duration: 0.55, ease: 'none' }, 0.1)
+    .to(S, { fade: 0, duration: 0.3, ease: 'none' }, 0.35)
+    .to({}, { duration: 0.05 }, 0.65);
 
   // 섹션 제목 글자 등장
   document.querySelectorAll('.reveal').forEach(el => {
