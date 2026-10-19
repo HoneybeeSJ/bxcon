@@ -52,8 +52,10 @@ nav a:hover,nav a:focus-visible{color:#fff}
 .hero-copy{position:absolute;left:0;right:0;bottom:10vh;text-align:center;padding:0 16px}
 .slides{display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2.2vh,24px)}
 .slide-title{font-size:clamp(16px,2vw,30px);font-weight:700;line-height:1.28;letter-spacing:-.02em}
+@media (max-width:380px){.slide-title{font-size:min(16px,4.4vw)}}
 .hero-copy h1 em{font-style:normal;color:var(--sky)}
 .hero-sub{margin-top:3px;font-size:clamp(11.5px,1vw,15px);color:var(--mute);letter-spacing:.02em}
+@media (max-width:380px){.hero-sub{font-size:min(11.5px,3.05vw)}}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
 
 .float-label{position:absolute;left:0;top:0;font-size:13px;font-weight:600;color:#bcd7ff;letter-spacing:.04em;white-space:nowrap;pointer-events:none;opacity:0}
