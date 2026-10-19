@@ -282,6 +282,16 @@ nav a:hover,nav a:focus-visible{opacity:1}
 .cta::before{content:'';position:absolute;right:-6%;top:50%;width:46%;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(47,99,255,.16) 0,transparent 64%);pointer-events:none}
 .cta>*{position:relative}
 .cta-bx{justify-self:end;font-weight:900;font-size:clamp(110px,13vw,210px);line-height:1;letter-spacing:-.05em;color:transparent;background:repeating-linear-gradient(90deg,var(--blue) 0 5px,transparent 5px 11px);-webkit-background-clip:text;background-clip:text}
+.nl{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(20px,4vw,56px);align-items:center;padding-top:6vh;padding-bottom:8vh}
+.nl h2{font-size:clamp(22px,2vw,30px);font-weight:800;letter-spacing:.04em}
+.nl p{margin-top:8px;font-size:15px;line-height:1.6;color:var(--mute)}
+.nl-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
+.nl-form label{display:grid;gap:6px;font-size:13px;font-weight:600}
+.nl-form input{height:48px;padding:0 14px;font:inherit;font-size:16px;border-radius:var(--r-tag);min-width:0}
+.nl-form .btn{min-height:48px;padding:0 24px;cursor:pointer;font-family:inherit}
+@media (max-width:768px){.nl{grid-template-columns:1fr}.nl-form{grid-template-columns:1fr}.nl-form .btn{width:100%}}
+.nl-form input{background:#fff;color:var(--ink);border:1.5px solid rgba(15,23,40,.35)}
+.nl-form input:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-color:var(--blue)}
 footer{border-top:1px solid var(--line);padding-top:28px;padding-bottom:28px;font-size:14px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;line-height:1.7}
 footer address{font-style:normal}
 footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
@@ -508,6 +518,16 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   </section>
 </div>
 
+<!-- NEWSLETTER (홈페이지 하단 레터 구독 박스 원문. 시안에서는 실제로 저장·발송하지 않음) -->
+<section class="nl pad fx-up" id="newsletter" aria-labelledby="nlTitle">
+  <div class="nl-text"><h2 id="nlTitle">NEWSLETTER</h2><p>실무에 바로 연결되는 인사이트를 메일로 편하게 받아보세요.</p></div>
+  <form class="nl-form" id="nlForm">
+    <label>Name<input type="text" name="name" autocomplete="name" required></label>
+    <label>E-mail<input type="email" name="email" autocomplete="email" inputmode="email" spellcheck="false" required></label>
+    <button class="btn solid" type="submit">Subscribe</button>
+  </form>
+</section>
+
 </main>
 
 <footer class="pad">
@@ -553,6 +573,14 @@ document.addEventListener('click', e => {
   e.preventDefault();
   toast.textContent = '실제 사이트에서는 여기서 프로젝트 문의 창이 열립니다.';
   toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2400);
+});
+
+// 레터 구독: 시안에서는 입력값을 저장하거나 보내지 않고 안내만 띄움
+const nlForm = document.getElementById('nlForm');
+nlForm && nlForm.addEventListener('submit', e => {
+  e.preventDefault(); nlForm.reset();
+  toast.textContent = '실제 사이트에서는 여기서 레터 구독이 접수됩니다. (시안에서는 저장되지 않아요)';
+  toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2800);
 });
 
 // 글자 단위 분리. 스크린리더에는 원문만 읽히도록 조각은 숨긴다.

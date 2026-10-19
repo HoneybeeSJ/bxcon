@@ -166,6 +166,16 @@ nav a:hover,nav a:focus-visible{color:#fff}
 .cta h2{font-size:clamp(28px,4vw,56px);font-weight:800;line-height:1.25;margin-bottom:40px;letter-spacing:-.02em}
 .cta .bars{position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(90deg,rgba(61,114,240,.22) 0 2px,transparent 2px 14px);-webkit-mask-image:radial-gradient(ellipse at center,#000 0,transparent 68%);mask-image:radial-gradient(ellipse at center,#000 0,transparent 68%);transform-origin:center}
 .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.nl{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(20px,4vw,56px);align-items:center;padding-top:6vh;padding-bottom:8vh}
+.nl h2{font-size:clamp(22px,2vw,30px);font-weight:800;letter-spacing:.04em}
+.nl p{margin-top:8px;font-size:15px;line-height:1.6;color:var(--mute)}
+.nl-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
+.nl-form label{display:grid;gap:6px;font-size:13px;font-weight:600}
+.nl-form input{height:48px;padding:0 14px;font:inherit;font-size:16px;border-radius:var(--r-tag);min-width:0}
+.nl-form .btn{min-height:48px;padding:0 24px;cursor:pointer;font-family:inherit}
+@media (max-width:768px){.nl{grid-template-columns:1fr}.nl-form{grid-template-columns:1fr}.nl-form .btn{width:100%}}
+.nl-form input{background:#10121f;color:var(--ink);border:1px solid #3a4275}
+.nl-form input:focus-visible{outline:2px solid var(--sky);outline-offset:2px;border-color:var(--sky)}
 footer{border-top:1px solid var(--line);padding-top:28px;padding-bottom:28px;font-size:14px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;line-height:1.7}
 footer address{font-style:normal}
 footer .tagline{color:var(--ink);margin-bottom:6px}
@@ -343,6 +353,16 @@ footer .tagline{color:var(--ink);margin-bottom:6px}
   <div class="cta-row"><a class="btn solid" href="#cta" data-planned>프로젝트 문의</a><a class="btn" href="mailto:contact@bxcon.co.kr">contact@bxcon.co.kr</a></div>
 </section>
 
+<!-- NEWSLETTER (홈페이지 하단 레터 구독 박스 원문. 시안에서는 실제로 저장·발송하지 않음) -->
+<section class="nl pad fx-up" id="newsletter" aria-labelledby="nlTitle">
+  <div class="nl-text"><h2 id="nlTitle">NEWSLETTER</h2><p>실무에 바로 연결되는 인사이트를 메일로 편하게 받아보세요.</p></div>
+  <form class="nl-form" id="nlForm">
+    <label>Name<input type="text" name="name" autocomplete="name" required></label>
+    <label>E-mail<input type="email" name="email" autocomplete="email" inputmode="email" spellcheck="false" required></label>
+    <button class="btn solid" type="submit">Subscribe</button>
+  </form>
+</section>
+
 </main>
 
 <footer class="pad">
@@ -385,6 +405,14 @@ document.addEventListener('click', e => {
   e.preventDefault();
   toast.textContent = '실제 사이트에서는 여기서 프로젝트 문의 창이 열립니다.';
   toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2400);
+});
+
+// 레터 구독: 시안에서는 입력값을 저장하거나 보내지 않고 안내만 띄움
+const nlForm = document.getElementById('nlForm');
+nlForm && nlForm.addEventListener('submit', e => {
+  e.preventDefault(); nlForm.reset();
+  toast.textContent = '실제 사이트에서는 여기서 레터 구독이 접수됩니다. (시안에서는 저장되지 않아요)';
+  toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2800);
 });
 
 // 글자 단위 분리 (SplitText 대체). 스크린리더에는 원문만 읽히도록 조각은 숨긴다.
