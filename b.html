@@ -17,7 +17,7 @@
 /* 2차 시안: 루아소프트(luasoft.kr) 구성 벤치마크. 밝은 바탕 + 선명한 파랑 + 남색 띠
    모서리 규칙: 큰 면 28px / 카드 20px / 작은 태그 8px / 버튼·칩은 알약형 */
 :root{--bg:#f5f8ff;--surface:#fff;--ink:#0b1530;--mute:#56627f;--line:#dfe6f5;--blue:#3d72f0;--blue-d:#2a56c9;--sky:#7cc8ff;--navy:#0b1230;
-  --r-xl:28px;--r-card:20px;--r-tag:8px;--r-pill:999px;--gut:clamp(16px,6vw,96px);color-scheme:light}
+  --r-xl:28px;--r-card:20px;--r-tag:8px;--r-pill:999px;--gut:max(clamp(16px,6vw,96px),calc((100vw - 1560px) / 2));color-scheme:light}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-padding-top:88px}
 html,body{background:var(--bg)}
@@ -81,7 +81,7 @@ nav a:hover,nav a:focus-visible{opacity:1}
 .biz::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(rgba(47,99,255,.2) 1px,transparent 1.6px) 0 0/44px 44px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,#000,transparent);mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,#000,transparent)}
 .biz-glow{position:absolute;right:-8%;top:50%;width:62vw;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(47,99,255,.17) 0,transparent 62%);pointer-events:none}
 .biz-stage{position:absolute;inset:0}
-.chap{position:absolute;inset:0;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:4vw;padding:96px var(--gut) 96px;visibility:hidden;opacity:0}
+.chap{position:absolute;inset:0;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:min(4vw,64px);padding:96px var(--gut) 96px;visibility:hidden;opacity:0}
 .chap .num{display:block;font-size:15px;font-weight:700;letter-spacing:.06em;color:var(--blue-d);font-variant-numeric:tabular-nums}
 .chap h3{overflow:hidden;font-size:clamp(36px,4.6vw,72px);font-weight:800;letter-spacing:-.045em;line-height:1.2;padding-bottom:.1em;margin:14px 0 14px}
 .chap h3 span{display:block}
@@ -90,7 +90,7 @@ nav a:hover,nav a:focus-visible{opacity:1}
 .tags li{font-size:14px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(47,99,255,.08);border:1px solid rgba(47,99,255,.28);color:#2547b8;font-weight:600}
 .chap .btn{min-height:44px}
 .chap .btn:hover,.chap .btn:focus-visible{background:var(--blue);border-color:var(--blue);color:#fff}
-.art-wrap{container-type:inline-size;width:min(40vw,560px);justify-self:center}
+.art-wrap{container-type:inline-size;width:min(40vw,640px);justify-self:center}
 .art{position:relative;width:100%;height:calc(100cqw * 34 / 42);font-size:calc(100cqw / 42);color:var(--ink);font-weight:500}
 .art .abs{position:absolute;left:0;top:0;width:100%;height:auto;overflow:visible}
 .gc{position:absolute}
@@ -186,7 +186,7 @@ nav a:hover,nav a:focus-visible{opacity:1}
 .biz-prog i b{display:block;height:100%;background:var(--blue);transform:scaleX(0);transform-origin:left}
 
 /* 4 CRM */
-.crm{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center;padding-top:18vh;padding-bottom:14vh}
+.crm{display:grid;grid-template-columns:1fr 1fr;gap:min(6vw,96px);align-items:center;padding-top:18vh;padding-bottom:14vh}
 .h2{font-size:clamp(30px,3.6vw,56px);font-weight:800;line-height:1.22;letter-spacing:-.035em}
 .lead{margin-top:16px;font-size:clamp(16px,1.25vw,18px);color:var(--mute);line-height:1.7;max-width:58ch}
 .crm .btn{margin-top:32px}
@@ -376,6 +376,12 @@ footer .tagline{color:var(--ink);font-weight:600;margin-bottom:6px}
   .cta{grid-template-columns:1fr}
   .cta h2 br{display:none}
   .cta-bx{display:none}
+}
+
+/* 아주 넓은 화면(브라우저 배율을 낮춘 경우 포함): 글과 그래픽을 가운데로 모아 한 쌍으로 보이게 */
+@media (min-width:1500px){
+  .chap{grid-template-columns:minmax(0,560px) minmax(0,640px);justify-content:center;gap:clamp(64px,6vw,112px)}
+  .crm{grid-template-columns:minmax(0,560px) minmax(0,520px);justify-content:center;gap:clamp(64px,6vw,112px)}
 }
 </style>
 </head>
