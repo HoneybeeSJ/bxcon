@@ -51,9 +51,9 @@ nav a:hover,nav a:focus-visible{color:#fff}
 #lines{position:absolute;inset:0;width:100%;height:100%}
 .hero-copy{position:absolute;left:0;right:0;bottom:10vh;text-align:center;padding:0 16px}
 .slides{display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2.2vh,24px)}
-.slide-title{font-size:clamp(20px,2.4vw,36px);font-weight:700;line-height:1.28;letter-spacing:-.02em}
+.slide-title{font-size:clamp(16px,2vw,30px);font-weight:700;line-height:1.28;letter-spacing:-.02em}
 .hero-copy h1 em{font-style:normal;color:var(--sky)}
-.hero-sub{margin-top:4px;font-size:clamp(13px,1.1vw,16px);color:var(--mute);letter-spacing:.02em}
+.hero-sub{margin-top:3px;font-size:clamp(11.5px,1vw,15px);color:var(--mute);letter-spacing:.02em}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
 
 .float-label{position:absolute;left:0;top:0;font-size:13px;font-weight:600;color:#bcd7ff;letter-spacing:.04em;white-space:nowrap;pointer-events:none;opacity:0}
@@ -513,7 +513,7 @@ function build() {
   // 'BX' 글자를 오프스크린에 그려 세로 줄 단위로 샘플링 → 브로셔 표지의 줄무늬 BX
   const copy = document.querySelector('.hero-copy');
   const copyTop = H - parseFloat(getComputedStyle(copy).bottom) - copy.offsetHeight;
-  let ow = Math.round(Math.min(W * (narrowHero() ? 0.8 : 0.56), 760));
+  let ow = Math.round(Math.min(W * (narrowHero() ? 1.08 : 0.64), 860));
   ow = Math.max(150, Math.min(ow, Math.round((copyTop - 32 - 90) / 0.46)));  // 헤더 아래 90px 안쪽, 문구 윗선에서 32px 위
   const oh = Math.round(ow * 0.46);
   const off = document.createElement('canvas'); off.width = ow; off.height = oh;
