@@ -936,7 +936,11 @@ function initMotion() {
       const counters = [], tl = gsap.timeline({ paused: true });
       chapAnim(tl, c, 0, counters);
       tl.timeScale(0.6).eventCallback('onUpdate', () => updCnt(tl, counters));
-      ScrollTrigger.create({ trigger: c, start: 'top 78%', once: true, onEnter: () => tl.play() });
+      // PC처럼 위로 올라올 때도 다시 재생: 화면에 들어올 때(아래로·위로 모두) 처음부터 재생하고, 화면 밖으로 나가면 시작 상태로 되돌려 둠
+      const play = () => tl.restart();
+      const reset = () => tl.pause(0);
+      const st = ScrollTrigger.create({ trigger: c, start: 'top 78%', end: 'bottom 15%', onEnter: play, onEnterBack: play, onLeave: reset, onLeaveBack: reset });
+      if (st.isActive) play();
       return tl;
     });
 
