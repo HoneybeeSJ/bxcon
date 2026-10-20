@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title>BXCON</title>
+  <rect width="128" height="128" rx="28" fill="#171717"/>
+  <path d="M28 96V32h28c17 0 28 7 28 21 0 8-4 14-11 17 10 2 16 9 16 19 0 15-11 23-30 23H28Zm18-39h9c7 0 12-3 12-9s-5-8-12-8h-9v17Zm0 31h12c8 0 13-3 13-10s-5-10-13-10H46v20Z" fill="#f6f1e8"/>
+  <circle cx="96" cy="38" r="10" fill="#a6461c"/>
+</svg>
