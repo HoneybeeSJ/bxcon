@@ -1,1 +1,0 @@
-import{n as e}from"./client-recent-sales-programs.vYepZUAG.js";try{let t=document.getElementById(`sales-current-program`),n=JSON.parse(t?.textContent||`{}`);e(window.localStorage,n)}catch{}
