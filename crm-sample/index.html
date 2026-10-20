@@ -1,1 +1,76 @@
-<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>CRM 예시 공유본</title><meta http-equiv="refresh" content="0; url=examples/crm/"><a href="examples/crm/">CRM 예시 공유본 열기</a>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>BX CRM 예시 공유본</title>
+<style>
+:root{--bg:#e9edf5;--bar:#0f1728;--on:#3d72f0;--tx:#fff}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);font-family:Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+.bar{height:56px;background:var(--bar);color:var(--tx);display:flex;align-items:center;gap:20px;padding:0 16px;overflow-x:auto;white-space:nowrap}
+.bar b{font-size:14px;opacity:.7;font-weight:600;margin-right:4px}
+.seg{display:inline-flex;background:rgba(255,255,255,.1);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;color:inherit;font:inherit;font-size:14px;font-weight:600;padding:7px 16px;border-radius:8px;cursor:pointer;opacity:.75}
+.seg button[aria-pressed=true]{background:var(--on);opacity:1}
+.seg button:focus-visible,.open:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.open{margin-left:auto;color:var(--tx);font-size:13px;opacity:.8;text-decoration:none}
+.stage{height:calc(100% - 56px);display:flex;justify-content:center;align-items:center;overflow:auto}
+iframe{border:0;background:#fff;display:block;width:100%;height:100%}
+.stage.m{padding:20px 0}
+.stage.m .dev{width:390px;height:min(844px,calc(100% - 4px));border:10px solid #111;border-radius:42px;overflow:hidden;box-shadow:0 20px 50px rgba(15,23,40,.3);flex:none}
+/* PC: 창이 좁아도 1280px 이상 화면으로 렌더링한 뒤 축소해서 보여줌 */
+.stage:not(.m){display:block;overflow:hidden}
+.stage:not(.m) .dev{width:100%;height:100%;overflow:hidden}
+.stage:not(.m) iframe{transform-origin:0 0}
+@media (max-width:600px){.bar{gap:10px}.bar b{display:none}.open{display:none}
+  .stage.m{padding:0}.stage.m .dev{width:100%;height:100%;border:0;border-radius:0;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <b>BX CRM 예시</b>
+  <div class="seg" role="group" aria-label="페이지 선택">
+    <button data-v="intro" aria-pressed="true">소개 페이지</button>
+    <button data-v="demo" aria-pressed="false">체험 화면</button>
+  </div>
+  <div class="seg" role="group" aria-label="화면 선택">
+    <button data-d="pc" aria-pressed="true">PC</button>
+    <button data-d="m" aria-pressed="false">모바일</button>
+  </div>
+  <a class="open" id="open" href="examples/crm/" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
+</div>
+<div class="stage" id="stage"><div class="dev"><iframe id="f" src="examples/crm/" title="CRM 예시 미리보기"></iframe></div></div>
+<script>
+(function(){
+  var SRC={intro:'examples/crm/',demo:'examples/crm/demo/'};
+  var st={v:'intro',d:'pc'},f=document.getElementById('f'),stage=document.getElementById('stage'),open=document.getElementById('open');
+  var h=(location.hash||'').replace('#','').split('-');
+  if(h[0]==='demo')st.v='demo'; if(h[1]==='m')st.d='m';
+  /* 폰으로 직접 열면 기본을 모바일(실제 화면 그대로)로 */
+  if(!location.hash && matchMedia('(max-width:600px)').matches)st.d='m';
+  var PCW=1280;
+  function fit(){
+    if(st.d==='m'){f.style.width=f.style.height=f.style.transform='';return}
+    var w=stage.clientWidth,hh=stage.clientHeight,iw=Math.max(PCW,w),k=w/iw;
+    f.style.width=iw+'px';f.style.height=(hh/k)+'px';f.style.transform=k<1?'scale('+k+')':'';
+  }
+  addEventListener('resize',fit);
+  function render(reload){
+    stage.className='stage'+(st.d==='m'?' m':'');
+    fit();
+    document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===st.v)});
+    document.querySelectorAll('[data-d]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.d===st.d)});
+    var src=SRC[st.v];
+    if(reload||f.getAttribute('src')!==src)f.setAttribute('src',src);
+    open.href=src;
+    history.replaceState(null,'','#'+st.v+'-'+st.d);
+  }
+  document.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){st.v=b.dataset.v;render()}});
+  document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){st.d=b.dataset.d;render(true)}});
+  render();
+})();
+</script>
+</body>
+</html>
