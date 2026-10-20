@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>BX 홈페이지 시안 비교</title>
+<title>BX 홈페이지 시안</title>
 <style>
 :root{--bg:#e9edf5;--bar:#0f1728;--on:#3d72f0;--tx:#fff}
 *{box-sizing:border-box}
@@ -32,23 +32,21 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
 <div class="bar">
   <b>BX 홈페이지 시안</b>
   <div class="seg" role="group" aria-label="시안 선택">
-    <button data-v="a" aria-pressed="true">A안 (1차)</button>
-    <button data-v="b" aria-pressed="false">B안 (2차)</button>
-    <button data-v="c" aria-pressed="false">C안 (합본)</button>
+    <button data-v="c" aria-pressed="true">메인페이지</button>
     <button data-v="crm" aria-pressed="false">CRM 예시</button>
   </div>
   <div class="seg" role="group" aria-label="화면 선택">
     <button data-d="pc" aria-pressed="true">PC</button>
     <button data-d="m" aria-pressed="false">모바일</button>
   </div>
-  <a class="open" id="open" href="a.html" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
+  <a class="open" id="open" href="c.html" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
 </div>
-<div class="stage" id="stage"><div class="dev"><iframe id="f" src="a.html" title="시안 미리보기"></iframe></div></div>
+<div class="stage" id="stage"><div class="dev"><iframe id="f" src="c.html" title="시안 미리보기"></iframe></div></div>
 <script>
 (function(){
-  var st={v:'a',d:'pc'},f=document.getElementById('f'),stage=document.getElementById('stage'),open=document.getElementById('open');
+  var st={v:'c',d:'pc'},f=document.getElementById('f'),stage=document.getElementById('stage'),open=document.getElementById('open');
   var h=(location.hash||'').replace('#','').split('-');
-  if(h[0]==='b'||h[0]==='c'||h[0]==='crm')st.v=h[0]; if(h[1]==='m')st.d='m';
+  if(h[0]==='crm')st.v='crm'; if(h[1]==='m')st.d='m';
   var PCW=1280;
   function fit(){
     if(st.d==='m'){f.style.width=f.style.height=f.style.transform='';return}
