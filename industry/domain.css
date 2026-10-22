@@ -2,7 +2,7 @@
 .industry-visual{margin:0;min-width:0}.industry-visual img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:22px}.industry-visual figcaption{display:flex;justify-content:space-between;gap:16px;padding:14px 2px 0;font-size:12px;line-height:1.7;color:var(--mute)}.industry-visual figcaption small{font-size:12px;white-space:nowrap;color:#69748b}.editorial-hero{min-height:545px}.expertise-layout{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}.expertise-item{padding:22px 0;border-top:1px solid var(--line)}.expertise-item:first-child{padding-top:0;border:0}.expertise-item-head{display:flex;gap:14px;align-items:baseline}.expertise-item-head>span{color:var(--blue-d);font-size:12px;font-weight:700}.expertise-item h3{font-size:22px;line-height:1.4}.expertise-foundation{font-size:13px;font-weight:650;color:var(--blue-d);margin:10px 0 8px}.expertise-application{color:var(--mute);font-size:15px;line-height:1.85}.expertise-evidence{font-size:12px;color:#5c6e8c;margin-top:12px}.expertise-boundary{margin-top:30px;font-size:12px;color:var(--mute);line-height:1.8}.domain-motion{padding:25px;box-shadow:0 20px 60px #183c900a}.domain-motion figcaption{font-size:21px;margin:20px 0 22px;line-height:1.45}.domain-motion-status{display:flex;align-items:center;gap:9px;padding-top:16px;border-top:1px solid var(--line);margin-top:20px;flex-wrap:wrap}.domain-motion .mini-message{padding:0;min-height:24px;flex:1;font-size:12px;color:var(--blue-d);font-weight:650}.status-orbit{width:7px;height:7px;border-radius:50%;background:#6387e5;flex-shrink:0}.motion-example{font-size:12px;color:var(--mute)}
 /* ── 산업별 모션(10차): 의사결정자가 속으로 묻는 질문에서 출발한다. 자동 재생(data-phase 0~3) ──
    규칙: 바깥 카드 20px > 안쪽 패널 14px > 작은 요소 8px, 알약 999px. 강조색은 파랑 하나, 본문 글자 대비 4.5:1 이상, 최소 12px.
-   세 산업의 형태가 다르다: 제약=접점 레일과 한마디, IT=세 부서의 질문 벽, 반도체=평가 관문 링. */
+   세 산업의 형태가 다르다: 제약=접점 레일과 한마디, IT=네 관계자의 질문과 합의, 반도체=T1·T2 거래 단계 두 레인. */
 .domain-motion{--ink:#1f3d73;--body:#3a4d6b;--quiet:#586984;--rule:#d5e1fa;--accent:#2a56c9;--soft:#e8efff}
 .scene{position:relative;overflow:hidden;padding:22px 20px;border-radius:14px;border:1px solid var(--rule);background:radial-gradient(110% 90% at 0% 0%,#dbe7ff 0%,#f1f6ff 48%,#fbfdff 100%)}
 .scene::before{content:'';position:absolute;right:-60px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,#9db9f6 0%,#9db9f600 70%);opacity:.5;pointer-events:none}
@@ -35,39 +35,47 @@
 .skills b{width:100%;font-size:12.5px;color:var(--quiet)}
 .skills span{padding:6px 12px;border-radius:999px;background:var(--accent);color:#fff;font-size:13px;font-weight:650}
 @keyframes visit-pulse{0%{box-shadow:0 0 0 0 #2a56c966}100%{box-shadow:0 0 0 14px #2a56c900}}
-/* IT: 세 부서가 각자 묻는다, 하나의 제안이 답한다 */
-.scene-it{display:flex;flex-direction:column;gap:16px}
-.wall{display:grid;gap:12px}
-.qb{display:flex;flex-direction:column;gap:6px;width:min(78%,420px);padding:13px 16px;border-radius:14px;background:#ffffffd9;border:1px solid var(--rule);box-shadow:0 12px 30px #2a56c912;opacity:0;transform:translateX(-26px);transition:opacity 0.35s,transform 0.4s cubic-bezier(.2,.8,.2,1)}
-.qb.r{margin-left:auto;transform:translateX(26px)}
+/* IT: 네 관계자가 각자 묻고, 기준이 엇갈린 뒤, 하나의 도입 논리로 합의한다 */
+.scene-it{display:flex;flex-direction:column;gap:14px}
+.wall{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qb{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:14px;background:#ffffffd9;border:1px solid var(--rule);box-shadow:0 12px 30px #2a56c912;opacity:0;transform:translateY(10px);transition:opacity 0.35s,transform 0.4s cubic-bezier(.2,.8,.2,1),border-color 0.3s}
 .qb em{align-self:flex-start;padding:2px 9px;border-radius:999px;background:var(--soft);color:var(--ink);font-size:12px;font-weight:700;font-style:normal}
-.qb b{font-size:17px;font-weight:700;line-height:1.45;letter-spacing:-.035em;color:var(--ink)}
-.motion-it .q1{opacity:1;transform:none}
-.motion-it:is([data-phase='1'],[data-phase='2'],[data-phase='3']) .q2,.motion-it:is([data-phase='2'],[data-phase='3']) .q3{opacity:1;transform:none}
+.qb b{font-size:15px;font-weight:700;line-height:1.45;letter-spacing:-.035em;color:var(--ink)}
+.motion-it .q2,.motion-it .q4{transition-delay:0.25s}
+.motion-it .q1,.motion-it .q2,.motion-it:is([data-phase='1'],[data-phase='2'],[data-phase='3']) :is(.q3,.q4){opacity:1;transform:none}
+.motion-it[data-phase='2'] .q1{transform:translate(-5px,-5px)}.motion-it[data-phase='2'] .q2{transform:translate(5px,-5px)}.motion-it[data-phase='2'] .q3{transform:translate(-5px,5px)}.motion-it[data-phase='2'] .q4{transform:translate(5px,5px)}
+.motion-it[data-phase='2'] .qb{border-style:dashed;border-color:#8ea3c9;transition-delay:0s}
+.motion-it[data-phase='3'] .qb{border-color:var(--accent);transition-delay:0s}
+.hub{grid-column:1/-1;display:grid;justify-items:center;margin:-2px 0}.hub>span{grid-area:1/1}
+.clash{padding:5px 14px;border-radius:999px;background:#fff;border:1.5px dashed var(--accent);color:var(--ink);font-size:13px;font-weight:700;white-space:nowrap;box-shadow:0 10px 24px #2a56c91f;opacity:0;transform:scale(.9);transition:opacity 0.3s,transform 0.3s}
+.motion-it[data-phase='2'] .clash{opacity:1;transform:none}
+.agree{padding:5px 14px;border-radius:999px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;white-space:nowrap;opacity:0;transform:scale(.9);transition:opacity 0.3s,transform 0.3s}
+.motion-it[data-phase='3'] .agree{opacity:1;transform:none}
 .answer{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:14px 16px;border-radius:14px;background:var(--accent);color:#fff;opacity:0;transform:translateY(10px);transition:opacity 0.35s,transform 0.35s}
 .motion-it[data-phase='3'] .answer{opacity:1;transform:none}
 .answer b{width:100%;font-size:15px;font-weight:700;letter-spacing:-.03em}
 .answer span{padding:4px 11px;border-radius:999px;background:#ffffff26;border:1px solid #ffffff59;font-size:13px;font-weight:650}
-/* 반도체: 평가 관문을 하나씩 통과하는 링 */
-.scene-semi{display:flex;flex-direction:column;gap:18px}
-.gate-wrap{display:grid;grid-template-columns:150px 1fr;gap:26px;align-items:center}
-.ring{position:relative;width:150px;height:150px}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring circle{fill:none;stroke-width:12}
-.rg-base{stroke:#cbdaf8}
-.rg{stroke:var(--accent);stroke-dasharray:0 100;transition:stroke-dasharray 0.7s ease}
-.rg0{stroke-dashoffset:0}.rg1{stroke-dashoffset:-33.4}.rg2{stroke-dashoffset:-66.8}
-.motion-semiconductor:is([data-phase='0'],[data-phase='1'],[data-phase='2'],[data-phase='3']) .rg0{stroke-dasharray:30 70}
-.motion-semiconductor:is([data-phase='1'],[data-phase='2'],[data-phase='3']) .rg1{stroke-dasharray:30 70}
-.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .rg2{stroke-dasharray:30 70}
-.ring-core{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;font-weight:800;letter-spacing:-.03em;color:var(--ink);text-align:center}
-.ring-core small{font-size:12px;font-weight:600;color:var(--quiet)}
-.gates{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.gt{padding:11px 14px;border-radius:14px;border:1px solid var(--rule);background:#ffffff99;transition:background 0.3s,border-color 0.3s,box-shadow 0.3s}
-.gt span{display:block;font-size:12px;font-weight:700;color:var(--quiet)}
-.gt b{display:block;margin-top:2px;font-size:16px;font-weight:700;line-height:1.45;letter-spacing:-.035em;color:var(--body)}
-.motion-semiconductor[data-phase='0'] .g0,.motion-semiconductor[data-phase='1'] .g1,.motion-semiconductor[data-phase='2'] .g2{background:#fff;border-color:#8ea3c9;box-shadow:0 12px 30px #2a56c91a}
-.motion-semiconductor[data-phase='0'] .g0 b,.motion-semiconductor[data-phase='1'] .g1 b,.motion-semiconductor[data-phase='2'] .g2 b{color:var(--ink)}
+/* 반도체: T1 제조사와 T2 장비·소재·부품의 거래 단계가 두 레인으로 나란히 진행된다 */
+.scene-semi{display:flex;flex-direction:column;gap:12px}
+.lane{padding:14px 14px 12px;border-radius:14px;background:#ffffffb3;border:1px solid var(--rule)}
+.lane-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.lane-head em{padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--ink);font-size:12.5px;font-weight:800;font-style:normal}
+.lane-head span{font-size:12px;color:var(--quiet)}
+.steps{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;list-style:none;margin:0;padding:0}
+.steps::before,.steps::after{content:'';position:absolute;top:7px;left:16.7%;right:16.7%;height:3px;border-radius:3px;background:#cbdaf8}
+.steps::after{background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.7s ease}
+.motion-semiconductor[data-phase='1'] .steps::after{transform:scaleX(.5)}
+.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .steps::after{transform:scaleX(1)}
+.lane-t2 .steps::after{transition-delay:0.2s}
+.st{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:13px;font-weight:700;line-height:1.4;color:var(--quiet);transition:color 0.3s}
+.st i{width:17px;height:17px;box-sizing:border-box;border-radius:50%;background:#fff;border:3px solid #cbdaf8;z-index:1;transition:background 0.3s,border-color 0.3s}
+.motion-semiconductor .s0,.motion-semiconductor:is([data-phase='1'],[data-phase='2'],[data-phase='3']) .s1,.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .s2{color:var(--ink)}
+.motion-semiconductor .s0 i,.motion-semiconductor:is([data-phase='1'],[data-phase='2'],[data-phase='3']) .s1 i,.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .s2 i{border-color:var(--accent)}
+.motion-semiconductor[data-phase='0'] .s0 i,.motion-semiconductor[data-phase='1'] .s1 i,.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .s2 i{background:var(--accent)}
+.ask{margin:12px 0 0;padding:9px 12px;border-radius:8px;background:var(--soft);font-size:14px;font-weight:700;line-height:1.45;letter-spacing:-.03em;color:var(--ink);text-align:center;opacity:0;transform:translateY(6px);transition:opacity 0.35s,transform 0.35s}
+.ask small{display:block;font-size:12px;font-weight:600;color:var(--quiet)}
+.lane-t2 .ask{transition-delay:0.25s}
+.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .ask{opacity:1;transform:none}
 .plan{padding:13px 16px;border-radius:14px;background:var(--accent);color:#fff;opacity:0;transform:translateY(10px);transition:opacity 0.35s,transform 0.35s}
 .plan span{display:block;font-size:12px;opacity:.9;margin-bottom:2px}
 .plan b{font-size:15px;font-weight:700;letter-spacing:-.03em}
@@ -85,8 +93,6 @@
 .domain-motion .mini-message{flex:none;text-align:center}
 .quote{max-width:440px;margin-inline:auto;width:100%}
 .skills{justify-content:center;text-align:center}
-.qb,.qb.r{width:min(100%,460px);margin-inline:auto}
-.gate-wrap{max-width:500px;margin-inline:auto}
 .answer{justify-content:center;text-align:center;max-width:460px;margin-inline:auto;width:100%}
 .plan{text-align:center;max-width:460px;margin-inline:auto;width:100%}
 .industry-row{grid-template-columns:55px 180px .75fr 1.2fr}.industry-thumb{width:180px;height:104px;object-fit:cover;border-radius:12px;display:block}.industry-row .en{font-size:12px}
@@ -113,5 +119,5 @@ html:not([data-preview]) [data-preview-only]{display:none!important}
 .related-cols a{display:flex;align-items:center;min-height:44px;font-size:15px;font-weight:650;border-bottom:1px solid var(--line)}
 @media(max-width:700px){.related-cols{grid-template-columns:1fr;gap:20px}}
 
-@media(max-width:540px){.scene{padding:18px 14px}.rail{grid-template-columns:repeat(4,1fr)}.tp{font-size:12px}.quote{padding:13px}.quote p{font-size:16px}.avatar{width:36px;height:36px;font-size:12px}.skills span{font-size:12px;padding:5px 10px}.qb,.qb.r{width:100%;padding:11px 13px}.qb b{font-size:15px}.answer b{font-size:14px}.answer span{font-size:12px}.gate-wrap{grid-template-columns:1fr;gap:16px;justify-items:center}.ring{width:124px;height:124px}.ring-core{font-size:14px}.gates{width:100%}.gt b{font-size:15px}.plan b{font-size:14px}}
+@media(max-width:540px){.scene{padding:18px 14px}.rail{grid-template-columns:repeat(4,1fr)}.tp{font-size:12px}.quote{padding:13px}.quote p{font-size:16px}.avatar{width:36px;height:36px;font-size:12px}.skills span{font-size:12px;padding:5px 10px}.wall{gap:8px}.qb{padding:10px 11px}.qb b{font-size:13.5px}.clash,.agree{font-size:12px;padding:5px 11px}.answer b{font-size:14px}.answer span{font-size:12px}.lane{padding:12px 10px 10px}.lane-head{flex-wrap:wrap;gap:4px;margin-bottom:12px}.st{font-size:12px}.ask{font-size:13px}.plan b{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.domain-motion *,.domain-motion *::before,.domain-motion *::after{animation:none!important;transition:none!important}}
