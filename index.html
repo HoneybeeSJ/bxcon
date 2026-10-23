@@ -24,7 +24,7 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
 .stage:not(.m){display:block;overflow:hidden}
 .stage:not(.m) .dev{width:100%;height:100%;overflow:hidden}
 .stage:not(.m) iframe{transform-origin:0 0}
-@media (max-width:600px){.bar{gap:10px}.bar b{display:none}.open{display:none}
+@media (max-width:600px){.bar{gap:10px}.seg button{padding:7px 10px;font-size:13px}.bar b{display:none}.open{display:none}
   .stage.m{padding:0}.stage.m .dev{width:100%;height:100%;border:0;border-radius:0;box-shadow:none}}
 </style>
 </head>
@@ -34,7 +34,8 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
   <div class="seg" role="group" aria-label="시안 선택">
     <button data-v="c" aria-pressed="true">메인페이지</button>
     <button data-v="crm" aria-pressed="false">CRM 예시</button>
-    <button data-v="ind" aria-pressed="false">산업별 교육</button>
+    <button data-v="ind" aria-pressed="false">산업별 · 개편</button>
+    <button data-v="indold" aria-pressed="false">산업별 · 이전</button>
   </div>
   <div class="seg" role="group" aria-label="화면 선택">
     <button data-d="pc" aria-pressed="true">PC</button>
@@ -47,7 +48,7 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
 (function(){
   var st={v:'c',d:'pc'},f=document.getElementById('f'),stage=document.getElementById('stage'),open=document.getElementById('open');
   var h=(location.hash||'').replace('#','').split('-');
-  if(h[0]==='crm'||h[0]==='ind')st.v=h[0]; if(h[1]==='m')st.d='m';
+  if(h[0]==='crm'||h[0]==='ind'||h[0]==='indold')st.v=h[0]; if(h[1]==='m')st.d='m';
   var PCW=1280;
   function fit(){
     if(st.d==='m'){f.style.width=f.style.height=f.style.transform='';return}
@@ -60,7 +61,7 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
     fit();
     document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===st.v)});
     document.querySelectorAll('[data-d]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.d===st.d)});
-    var src=st.v==='crm'?'crm-sample/examples/crm/':st.v==='ind'?'industry/index.html':st.v+'.html';
+    var src=st.v==='crm'?'crm-sample/examples/crm/':st.v==='ind'?'industry/index.html':st.v==='indold'?'industry-prev/index.html':st.v+'.html';
     if(reload||f.getAttribute('src')!==src)f.setAttribute('src',src);
     open.href=src;
     history.replaceState(null,'','#'+st.v+'-'+st.d);
