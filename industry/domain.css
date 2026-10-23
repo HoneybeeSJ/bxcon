@@ -61,12 +61,12 @@
 .lane-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
 .lane-head em{padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--ink);font-size:12.5px;font-weight:800;font-style:normal}
 .lane-head span{font-size:12px;color:var(--quiet)}
-.steps{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;list-style:none;margin:0;padding:0}
-.steps::before,.steps::after{content:'';position:absolute;top:7px;left:16.7%;right:16.7%;height:3px;border-radius:3px;background:#cbdaf8}
-.steps::after{background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.7s ease}
-.motion-semiconductor[data-phase='1'] .steps::after{transform:scaleX(.5)}
-.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .steps::after{transform:scaleX(1)}
-.lane-t2 .steps::after{transition-delay:0.2s}
+.lane-steps{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;list-style:none;margin:0;padding:0}
+.lane-steps::before,.lane-steps::after{content:'';position:absolute;top:7px;left:16.7%;right:16.7%;height:3px;border-radius:3px;background:#cbdaf8}
+.lane-steps::after{background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.7s ease}
+.motion-semiconductor[data-phase='1'] .lane-steps::after{transform:scaleX(.5)}
+.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .lane-steps::after{transform:scaleX(1)}
+.lane-t2 .lane-steps::after{transition-delay:0.2s}
 .st{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:13px;font-weight:700;line-height:1.4;color:var(--quiet);transition:color 0.3s}
 .st i{width:17px;height:17px;box-sizing:border-box;border-radius:50%;background:#fff;border:3px solid #cbdaf8;z-index:1;transition:background 0.3s,border-color 0.3s}
 .motion-semiconductor .s0,.motion-semiconductor:is([data-phase='1'],[data-phase='2'],[data-phase='3']) .s1,.motion-semiconductor:is([data-phase='2'],[data-phase='3']) .s2{color:var(--ink)}

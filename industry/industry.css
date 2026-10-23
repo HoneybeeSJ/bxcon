@@ -18,3 +18,10 @@
 @media print{.site-header,.review-strip,.page-links,.actions,dialog,.doc-tools{display:none!important}.section{padding:30px 0;break-inside:avoid}.hero{padding:25px 0;min-height:0}.reveal,.motion-ready .reveal{opacity:1;transform:none}.doc{max-width:none;padding:0}.doc h2{break-after:avoid}.doc table{break-inside:avoid}body{background:white}.pad{padding-left:25px;padding-right:25px}}
 .strategy-list{list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px}.strategy-list li{display:flex;gap:14px;border-top:1px solid #b6c6e6;padding-top:20px}.strategy-no{flex:0 0 auto;white-space:nowrap;color:var(--blue-d);font-size:13px;font-weight:700;padding-top:4px}.strategy-list h3{font-size:19px;line-height:1.45;margin:0 0 10px}.strategy-list p{font-size:15px;margin:0;line-height:1.8}.outlook-grid.three{grid-template-columns:repeat(3,1fr);gap:40px}
 @media(max-width:900px){.strategy-list{grid-template-columns:1fr;gap:18px}.outlook-grid.three{grid-template-columns:1fr;gap:30px}}
+
+/* 참고 자료: 출처를 한 줄씩 세로로 */
+.source-note .source-title{display:block;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--ink,#1f3d73)}
+.source-list{list-style:none;margin:0 0 10px;padding:0}
+.source-list li{position:relative;padding-left:12px;line-height:1.9}
+.source-list li::before{content:'';position:absolute;left:0;top:.95em;width:4px;height:4px;border-radius:50%;background:#8ea3c9}
+.source-note p{margin:0}
