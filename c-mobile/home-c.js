@@ -8,6 +8,8 @@ scrollTo(0, 0);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (reduce) document.querySelector('.home-c').classList.add('reduced');
 gsap.registerPlugin(ScrollTrigger);
+// 서비스 장면마다 없는 요소(차트 선·카운터 등)는 비어 있는 게 정상이라 'target not found' 경고를 끈다
+gsap.config({ nullTargetWarn: false });
 
 // 부드러운 스크롤 (루아소프트와 같은 Lenis)
 let lenis = null;
