@@ -357,8 +357,8 @@ function initMotion() {
   function chapAnim(tl, c, t0, counters) {
     const art = c.querySelector('.art'), q = sel => art.querySelectorAll(sel);
     tl.fromTo(c.querySelector('h3 span'), { yPercent: 110 }, { yPercent: 0, duration: 0.2, ease: 'power3.out' }, t0)
-      .fromTo(c.querySelectorAll('.num,p,.tags,.btn'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.04, duration: 0.2, ease: 'power2.out' }, t0 + 0.04)
-      .fromTo(q('.gc'), { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.24, ease: 'power3.out' }, t0 + 0.02)
+      .fromTo(c.querySelectorAll('.num,p,.tags,.btn'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.03, duration: 0.16, ease: 'power2.out' }, t0)
+      .fromTo(q('.gc'), { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.2, ease: 'power3.out' }, t0)
       .fromTo(q('.gx'), { scaleX: 0 }, { scaleX: 1, stagger: 0.03, duration: 0.35, ease: 'power2.out' }, t0 + 0.2)
       .fromTo(q('.gy'), { scaleY: 0 }, { scaleY: 1, stagger: 0.04, duration: 0.35, ease: 'power2.out' }, t0 + 0.2)
       .fromTo(q('.fillp'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t0 + 0.3)
@@ -386,9 +386,10 @@ function initMotion() {
       chapAnim(tl, c, t0, counters);
       tl.fromTo(bars[i], { scaleX: 0 }, { scaleX: 1, duration: SEG, ease: 'none' }, t0)
         .to(glow, { yPercent: -50 + (i % 2 ? 6 : -6), duration: SEG, ease: 'none' }, t0);
-      if (i < chaps.length - 1) tl.to(c, { opacity: 0, y: -36, duration: 0.15, ease: 'power2.in' }, t0 + SEG - 0.17);
+      // 나가는 장면은 경계 직전까지 보이다가 서둘러 사라지고, 들어오는 장면은 경계에서 바로 시작 (사이에 빈 화면이 길게 남지 않게)
+      if (i < chaps.length - 1) tl.to(c, { opacity: 0, y: -36, duration: 0.1, ease: 'power2.in' }, t0 + SEG - 0.1);
       else tl.to({}, { duration: 0.15 }, t0 + SEG);
-      if (i > 0) tl.fromTo(c, { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.14, ease: 'power2.out' }, t0);
+      if (i > 0) tl.fromTo(c, { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.07, ease: 'power2.out' }, t0);
     });
     // 숫자는 타임라인 시간에서 직접 계산 (스크롤을 올리고 내려도 항상 같은 값)
     // 장면이 보이는 구간은 타임라인 시간에서 직접 계산 (set으로 켜고 끄면 거꾸로 스크롤할 때 되돌아오지 않는 경우가 있었음)
@@ -454,7 +455,7 @@ function initMotion() {
 
   // 공통: 화면에 들어올 때 아래에서 올라옴
   gsap.set('.fx-up', { opacity: 0, y: 30 });
-  ScrollTrigger.batch('.fx-up', { start: 'top 88%', once: true, onEnter: els => gsap.to(els, { opacity: 1, y: 0, stagger: 0.12, duration: 0.7, ease: 'power3.out' }) });
+  ScrollTrigger.batch('.fx-up', { start: 'top 96%', once: true, onEnter: els => gsap.to(els, { opacity: 1, y: 0, stagger: 0.1, duration: 0.55, ease: 'power3.out' }) });
   // CRM 화면: 스크롤에 맞춰 떠오름
   gsap.from('.crm-shot', { y: 90, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.crm', start: 'top 85%', end: 'center center', scrub: 0.6 } });
   // 수행사례 카드: 아래에서 차례로 올라옴
