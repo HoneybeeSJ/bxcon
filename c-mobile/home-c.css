@@ -127,7 +127,8 @@
 .home-c .fn{position:relative;height:2.9em;margin-bottom:.6em;font-weight:700;border-radius:.9em;background:rgba(47,99,255,.06)}
 .home-c .fn i{position:absolute;left:0;top:0;bottom:0;border-radius:.9em;background:linear-gradient(90deg,#2f63ff,#5b86ff)}
 .home-c .fn span{position:relative;line-height:2.9em;padding-left:1em;color:#fff}
-.home-c .fn b{position:absolute;right:.9em;line-height:2.9em;font-variant-numeric:tabular-nums}
+.home-c .fn b{position:absolute;right:.9em;line-height:2.9em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.home-c .fn b span{color:var(--ink)}
 .home-c .kpi{display:flex;align-items:flex-end;justify-content:space-between;gap:1em}
 .home-c .sp{width:46%;height:auto;overflow:visible}
 .home-c .row{display:flex;align-items:center;gap:.7em;padding:.55em 0;border-top:1px solid rgba(15,23,40,.08);font-size:.95em}
@@ -440,7 +441,7 @@
   .home-c .gi:has(> .tg){padding-bottom:3.2em}
   .home-c .g-third .org{flex-direction:column;text-align:center;gap:.4em}
   .home-c .g-third .av{width:2.4em;height:2.4em}
-  .home-c .rg{width:70%}
+  .home-c .rg{width:100%;max-width:150px}
   .home-c .kpi{flex-wrap:wrap;gap:.4em}
   .home-c .kpi .sp{width:100%}
   .home-c .cht text{font-size:14px}
