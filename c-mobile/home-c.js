@@ -425,7 +425,8 @@ function initMotion() {
     const wrap = el => el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el;
     document.querySelectorAll('[data-dark]').forEach(sec => ScrollTrigger.create({ trigger: wrap(sec), start: 'top 64px', end: 'bottom 64px', onToggle: s => mark(sec, s.isActive) }));
 
-    return () => { stage.removeEventListener('focusin', onFocus); header.classList.remove('on-dark'); };
+    // 모바일 폭으로 바뀌면 PC에서 직접 켜고 끈 장면 표시값을 지워야 모바일 CSS(모두 보임)가 적용됨
+    return () => { stage.removeEventListener('focusin', onFocus); header.classList.remove('on-dark'); chaps.forEach(c => { c.style.visibility = ''; }); };
   });
   mm.add('(max-width: 768px)', () => {
     const dark = new Set();
