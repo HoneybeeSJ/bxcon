@@ -1,0 +1,1 @@
+import{t as e}from"./newsletter.-5WBeKNB.js";e({prefix:`landing-newsletter`,idleLabel:`Subscribe`,loadingLabel:`Submitting`,sampleMessage:`현재는 샘플 모드입니다.`,successMessage:`구독 요청이 정상적으로 접수되었습니다.`});

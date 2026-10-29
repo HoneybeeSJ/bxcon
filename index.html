@@ -32,23 +32,21 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
 <div class="bar">
   <b>BX 홈페이지 시안</b>
   <div class="seg" role="group" aria-label="시안 선택">
-    <button data-v="c" aria-pressed="true">메인페이지</button>
-    <button data-v="crm" aria-pressed="false">CRM 예시</button>
-    <button data-v="ind" aria-pressed="false">산업별 · 개편</button>
-    <button data-v="indold" aria-pressed="false">산업별 · 이전</button>
+    <button data-v="main" aria-pressed="true">메인페이지</button>
+    <button data-v="ind" aria-pressed="false">산업별 교육</button>
   </div>
   <div class="seg" role="group" aria-label="화면 선택">
     <button data-d="pc" aria-pressed="true">PC</button>
     <button data-d="m" aria-pressed="false">모바일</button>
   </div>
-  <a class="open" id="open" href="c.html" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
+  <a class="open" id="open" href="main/index.html" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
 </div>
-<div class="stage" id="stage"><div class="dev"><iframe id="f" src="c.html" title="시안 미리보기"></iframe></div></div>
+<div class="stage" id="stage"><div class="dev"><iframe id="f" src="main/index.html" title="시안 미리보기"></iframe></div></div>
 <script>
 (function(){
-  var st={v:'c',d:'pc'},f=document.getElementById('f'),stage=document.getElementById('stage'),open=document.getElementById('open');
+  var st={v:'main',d:'pc'},f=document.getElementById('f'),stage=document.getElementById('stage'),open=document.getElementById('open');
   var h=(location.hash||'').replace('#','').split('-');
-  if(h[0]==='crm'||h[0]==='ind'||h[0]==='indold')st.v=h[0]; if(h[1]==='m')st.d='m';
+  if(h[0]==='ind')st.v='ind'; if(h[1]==='m')st.d='m';
   var PCW=1280;
   function fit(){
     if(st.d==='m'){f.style.width=f.style.height=f.style.transform='';return}
@@ -61,7 +59,7 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
     fit();
     document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===st.v)});
     document.querySelectorAll('[data-d]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.d===st.d)});
-    var src=st.v==='crm'?'crm-sample/examples/crm/':st.v==='ind'?'industry/index.html':st.v==='indold'?'industry-prev/index.html':st.v+'.html';
+    var src=st.v==='ind'?'industry-new/industry/index.html':'main/index.html';
     if(reload||f.getAttribute('src')!==src)f.setAttribute('src',src);
     open.href=src;
     history.replaceState(null,'','#'+st.v+'-'+st.d);
