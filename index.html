@@ -39,9 +39,9 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
     <button data-d="pc" aria-pressed="true">PC</button>
     <button data-d="m" aria-pressed="false">모바일</button>
   </div>
-  <a class="open" id="open" href="main/index.html" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
+  <a class="open" id="open" href="main/index.html?v=20261029b" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
 </div>
-<div class="stage" id="stage"><div class="dev"><iframe id="f" src="main/index.html" title="시안 미리보기"></iframe></div></div>
+<div class="stage" id="stage"><div class="dev"><iframe id="f" src="main/index.html?v=20261029b" title="시안 미리보기"></iframe></div></div>
 <script>
 (function(){
   var st={v:'main',d:'pc'},f=document.getElementById('f'),stage=document.getElementById('stage'),open=document.getElementById('open');
@@ -59,13 +59,13 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
     fit();
     document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===st.v)});
     document.querySelectorAll('[data-d]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.d===st.d)});
-    var src=st.v==='ind'?'industry-new/industry/index.html':'main/index.html';
+    var src=(st.v==='ind'?'industry-new/industry/index.html':'main/index.html')+'?v=20261029b';
     if(reload||f.getAttribute('src')!==src)f.setAttribute('src',src);
     open.href=src;
     history.replaceState(null,'','#'+st.v+'-'+st.d);
   }
   document.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){st.v=b.dataset.v;render()}});
-  f.addEventListener('load',function(){try{var u=f.contentWindow.location.pathname;var v=u.indexOf('/industry-new/')>-1?'ind':u.indexOf('/main/')>-1?'main':st.v;if(v!==st.v){st.v=v;stage.className='stage'+(st.d==='m'?' m':'');document.querySelectorAll('[data-v]').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.v===st.v)});history.replaceState(null,'','#'+st.v+'-'+st.d);open.href=v==='ind'?'industry-new/industry/index.html':'main/index.html'}}catch(e){}});
+  f.addEventListener('load',function(){try{var u=f.contentWindow.location.pathname;var v=u.indexOf('/industry-new/')>-1?'ind':u.indexOf('/main/')>-1?'main':st.v;if(v!==st.v){st.v=v;stage.className='stage'+(st.d==='m'?' m':'');document.querySelectorAll('[data-v]').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.v===st.v)});history.replaceState(null,'','#'+st.v+'-'+st.d);open.href=(v==='ind'?'industry-new/industry/index.html':'main/index.html')+'?v=20261029b'}}catch(e){}});
   document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){st.d=b.dataset.d;render(true)}});
   render();
 })();
