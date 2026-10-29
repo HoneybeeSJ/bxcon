@@ -65,6 +65,7 @@ iframe{border:0;background:#fff;display:block;width:100%;height:100%}
     history.replaceState(null,'','#'+st.v+'-'+st.d);
   }
   document.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){st.v=b.dataset.v;render()}});
+  f.addEventListener('load',function(){try{var u=f.contentWindow.location.pathname;var v=u.indexOf('/industry-new/')>-1?'ind':u.indexOf('/main/')>-1?'main':st.v;if(v!==st.v){st.v=v;stage.className='stage'+(st.d==='m'?' m':'');document.querySelectorAll('[data-v]').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.v===st.v)});history.replaceState(null,'','#'+st.v+'-'+st.d);open.href=v==='ind'?'industry-new/industry/index.html':'main/index.html'}}catch(e){}});
   document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){st.d=b.dataset.d;render(true)}});
   render();
 })();
